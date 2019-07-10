@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.12.1
+Version: 0.12.2
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -340,6 +340,7 @@ EOT;
         $content_name = (isset($content['name']) && !empty($content['name'])) ? $content['name'] : 'Default';
         $post_types = (isset($content['post_types']) && is_array($content['post_types'])) ? $content['post_types'] : array('post');
         $page_ids = (isset($content['page_ids']) && is_array($content['page_ids'])) ? $content['page_ids'] : array();
+        $page_templates = (isset($content['page_templates']) && is_array($content['page_templates'])) ? $content['page_templates'] : array();
         $layouts = (isset($content['layouts']) && is_array($content['layouts'])) ? $content['layouts'] : array();
         $fields = (isset($content['fields']) && is_array($content['fields'])) ? $content['fields'] : array();
         $hide_on_screen = (isset($content['hide_on_screen']) && is_array($content['hide_on_screen'])) ? $content['hide_on_screen'] : array('the_content');
@@ -421,6 +422,16 @@ EOT;
                         'param' => 'post',
                         'operator' => '==',
                         'value' => $page_id
+                    )
+                );
+            }
+        } else if (!empty($page_templates)) {
+            foreach ($page_templates as $page_template) {
+                $acf_location[] = array(
+                    array(
+                        'param' => 'page_template',
+                        'operator' => '==',
+                        'value' => $page_template
                     )
                 );
             }
