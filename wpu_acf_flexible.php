@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.12.2
+Version: 0.13.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -75,14 +75,7 @@ EOT;
 EOT;
 
     private $default_var_image = <<<EOT
-$##ID## = get_sub_field('##ID##');
-$##ID##_src = '';
-if (is_numeric($##ID##)) {
-    $##ID## = wp_get_attachment_image_src($##ID##, 'thumbnail');
-    if (is_array($##ID##)) {
-        $##ID##_src = $##ID##[0];
-    }
-}
+$##ID##_src = get_wpu_acf_image_src(get_sub_field('##ID##'), 'thumbnail');
 EOT;
 
     private $default_value_relationship = <<<EOT
@@ -146,7 +139,7 @@ EOT;
 
         /* Label */
         if (!isset($field['label'])) {
-            $field['label'] = $id;
+            $field['label'] = ucfirst($field_id);
         }
         if (!isset($field['title'])) {
             $field['title'] = $field['label'];
@@ -264,7 +257,7 @@ EOT;
                 if (!empty($field_value)) {
                     $tmp_value_content .= '<?php ' . $field_value . ' ?>' . "\n";
                 }
-                $tmp_value_content .= $this->get_value_content_field($sub_id, $sub_sub_field);
+                $tmp_value_content .= $this->get_value_content_field($sub_id, $sub_sub_field, $level + 1);
             }
             $tmp_value = str_replace('##ID##', $id, $this->default_value_repeater) . "\n";
             if ($level < 2) {
@@ -280,7 +273,7 @@ EOT;
         default:
             $tag = 'div';
             if ($id == 'title') {
-                $tag = 'h2';
+                $tag = 'h' . $level;
             }
             $values = '<' . $tag . ' ' . $classname . '><?php echo ' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\') ?></' . $tag . '>' . "\n";
         }
@@ -315,7 +308,7 @@ EOT;
         case 'repeater':
             $tmp_value_content = '';
             foreach ($sub_field['sub_fields'] as $sub_id => $sub_sub_field) {
-                $tmp_value_content .= $this->get_value_content_field_twig($sub_id, $sub_sub_field);
+                $tmp_value_content .= $this->get_value_content_field_twig($sub_id, $sub_sub_field, $level + 1);
             }
             $tmp_value = str_replace('##ID##', $id, $this->default_value_repeater_twig) . "\n";
             $tmp_value_content = str_replace('{{', '{{item.', $tmp_value_content);
@@ -616,6 +609,17 @@ function get_wpu_acf_flexible_content($group = 'blocks') {
 
     endwhile;
     return ob_get_clean();
+}
+
+function get_wpu_acf_image_src($image, $size = 'thumbnail') {
+    $item_src = '';
+    if (is_numeric($image)) {
+        $image = wp_get_attachment_image_src($image, $size);
+        if (is_array($image)) {
+            $item_src = $image[0];
+        }
+    }
+    return $item_src;
 }
 
 /*
