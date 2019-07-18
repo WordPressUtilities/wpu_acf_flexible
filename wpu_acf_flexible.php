@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.13.0
+Version: 0.13.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -339,6 +339,7 @@ EOT;
         $hide_on_screen = (isset($content['hide_on_screen']) && is_array($content['hide_on_screen'])) ? $content['hide_on_screen'] : array('the_content');
         $position = isset($content['position']) ? $content['position'] : 'acf_after_title';
         $custom_acf_location = isset($content['location']) ? $content['location'] : array();
+        $layout_key = isset($content['key']) ? $content['key'] : 'field_' . md5($content_id);
 
         /* Build Layouts */
         $base_fields = array();
@@ -347,9 +348,11 @@ EOT;
                 $field_key = isset($field['key']) ? $field['key'] : md5($content_id . $field_id);
                 $base_fields[$field_key] = $this->set_field($field_key, $field, $field_id);
             }
-        } else {
-            $base_fields = array(
-                'key' => 'field_' . md5($content_id),
+        }
+
+        if (!empty($layouts)) {
+            $base_field_layouts = array(
+                'key' => $layout_key,
                 'label' => $content_name,
                 'name' => $content_id,
                 'type' => 'flexible_content',
@@ -368,10 +371,10 @@ EOT;
             );
             foreach ($layouts as $layout_id => $layout) {
                 $layout_key = isset($layout['key']) ? $layout['key'] : md5($content_id . $layout_id);
-                $base_fields['layouts'][$layout_key] = $this->set_field($layout_key, $layout, $layout_id);
-                unset($base_fields['layouts'][$layout_key]['type']);
+                $base_field_layouts['layouts'][$layout_key] = $this->set_field($layout_key, $layout, $layout_id);
+                unset($base_field_layouts['layouts'][$layout_key]['type']);
             }
-            $base_fields = array($base_fields);
+            $base_fields[] = $base_field_layouts;
         }
 
         /* Init */
