@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.13.3
+Version: 0.13.4
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -338,6 +338,9 @@ EOT;
         $fields = (isset($content['fields']) && is_array($content['fields'])) ? $content['fields'] : array();
         $hide_on_screen = (isset($content['hide_on_screen']) && is_array($content['hide_on_screen'])) ? $content['hide_on_screen'] : array('the_content');
         $position = isset($content['position']) ? $content['position'] : 'acf_after_title';
+        $style = isset($content['style']) ? $content['style'] : 'seamless';
+        $menu_order = isset($content['menu_order']) ? $content['menu_order'] : 0;
+        $label_placement = isset($content['label_placement']) ? $content['label_placement'] : 'top';
         $custom_acf_location = isset($content['location']) ? $content['location'] : array();
         $layout_key = isset($content['key']) ? $content['key'] : 'field_' . md5($content_id);
 
@@ -454,10 +457,10 @@ EOT;
             'title' => $content_name,
             'fields' => $base_fields,
             'location' => $acf_location,
-            'menu_order' => 0,
+            'menu_order' => $menu_order,
             'position' => $position,
-            'style' => 'seamless',
-            'label_placement' => 'top',
+            'style' => $style,
+            'label_placement' => $label_placement,
             'instruction_placement' => 'label',
             'hide_on_screen' => $hide_on_screen,
             'active' => 1,
