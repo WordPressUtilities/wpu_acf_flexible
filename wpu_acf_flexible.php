@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.13.2
+Version: 0.13.3
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -384,6 +384,9 @@ EOT;
                     $vars = '';
                     $values = '';
                     $valuesTwig = '';
+                    if (!isset($layout['sub_fields']) || !is_array($layout['sub_fields'])) {
+                        continue;
+                    }
                     foreach ($layout['sub_fields'] as $id => $sub_field) {
                         $vars .= $this->get_var_content_field($id, $sub_field);
                         $values .= $this->get_value_content_field($id, $sub_field);
