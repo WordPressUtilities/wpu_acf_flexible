@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.13.4
+Version: 0.13.5
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -478,9 +478,10 @@ EOT;
         /* Remove empty */
         $content = preg_replace('/<\?php(\s\n)\?>/isU', '', $content);
         $content = preg_replace('/(?:(?:\r\n|\r|\n)){2}/s', "\n", $content);
-
         $file_path = $this->get_controller_path($group);
         $file_id = $file_path . $layout_id . '.php';
+
+        do_action('wpu_acf_flexible__set_file_content', $layout_id, $group);
         if (!file_exists($file_id)) {
             file_put_contents($file_id, $content);
         }
