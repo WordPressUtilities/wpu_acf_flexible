@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.13.5
+Version: 0.14.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -122,14 +122,15 @@ EOT;
 
     public function __construct() {
         add_action('init', array(&$this, 'init'));
+        add_action('acf/save_post', array(&$this, 'save_post'));
     }
 
     public function init() {
         if (!function_exists('acf_add_local_field_group')) {
             return;
         }
-        $contents = apply_filters('wpu_acf_flexible_content', array());
-        foreach ($contents as $id => $content) {
+        $this->contents = apply_filters('wpu_acf_flexible_content', array());
+        foreach ($this->contents as $id => $content) {
             $this->add_field_group($id, $content);
         }
     }
@@ -572,11 +573,43 @@ EOT;
         return $context;
 
     }
+
+    /**
+     * Save post rows HTML in content
+     * @param  int $post_ID
+     */
+    public function save_post($post_ID) {
+        if (empty($_POST)) {
+            return;
+        }
+
+        $content = '';
+        foreach ($this->contents as $group => $blocks) {
+            if (!isset($blocks['save_post']) || !$blocks['save_post']) {
+                continue;
+            }
+            $content = get_wpu_acf_flexible_content($group, 'admin');
+        }
+
+        if (!empty($content)) {
+            $_post = get_post($post_ID);
+            $post_infos = array(
+                'ID' => $post_ID,
+                'post_content' => $content
+            );
+
+            if (empty($_post->post_excerpt)) {
+                $post_infos['post_excerpt'] = wp_kses_post(wp_trim_words($content, 20, ''));
+            }
+
+            wp_update_post($post_infos);
+        }
+    }
 }
 
 $wpu_acf_flexible = new wpu_acf_flexible();
 
-function get_wpu_acf_flexible_content($group = 'blocks') {
+function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
     global $post, $wpu_acf_flexible;
     if (!have_rows($group)) {
         return '';
@@ -588,17 +621,27 @@ function get_wpu_acf_flexible_content($group = 'blocks') {
 
     $group_item = $group;
     $groups = apply_filters('wpu_acf_flexible_content', array());
-    if (isset($groups[$group])) {
-        $group_item = $groups[$group];
+    if (!isset($groups[$group])) {
+        return '';
     }
+    $group_item = $groups[$group];
 
     while (have_rows($group)):
         the_row();
+        $layout = get_row_layout();
+        if (!isset($group_item['layouts'][$layout])) {
+            return '';
+        }
+
+        /* Do not save if this layout is not allowed */
+        if ($mode == 'admin' && isset($group_item['layouts'][$layout]['no_save_post'])) {
+            continue;
+        }
 
         /* Load controller or template file */
         $controller_path = $wpu_acf_flexible->get_controller_path($group_item);
-        $layout_file = $controller_path . get_row_layout() . '.php';
-        $context = $wpu_acf_flexible->get_row_context($group, get_row_layout());
+        $layout_file = $controller_path . $layout . '.php';
+        $context = $wpu_acf_flexible->get_row_context($group, $layout);
 
         /* Include src file */
         if (file_exists($layout_file)) {
@@ -636,6 +679,7 @@ function get_wpu_acf_image_src($image, $size = 'thumbnail') {
 add_filter('wpu_acf_flexible_content', 'example_wpu_acf_flexible_content', 10, 1);
 function example_wpu_acf_flexible_content($contents) {
     $contents['blocks'] = array(
+        'save_post' => 1,
         'post_types' => array(
             'post',
             'page'
