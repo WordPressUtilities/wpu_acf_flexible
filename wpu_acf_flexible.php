@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.14.0
+Version: 0.14.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -583,12 +583,21 @@ EOT;
             return;
         }
 
+        $allowed_tags = apply_filters('wpu_acf_flexible__save_post_allowed_tags', '<p><a><strong><em><h1><h2><h3><h4><h5><ol><ul><li><img>');
+
         $content = '';
         foreach ($this->contents as $group => $blocks) {
             if (!isset($blocks['save_post']) || !$blocks['save_post']) {
                 continue;
             }
             $content = get_wpu_acf_flexible_content($group, 'admin');
+            /* Keep only some useful tags */
+            $content = strip_tags($content, $allowed_tags);
+            /* Ensure content is correct and secure */
+            $content = wp_kses_post($content);
+            /* Remove useless spaces */
+            $content = preg_replace('/\s+/', ' ', $content);
+            $content = trim($content);
         }
 
         if (!empty($content)) {
@@ -599,7 +608,7 @@ EOT;
             );
 
             if (empty($_post->post_excerpt)) {
-                $post_infos['post_excerpt'] = wp_kses_post(wp_trim_words($content, 20, ''));
+                $post_infos['post_excerpt'] = wp_trim_words(wp_strip_all_tags($content), 20, '');
             }
 
             wp_update_post($post_infos);
