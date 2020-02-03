@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.14.1
+Version: 0.15.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -135,8 +135,12 @@ EOT;
         }
     }
 
-    public function set_field($id, $field, $field_id) {
+    public function set_field($id, $field, $field_id, $extras = array()) {
         $acf_field = $this->base_field;
+
+        if (!is_array($extras)) {
+            $extras = array();
+        }
 
         /* Label */
         if (!isset($field['label'])) {
@@ -150,6 +154,17 @@ EOT;
         /* Choices */
         if (!isset($field['choices'])) {
             $field['choices'] = array(__('No'), __('Yes'));
+        }
+
+        if (isset($extras['group'])) {
+            $file_path = $this->get_controller_path($extras['group']);
+            $file_id = $file_path . $field_id . '.php';
+            if (file_exists($file_id)) {
+                $file_id = str_replace(get_stylesheet_directory() . '/', '', $file_id);
+                $field['acfe_flexible_render_template'] = $file_id;
+                $field['acfe_flexible_render_style'] = '';
+                $field['acfe_flexible_render_script'] = '';
+            }
         }
 
         /* Return */
@@ -360,6 +375,9 @@ EOT;
                 'label' => $content_name,
                 'name' => $content_id,
                 'type' => 'flexible_content',
+                'acfe_flexible_layouts_templates' => 1,
+                'acfe_flexible_layouts_previews' => 1,
+                'acfe_flexible_close_button' => 1,
                 'instructions' => '',
                 'required' => 0,
                 'conditional_logic' => 0,
@@ -375,7 +393,7 @@ EOT;
             );
             foreach ($layouts as $layout_id => $layout) {
                 $layout_key = isset($layout['key']) ? $layout['key'] : md5($content_id . $layout_id);
-                $base_field_layouts['layouts'][$layout_key] = $this->set_field($layout_key, $layout, $layout_id);
+                $base_field_layouts['layouts'][$layout_key] = $this->set_field($layout_key, $layout, $layout_id, array('group' => $base_field_layouts['name']));
                 unset($base_field_layouts['layouts'][$layout_key]['type']);
             }
             $base_fields[] = $base_field_layouts;
@@ -689,6 +707,7 @@ add_filter('wpu_acf_flexible_content', 'example_wpu_acf_flexible_content', 10, 1
 function example_wpu_acf_flexible_content($contents) {
     $contents['blocks'] = array(
         'save_post' => 1,
+        'init_files' => 1,
         'post_types' => array(
             'post',
             'page'
