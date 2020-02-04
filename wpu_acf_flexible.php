@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.15.0
+Version: 0.16.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,6 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
+    private $plugin_version = '0.16.0';
 
     /* Base */
     private $base_field = array(
@@ -78,6 +79,10 @@ EOT;
 $##ID##_src = get_wpu_acf_image_src(get_sub_field('##ID##'), 'thumbnail');
 EOT;
 
+    private $default_var_link = <<<EOT
+$##ID##_link = get_sub_field('##ID##');
+EOT;
+
     private $default_value_relationship = <<<EOT
 <?php
 $##ID## = get_sub_field('##ID##');
@@ -123,6 +128,7 @@ EOT;
     public function __construct() {
         add_action('init', array(&$this, 'init'));
         add_action('acf/save_post', array(&$this, 'save_post'));
+        add_action('admin_enqueue_scripts', array(&$this, 'admin_styles'));
     }
 
     public function init() {
@@ -133,6 +139,10 @@ EOT;
         foreach ($this->contents as $id => $content) {
             $this->add_field_group($id, $content);
         }
+    }
+
+    public function admin_styles() {
+        wp_enqueue_style('wpu_acf_flexible-style', plugins_url('assets/style.css', __FILE__), array(), $this->plugin_version);
     }
 
     public function set_field($id, $field, $field_id, $extras = array()) {
@@ -159,6 +169,7 @@ EOT;
         if (isset($extras['group'])) {
             $file_path = $this->get_controller_path($extras['group']);
             $file_id = $file_path . $field_id . '.php';
+            $file_css = $file_path . $field_id . '.css';
             if (file_exists($file_id)) {
                 $file_id = str_replace(get_stylesheet_directory() . '/', '', $file_id);
                 $field['acfe_flexible_render_template'] = $file_id;
@@ -226,6 +237,9 @@ EOT;
         case 'image':
             $vars = str_replace('##ID##', $id, $this->default_var_image) . "\n";
             break;
+        case 'link':
+            $vars = str_replace('##ID##', $id, $this->default_var_link) . "\n";
+            break;
         case 'color':
         case 'color_picker':
         case 'url':
@@ -251,6 +265,9 @@ EOT;
         switch ($sub_field['type']) {
         case 'image':
             $values = '<img ' . $classname . ' src="<?php echo $' . $id . '_src ?>" alt="" />' . "\n";
+            break;
+        case 'link':
+            $values = '<?php if(is_array($' . $id . '_link)): ?><a target="<?php echo $' . $id . '_link[\'target\'] ?>" href="<?php echo $' . $id . '_link[\'url\'] ?>"><?php echo $' . $id . '_link[\'title\'] ?></a><?php endif; ?>' . "\n";
             break;
         case 'url':
             $values = '<?php if(!empty($' . $id . ')): ?><a ' . $classname . ' href="<?php echo $' . $id . '; ?>"><?php echo $' . $id . '; ?></a><?php endif; ?>' . "\n";
@@ -702,61 +719,3 @@ function get_wpu_acf_image_src($image, $size = 'thumbnail') {
     return $item_src;
 }
 
-/*
-add_filter('wpu_acf_flexible_content', 'example_wpu_acf_flexible_content', 10, 1);
-function example_wpu_acf_flexible_content($contents) {
-    $contents['blocks'] = array(
-        'save_post' => 1,
-        'init_files' => 1,
-        'post_types' => array(
-            'post',
-            'page'
-        ),
-        'name' => 'Blocks',
-        'layouts' => array(
-            'basique' => array(
-                'label' => 'Basique',
-                'sub_fields' => array(
-                    'title' => array(
-                        'label' => 'Titre'
-                    ),
-                    'content' => array(
-                        'label' => 'Contenu',
-                        'type' => 'textarea'
-                    ),
-                    'link_url' => array(
-                        'label' => 'URL Bouton',
-                        'type' => 'url'
-                    ),
-                    'link_text' => array(
-                        'label' => 'Texte Bouton',
-                        'type' => 'url'
-                    )
-                )
-            ),
-            'icons' => array(
-                'label' => 'Icones',
-                'sub_fields' => array(
-                    'title' => array(
-                        'label' => 'Titre'
-                    ),
-                    'icons' => array(
-                        'label' => 'Icones',
-                        'type' => 'repeater',
-                        'sub_fields' => array(
-                            'icons_title' => array(
-                                'label' => 'Titre'
-                            ),
-                            'icons_image' => array(
-                                'label' => 'Image',
-                                'type' => 'image'
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    );
-    return $contents;
-}
-*/
