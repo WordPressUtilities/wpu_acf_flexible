@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.16.0
+Version: 0.16.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '0.16.0';
+    private $plugin_version = '0.16.1';
 
     /* Base */
     private $base_field = array(
@@ -376,6 +376,7 @@ EOT;
         $label_placement = isset($content['label_placement']) ? $content['label_placement'] : 'top';
         $custom_acf_location = isset($content['location']) ? $content['location'] : array();
         $layout_key = isset($content['key']) ? $content['key'] : 'field_' . md5($content_id);
+        $acf_extras_layout = isset($content['acf_extras_layout']) && is_array($content['acf_extras_layout']) ? $content['acf_extras_layout'] : array();
 
         /* Build Layouts */
         $base_fields = array();
@@ -408,6 +409,10 @@ EOT;
                 'min' => '',
                 'max' => ''
             );
+            if (is_array($acf_extras_layout)) {
+                $base_field_layouts = array_merge($base_field_layouts, $acf_extras_layout);
+            }
+
             foreach ($layouts as $layout_id => $layout) {
                 $layout_key = isset($layout['key']) ? $layout['key'] : md5($content_id . $layout_id);
                 $base_field_layouts['layouts'][$layout_key] = $this->set_field($layout_key, $layout, $layout_id, array('group' => $base_field_layouts['name']));
@@ -502,6 +507,7 @@ EOT;
             'active' => 1,
             'description' => ''
         );
+
         acf_add_local_field_group($group);
 
     }
