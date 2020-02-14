@@ -9,8 +9,22 @@
     padding: 1em;
 }
 
+/* Titles
+-------------------------- */
+
 #poststuff .acfe-flexible-placeholder.-preview h3,
 #poststuff .acfe-flexible-placeholder.-preview h2 {
     padding: 0;
+    font-weight: bold;
+}
+
+/* Tables
+-------------------------- */
+
+#poststuff .acfe-flexible-placeholder.-preview table {
+    width: 100%;
+}
+
+#poststuff .acfe-flexible-placeholder.-preview th {
     font-weight: bold;
 }
