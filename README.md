@@ -39,13 +39,9 @@ function example_wpu_acf_flexible_content($contents) {
                         'label' => 'Contenu',
                         'type' => 'textarea'
                     ),
-                    'link_url' => array(
+                    'link' => array(
                         'label' => 'URL Bouton',
-                        'type' => 'url'
-                    ),
-                    'link_text' => array(
-                        'label' => 'Texte Bouton',
-                        'type' => 'text'
+                        'type' => 'link'
                     )
                 )
             ),
@@ -70,6 +66,10 @@ function example_wpu_acf_flexible_content($contents) {
                     )
                 )
             )
+            /* Use native model with a rich table */
+            'table_rich' => array(
+                'wpuacf_model' => 'rich-table'
+            )
         )
     );
     return $contents;
@@ -79,4 +79,5 @@ function example_wpu_acf_flexible_content($contents) {
 
 ## Todo
 
-- [ ] Remove Twig/Timber compatibility
+- [ ] Add French translation.
+- [ ] Remove Twig/Timber compatibility.

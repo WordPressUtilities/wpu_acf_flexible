@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.16.2
+Version: 0.17.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '0.16.2';
+    private $plugin_version = '0.17.0';
 
     /* Base */
     private $base_field = array(
@@ -126,6 +126,7 @@ EOT;
 EOT;
 
     public function __construct() {
+        $this->plugin_dir_path = dirname(__FILE__) . '/';
         add_action('init', array(&$this, 'init'));
         add_action('acf/save_post', array(&$this, 'save_post'));
         add_action('admin_enqueue_scripts', array(&$this, 'admin_styles'));
@@ -178,9 +179,17 @@ EOT;
             $file_path = $this->get_controller_path($extras['group']);
             $file_id = $file_path . $field_id . '.php';
             $file_css = $file_path . $field_id . '.css';
+            $tpl_file = false;
             if (file_exists($file_id)) {
-                $file_id = str_replace(get_stylesheet_directory() . '/', '', $file_id);
-                $field['acfe_flexible_render_template'] = $file_id;
+                $tpl_file = $file_id;
+            } else {
+                if (isset($field['wpuacf_model'])) {
+                    $tpl_file = $this->plugin_dir_path . 'blocks/' . $field['wpuacf_model'] . '/content.php';
+                }
+            }
+
+            if ($tpl_file) {
+                $field['acfe_flexible_render_template'] = $tpl_file;
                 $field['acfe_flexible_render_style'] = '';
                 $field['acfe_flexible_render_script'] = '';
             }
@@ -423,6 +432,14 @@ EOT;
 
             foreach ($layouts as $layout_id => $layout) {
                 $layout_key = isset($layout['key']) ? $layout['key'] : md5($content_id . $layout_id);
+
+                if (isset($layout['wpuacf_model'])) {
+                    $layout_tmp = $this->get_layout_model($layout['wpuacf_model'], $layout_id);
+                    if (is_array($layout_tmp)) {
+                        $layout = $layout_tmp;
+                    }
+                }
+
                 $base_field_layouts['layouts'][$layout_key] = $this->set_field($layout_key, $layout, $layout_id, array('group' => $base_field_layouts['name']));
                 unset($base_field_layouts['layouts'][$layout_key]['type']);
             }
@@ -433,6 +450,10 @@ EOT;
         if (isset($content['init_files']) && $content['init_files']) {
             if (!empty($layouts)) {
                 foreach ($layouts as $layout_id => $layout) {
+                    /* Do not create file if it's a Model */
+                    if (isset($layout['wpuacf_model'])) {
+                        continue;
+                    }
                     $vars = '';
                     $values = '';
                     $valuesTwig = '';
@@ -518,6 +539,20 @@ EOT;
 
         acf_add_local_field_group($group);
 
+    }
+
+    public function get_layout_model($id, $layout_id) {
+        $model_file = $this->plugin_dir_path . 'blocks/' . $id . '/model.php';
+        if (!file_exists($model_file)) {
+            return false;
+        }
+        include $model_file;
+        if (isset($model)) {
+            $model['wpuacf_model'] = $id;
+            $model = apply_filters('wpu_acf_flexible__override_model', $model, $layout_id);
+            return $model;
+        }
+        return false;
     }
 
     public function set_file_content($layout_id, $vars, $values, $group) {
@@ -615,8 +650,13 @@ EOT;
 
         /* Build context */
         $group_details = $acf_contents[$group]['layouts'][$layout];
-        foreach ($group_details['sub_fields'] as $id => $field) {
-            $context[$id] = $this->get_block_context(get_sub_field($id), $field);
+        if (isset($group_details['wpuacf_model'])) {
+            $group_details = $this->get_layout_model($group_details['wpuacf_model'], $layout);
+        }
+        if (isset($group_details['sub_fields'])) {
+            foreach ($group_details['sub_fields'] as $id => $field) {
+                $context[$id] = $this->get_block_context(get_sub_field($id), $field);
+            }
         }
 
         return $context;
@@ -691,8 +731,10 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
             return '';
         }
 
+        $_layout_settings = $group_item['layouts'][$layout];
+
         /* Do not save if this layout is not allowed */
-        if ($mode == 'admin' && isset($group_item['layouts'][$layout]['no_save_post'])) {
+        if ($mode == 'admin' && isset($_layout_settings['no_save_post'])) {
             continue;
         }
 
@@ -701,9 +743,14 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
         $layout_file = $controller_path . $layout . '.php';
         $context = $wpu_acf_flexible->get_row_context($group, $layout);
 
-        /* Include src file */
+        /* Include theme layout file */
         if (file_exists($layout_file)) {
             include $layout_file;
+        } else {
+            /* Include default model if available */
+            if (isset($_layout_settings['wpuacf_model'])) {
+                include $wpu_acf_flexible->plugin_dir_path . 'blocks/' . $_layout_settings['wpuacf_model'] . '/content.php';
+            }
         }
 
         /* Load view file if Timber is installed and context is available */
