@@ -1,7 +1,7 @@
 <?php
 
 $model = array(
-    'label' => __('Table', 'wpu_acf_flexible'),
+    'label' => __('[WPUACF] Table', 'wpu_acf_flexible'),
     'sub_fields' => array(
         'lines' => array(
             'label' => __('Table lines', 'wpu_acf_flexible'),

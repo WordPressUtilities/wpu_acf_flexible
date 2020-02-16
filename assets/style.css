@@ -14,8 +14,21 @@
 
 #poststuff .acfe-flexible-placeholder.-preview h3,
 #poststuff .acfe-flexible-placeholder.-preview h2 {
+    margin: 0 0 0.3em;
     padding: 0;
     font-weight: bold;
+}
+
+#poststuff .acfe-flexible-placeholder.-preview h2 {
+    font-size: 1.6em;
+}
+
+#poststuff .acfe-flexible-placeholder.-preview h3 {
+    font-size: 1.4em;
+}
+
+#poststuff .acfe-flexible-placeholder.-preview h4 {
+    font-size: 1.2em;
 }
 
 /* Tables
@@ -27,4 +40,54 @@
 
 #poststuff .acfe-flexible-placeholder.-preview th {
     font-weight: bold;
+}
+
+/* ----------------------------------------------------------
+  Blocks
+---------------------------------------------------------- */
+
+/* Features
+-------------------------- */
+
+.acfe-flexible-placeholder.-preview .cc-block-features .features-list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-features .features-list > * {
+    flex-grow: 1;
+    justify-content: space-between;
+    text-align: center;
+}
+
+/* Table
+-------------------------- */
+
+.acfe-flexible-placeholder.-preview .cc-block-rich-table table {
+    border-collapse: collapse;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-rich-table p:first-child {
+    margin-top: 0;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-rich-table p:last-child {
+    margin-bottom: 0;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-rich-table th,
+.acfe-flexible-placeholder.-preview .cc-block-rich-table td:not([data-empty="1"]) {
+    padding: 1em;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-rich-table th {
+    font-weight: bold;
+    background-color: #efefef;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-rich-table td:not([data-empty="1"]) {
+    background-color: #fafafa;
 }

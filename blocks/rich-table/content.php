@@ -12,8 +12,8 @@ while (has_sub_field('lines')) {
     while (has_sub_field('columns')):
 
         /* Get cell params */
-        $type_champ = get_sub_field('cell_type');
-        $tag = ($type_champ == 'heading' ? 'th' : 'td');
+        $cell_type = get_sub_field('cell_type');
+        $tag = ($cell_type == 'heading' ? 'th' : 'td');
         $image_src = get_wpu_acf_image_src(get_sub_field('image'), 'thumbnail');
         $nb_cols = get_sub_field('nb_cols');
         $nb_rows = get_sub_field('nb_rows');
@@ -25,6 +25,9 @@ while (has_sub_field('lines')) {
         }
         if (is_numeric($nb_rows) && $nb_rows > 1) {
             $cell_attrs .= ' rowspan="' . $nb_rows . '"';
+        }
+        if($cell_type == 'empty'){
+            $cell_attrs .= ' data-empty="1"';
         }
 
         /* Set cell content */
