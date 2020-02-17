@@ -1,37 +1,37 @@
 <?php
 
 $model = array(
-    'label' => '[WPUACF] Features',
+    'label' => __('[WPUACF] Features', 'wpu_acf_flexible'),
     'sub_fields' => array(
         'title' => array(
-            'label' => 'Titre'
+            'label' => __('Title', 'wpu_acf_flexible')
         ),
         'content' => array(
-            'label' => 'Contenu',
+            'label' => __('Content', 'wpu_acf_flexible'),
             'type' => 'textarea',
-            'rows' => 2,
+            'rows' => 2
         ),
         'features' => array(
-            'label' => 'Features',
+            'label' => __('Features', 'wpu_acf_flexible'),
             'type' => 'repeater',
             'required' => 1,
             'min' => 1,
             'max' => 3,
             'sub_fields' => array(
                 'image' => array(
-                    'label' => 'Image',
+                    'label' => __('Image', 'wpu_acf_flexible'),
                     'type' => 'image'
                 ),
                 'title' => array(
-                    'label' => 'Titre'
+                    'label' => __('Title', 'wpu_acf_flexible')
                 ),
                 'content' => array(
-                    'label' => 'Contenu',
+                    'label' => __('Content', 'wpu_acf_flexible'),
                     'type' => 'textarea',
-                    'rows' => 2,
+                    'rows' => 2
                 ),
                 'link' => array(
-                    'label' => 'URL Bouton',
+                    'label' => __('Button', 'wpu_acf_flexible'),
                     'type' => 'link'
                 )
             )

@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.18.0
+Version: 0.19.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '0.18.0';
+    private $plugin_version = '0.19.0';
 
     /* Base */
     private $base_field = array(
@@ -127,9 +127,22 @@ EOT;
 
     public function __construct() {
         $this->plugin_dir_path = dirname(__FILE__) . '/';
-        add_action('init', array(&$this, 'init'));
-        add_action('acf/save_post', array(&$this, 'save_post'));
-        add_action('admin_enqueue_scripts', array(&$this, 'admin_styles'));
+        add_action('init', array(&$this,
+            'init'
+        ));
+        add_action('acf/save_post', array(&$this,
+            'save_post'
+        ));
+        add_action('admin_enqueue_scripts', array(&$this,
+            'admin_styles'
+        ));
+        add_action('plugins_loaded', array(&$this,
+            'load_translation'
+        ));
+    }
+
+    public function load_translation() {
+        load_muplugin_textdomain('wpu_acf_flexible', dirname(plugin_basename(__FILE__)) . '/lang/');
     }
 
     public function init() {
@@ -410,9 +423,12 @@ EOT;
                 'label' => $content_name,
                 'name' => $content_id,
                 'type' => 'flexible_content',
+                'acfe_flexible_copy_paste' => 1,
+                'acfe_flexible_layouts_ajax' => 0,
                 'acfe_flexible_layouts_templates' => 1,
                 'acfe_flexible_layouts_previews' => 1,
                 'acfe_flexible_close_button' => 1,
+                'acfe_flexible_layouts_state' => 'collapse',
                 'instructions' => '',
                 'required' => 0,
                 'conditional_logic' => 0,
@@ -422,7 +438,7 @@ EOT;
                     'id' => ''
                 ),
                 'layouts' => array(),
-                'button_label' => __('Add block'),
+                'button_label' => __('Add block', 'wpu_acf_flexible'),
                 'min' => '',
                 'max' => ''
             );
