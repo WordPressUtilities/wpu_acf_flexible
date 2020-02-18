@@ -78,6 +78,10 @@ function example_wpu_acf_flexible_content($contents) {
             'features_list' => array(
                 'wpuacf_model' => 'features'
             )
+            /* Downloads : A list of downloadable files */
+            'downloads' => array(
+                'wpuacf_model' => 'downloads'
+            )
         )
     );
     return $contents;
@@ -96,7 +100,6 @@ function example_wpu_acf_flexible_content($contents) {
 
 ### Blocks to create :
 
-- [ ] Downloads : List of external links or local files.
 - [ ] Image : Just an image with an optional title + content (<figure>).
 - [ ] Logo List : Rows of images with an optional link.
 - [ ] Pull Quote : Quote + Optional Details.

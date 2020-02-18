@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-02-17 21:06+0100\n"
+"POT-Creation-Date: 2020-02-18 18:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -19,8 +19,8 @@ msgstr ""
 msgid "[WPUACF] Content"
 msgstr "[WPUACF] Contenu"
 
-#: .././blocks/content-classic/model.php:7 .././blocks/features/model.php:7
-#: .././blocks/features/model.php:26
+#: .././blocks/content-classic/model.php:7 .././blocks/downloads/model.php:7
+#: .././blocks/features/model.php:7 .././blocks/features/model.php:26
 msgid "Title"
 msgstr "Titre"
 
@@ -30,13 +30,41 @@ msgstr "Titre"
 msgid "Content"
 msgstr "Contenu"
 
-#: .././blocks/content-classic/model.php:15 .././blocks/features/model.php:34
+#: .././blocks/content-classic/model.php:16 .././blocks/features/model.php:34
 msgid "Button"
 msgstr "Bouton"
 
+#: .././blocks/downloads/model.php:4
+msgid "[WPUACF] Downloads"
+msgstr "[WPUACF] Téléchargements"
+
+#: .././blocks/downloads/model.php:10
+msgid "Files"
+msgstr "Fichiers"
+
+#: .././blocks/downloads/model.php:14
+msgid "File"
+msgstr "Fichier"
+
+#: .././blocks/downloads/model.php:18
+msgid "File name"
+msgstr "Nom du fichier"
+
+#: .././blocks/downloads/model.php:19
+msgid "Uses file name by default"
+msgstr "Utilise le nom du fichier par défaut"
+
+#: .././blocks/downloads/model.php:22
+msgid "External file link"
+msgstr "Lien du fichier externe"
+
+#: .././blocks/downloads/model.php:23
+msgid "Not used if a file exists"
+msgstr "Ignoré si un fichier est défini"
+
 #: .././blocks/features/model.php:4
 msgid "[WPUACF] Features"
-msgstr "[WPUACF] fonctionnalités"
+msgstr "[WPUACF] Fonctionnalités"
 
 #: .././blocks/features/model.php:15
 msgid "Features"
@@ -105,3 +133,9 @@ msgstr "Oui"
 #: .././wpu_acf_flexible.php:441
 msgid "Add block"
 msgstr "Ajouter un bloc"
+
+#~ msgid "External file"
+#~ msgstr "Fichier externe"
+
+#~ msgid "File URL"
+#~ msgstr "URL du fichier"
