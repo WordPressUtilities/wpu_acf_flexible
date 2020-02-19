@@ -3,6 +3,14 @@
 $model = array(
     'label' => __('[WPUACF] Table', 'wpu_acf_flexible'),
     'sub_fields' => array(
+        'title' => array(
+            'label' => __('Title', 'wpu_acf_flexible')
+        ),
+        'content' => array(
+            'label' => __('Content', 'wpu_acf_flexible'),
+            'type' => 'textarea',
+            'rows' => 2
+        ),
         'lines' => array(
             'label' => __('Table lines', 'wpu_acf_flexible'),
             'type' => 'repeater',

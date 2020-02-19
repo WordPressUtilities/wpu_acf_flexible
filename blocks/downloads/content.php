@@ -1,5 +1,6 @@
 <?php
 $_title = get_sub_field('title');
+$_content = apply_filters('the_content', get_sub_field('content'));
 $_files = get_sub_field('files');
 if (empty($_files)) {
     return;
@@ -19,7 +20,7 @@ foreach ($_files as $_file) {
     if (is_numeric($_file['file'])) {
         $_url = wp_get_attachment_url($_file['file']);
         $_label = pathinfo($_url, PATHINFO_BASENAME);
-        $_extension = pathinfo($path, PATHINFO_EXTENSION);
+        $_extension = pathinfo($_url, PATHINFO_EXTENSION);
     }
     if (!$_url) {
         return false;
@@ -37,11 +38,16 @@ foreach ($_files as $_file) {
     );
 }
 
-?><div class="centered-container cc-block-downloads cc-block-downloads--<?php echo get_row_layout(); ?>">
+?><div class="centered-container cc-wpuacfflexible cc-block-downloads cc-block-downloads--<?php echo get_row_layout(); ?>">
     <div class="block-downloads">
         <?php if ($_title): ?>
         <h2 class="field-title"><?php echo $_title; ?></h2>
         <?php endif;?>
+        <?php if ($_content): ?>
+        <div class="field-content">
+            <?php echo $_content; ?>
+        </div>
+        <?php endif; ?>
         <ul class="files-list">
         <?php foreach ($files as $file): ?>
             <li>

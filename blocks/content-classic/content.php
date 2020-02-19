@@ -1,22 +1,24 @@
 <?php
-$title = get_sub_field('title');
-$cta_link = get_sub_field('cta');
-$content = apply_filters('the_content', get_sub_field('content'));
+$_title = get_sub_field('title');
+$_cta_link = get_sub_field('cta');
+$_content = apply_filters('the_content', get_sub_field('content'));
 ?>
-<div class="centered-container cc-block--content-classic cc-block--content-classic--<?php echo get_row_layout(); ?>">
+<div class="centered-container cc-wpuacfflexible cc-block--content-classic cc-block--content-classic--<?php echo get_row_layout(); ?>">
     <div class="block--content-classic">
-        <?php if ($title): ?>
+        <?php if ($_title): ?>
             <h2 class="field-title">
-                <?php echo $title; ?>
+                <?php echo $_title; ?>
             </h2>
         <?php endif;?>
         <div class="field-content">
-            <?php echo $content; ?>
+            <?php echo $_content; ?>
         </div>
-        <?php if (is_array($cta_link)): ?>
-        <a target="<?php echo $cta_link['target']; ?>" href="<?php echo $cta_link['url']; ?>">
-            <?php echo $cta_link['title']; ?>
+        <?php if (is_array($_cta_link)): ?>
+        <div class="field-cta">
+        <a target="<?php echo $_cta_link['target']; ?>" href="<?php echo $_cta_link['url']; ?>">
+            <?php echo $_cta_link['title']; ?>
         </a>
+        </div>
         <?php endif;?>
     </div>
 </div>
