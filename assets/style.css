@@ -61,6 +61,52 @@
     text-align: center;
 }
 
+/* Logos
+-------------------------- */
+
+.acfe-flexible-placeholder.-preview {
+    z-index: 0;
+    position: relative;
+}
+
+.layout > .acfe-fc-placeholder .acfe-fc-overlay {
+    z-index: 1;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-logos .logos-list {
+    text-align: left;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-logos .logos-list > * {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 25%;
+    vertical-align: top;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-logos .logos-list a {
+    display: block;
+    z-index: 1;
+    position: relative;
+    box-sizing: border-box;
+    height: 150px;
+    border: 1px solid #F0F0F0;
+}
+
+.acfe-flexible-placeholder.-preview .cc-block-logos .logos-list img {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: auto;
+    max-height: 80%;
+    max-width: 80%;
+    vertical-align: 0;
+    -webkit-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+}
+
 /* Table
 -------------------------- */
 

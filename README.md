@@ -65,22 +65,26 @@ function example_wpu_acf_flexible_content($contents) {
                         )
                     )
                 )
-            )
+            ),
             /* Rich table : A rich table with images and content */
             'rich_table' => array(
                 'wpuacf_model' => 'rich-table'
-            )
+            ),
             /* Use native model with a rich table */
             'content_classic' => array(
                 'wpuacf_model' => 'content-classic'
-            )
+            ),
             /* Features : Columns of content with an image, a text and an optional CTA */
             'features_list' => array(
                 'wpuacf_model' => 'features'
-            )
+            ),
             /* Downloads : A list of downloadable files */
             'downloads' => array(
                 'wpuacf_model' => 'downloads'
+            ),
+            /* Logos : A list of clickable logos */
+            'logos' => array(
+                'wpuacf_model' => 'logos'
             )
         )
     );
@@ -101,7 +105,6 @@ function example_wpu_acf_flexible_content($contents) {
 ### Blocks to create :
 
 - [ ] Image : Just an image with an optional title + content (<figure>).
-- [ ] Logo List : Rows of images with an optional link.
 - [ ] Pull Quote : Quote + Optional Details.
 - [ ] Slider : Images with title and content (<figure>).
 - [ ] Team Quote : Image + Name + Job + Quote + Details.

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-02-18 18:18+0100\n"
+"POT-Creation-Date: 2020-02-21 18:24+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -21,12 +21,14 @@ msgstr "[WPUACF] Contenu"
 
 #: .././blocks/content-classic/model.php:7 .././blocks/downloads/model.php:7
 #: .././blocks/features/model.php:7 .././blocks/features/model.php:26
+#: .././blocks/logos/model.php:7 .././blocks/rich-table/model.php:7
 msgid "Title"
 msgstr "Titre"
 
-#: .././blocks/content-classic/model.php:11 .././blocks/features/model.php:10
-#: .././blocks/features/model.php:29 .././blocks/rich-table/model.php:31
-#: .././blocks/rich-table/model.php:79
+#: .././blocks/content-classic/model.php:11 .././blocks/downloads/model.php:10
+#: .././blocks/features/model.php:10 .././blocks/features/model.php:29
+#: .././blocks/logos/model.php:10 .././blocks/rich-table/model.php:10
+#: .././blocks/rich-table/model.php:39 .././blocks/rich-table/model.php:87
 msgid "Content"
 msgstr "Contenu"
 
@@ -38,27 +40,27 @@ msgstr "Bouton"
 msgid "[WPUACF] Downloads"
 msgstr "[WPUACF] Téléchargements"
 
-#: .././blocks/downloads/model.php:10
+#: .././blocks/downloads/model.php:15
 msgid "Files"
 msgstr "Fichiers"
 
-#: .././blocks/downloads/model.php:14
+#: .././blocks/downloads/model.php:19
 msgid "File"
 msgstr "Fichier"
 
-#: .././blocks/downloads/model.php:18
+#: .././blocks/downloads/model.php:23
 msgid "File name"
 msgstr "Nom du fichier"
 
-#: .././blocks/downloads/model.php:19
+#: .././blocks/downloads/model.php:24
 msgid "Uses file name by default"
 msgstr "Utilise le nom du fichier par défaut"
 
-#: .././blocks/downloads/model.php:22
+#: .././blocks/downloads/model.php:27
 msgid "External file link"
 msgstr "Lien du fichier externe"
 
-#: .././blocks/downloads/model.php:23
+#: .././blocks/downloads/model.php:28
 msgid "Not used if a file exists"
 msgstr "Ignoré si un fichier est défini"
 
@@ -70,55 +72,68 @@ msgstr "[WPUACF] Fonctionnalités"
 msgid "Features"
 msgstr "Caractéristiques"
 
-#: .././blocks/features/model.php:22 .././blocks/rich-table/model.php:50
+#: .././blocks/features/model.php:22 .././blocks/logos/model.php:19
+#: .././blocks/rich-table/model.php:58
 msgid "Image"
 msgstr "Image"
+
+#: .././blocks/logos/model.php:4
+msgid "[WPUACF] Logos"
+msgstr "[WPUACF] Logos"
+
+#: .././blocks/logos/model.php:15
+msgid "Logos"
+msgstr "Logos"
+
+#: .././blocks/logos/model.php:23
+msgid "Link"
+msgstr "Lien"
 
 #: .././blocks/rich-table/model.php:4
 msgid "[WPUACF] Table"
 msgstr "[WPUACF] Table"
 
-#: .././blocks/rich-table/model.php:7
+#: .././blocks/rich-table/model.php:15
 msgid "Table lines"
 msgstr "Lignes de table"
 
-#: .././blocks/rich-table/model.php:16
+#: .././blocks/rich-table/model.php:24
 msgid "Add a line"
 msgstr "Ajouter une ligne"
 
-#: .././blocks/rich-table/model.php:19
+#: .././blocks/rich-table/model.php:27
 msgid "Columns"
 msgstr "Colonnes"
 
-#: .././blocks/rich-table/model.php:28
+#: .././blocks/rich-table/model.php:36
 msgid "Add a column"
 msgstr "Ajouter une colonne"
 
-#: .././blocks/rich-table/model.php:41
+#: .././blocks/rich-table/model.php:49
 msgid "Text"
 msgstr "Texte"
 
-#: .././blocks/rich-table/model.php:64
+#: .././blocks/rich-table/model.php:72
 msgid "Layout"
 msgstr "Mise en page"
 
-#: .././blocks/rich-table/model.php:74
+#: .././blocks/rich-table/model.php:82
 msgid "Cell type"
 msgstr "Type de cellule"
 
-#: .././blocks/rich-table/model.php:77
+#: .././blocks/rich-table/model.php:85
 msgid "Empty"
 msgstr "Vide"
 
-#: .././blocks/rich-table/model.php:78
+#: .././blocks/rich-table/model.php:86
 msgid "Heading"
 msgstr "En-tête"
 
-#: .././blocks/rich-table/model.php:90
+#: .././blocks/rich-table/model.php:98
 msgid "Number of columns"
 msgstr "Nombre de colonnes"
 
-#: .././blocks/rich-table/model.php:99
+#: .././blocks/rich-table/model.php:107
 msgid "Number of rows"
 msgstr "Nombre de lignes"
 
