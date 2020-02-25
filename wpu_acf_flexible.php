@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 0.21.0
+Version: 1.0.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '0.21.0';
+    private $plugin_version = '1.0.0';
 
     /* Base */
     private $base_field = array(
@@ -136,6 +136,9 @@ EOT;
         add_action('admin_enqueue_scripts', array(&$this,
             'admin_styles'
         ));
+        add_action('wp_enqueue_scripts', array(&$this,
+            'front_styles'
+        ));
         add_action('plugins_loaded', array(&$this,
             'load_translation'
         ));
@@ -160,10 +163,20 @@ EOT;
             return;
         }
         $custom_css = apply_filters('wpu_acf_flexible__admin_css', array(
-            plugins_url('assets/style.css', __FILE__)
+            'admin-blocks' => plugins_url('assets/admin-blocks.css', __FILE__),
+            'front-blocks' => plugins_url('assets/front-blocks.css', __FILE__)
         ));
         foreach ($custom_css as $id => $file) {
-            wp_enqueue_style('wpu_acf_flexible-style-' . $id, $file, array(), $this->plugin_version);
+            wp_enqueue_style('wpu_acf_flexible-style-admin-' . $id, $file, array(), $this->plugin_version);
+        }
+    }
+
+    public function front_styles($hook_details) {
+        $custom_css = apply_filters('wpu_acf_flexible__front_css', array(
+            'front-blocks' => plugins_url('assets/front-blocks.css', __FILE__)
+        ));
+        foreach ($custom_css as $id => $file) {
+            wp_enqueue_style('wpu_acf_flexible-style-front-' . $id, $file, array(), $this->plugin_version);
         }
     }
 
@@ -723,6 +736,10 @@ EOT;
 
 $wpu_acf_flexible = new wpu_acf_flexible();
 
+/* ----------------------------------------------------------
+  Get flexible blocks
+---------------------------------------------------------- */
+
 function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
     global $post, $wpu_acf_flexible;
     if (!have_rows($group)) {
@@ -785,6 +802,10 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
     return '<div data-group="' . esc_attr($group) . '">' . ob_get_clean() . '</div>';
 }
 
+/* ----------------------------------------------------------
+  Helpers
+---------------------------------------------------------- */
+
 function get_wpu_acf_image_src($image, $size = 'thumbnail') {
     $item_src = '';
     if (is_numeric($image)) {
@@ -794,4 +815,28 @@ function get_wpu_acf_image_src($image, $size = 'thumbnail') {
         }
     }
     return $item_src;
+}
+
+function get_wpu_acf_figure($image, $size = 'thumbnail') {
+    if (!is_numeric($image)) {
+        return '';
+    }
+
+    /* Retrieve image HTML without  */
+    add_filter('wp_calculate_image_srcset_meta', '__return_null');
+    $html = wp_get_attachment_image($image, $size);
+    remove_filter('wp_calculate_image_srcset_meta', '__return_null');
+
+    if (apply_filters('get_wpu_acf_figure__display_figcaption', true)) {
+        $thumb_details = get_post($image);
+        if (isset($thumb_details->post_excerpt) && $thumb_details->post_excerpt) {
+            $html .= '<figcaption>' . $thumb_details->post_excerpt . '</figcaption>';
+        }
+    }
+
+    return '<figure>' . $html . '</figure>';
+}
+
+function get_wpu_acf_link($link) {
+    return '<a class="acfflex-link" target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
 }

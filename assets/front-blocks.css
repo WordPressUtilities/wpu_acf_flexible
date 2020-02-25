@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+/* ----------------------------------------------------------
+  Buttons
+---------------------------------------------------------- */
+
+.acfflex-link {
+    display: inline-block;
+    padding: 0 0.5em;
+    min-width: 150px;
+    border: 1px solid;
+    text-align: center;
+    text-decoration: none;
+    line-height: 2;
+}
+
+.acfflex-link:hover {
+    border-color: #369;
+    color: #FFF;
+    background: #369;
+}
+
+/* ----------------------------------------------------------
+  Grid
+---------------------------------------------------------- */
+
+@media(min-width:769px) {
+    .acfflex-grid {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .acfflex-grid > * {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .acfflex-grid > *:not(:first-child) {
+        padding-left: 15px;
+    }
+
+    .acfflex-grid > *:not(:last-child) {
+        padding-right: 15px;
+    }
+}
+
+@media(max-width:768px) {
+    .acfflex-grid > *:not(:first-child) {
+        padding-top: 15px;
+    }
+
+    .acfflex-grid > *:not(:last-child) {
+        padding-bottom: 15px;
+    }
+}
+
+/* ----------------------------------------------------------
+  Downloads
+---------------------------------------------------------- */
+
+.cc-block-features .features-list {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.cc-block-features .features-list > li {
+    display: table-cell;
+    text-align: center;
+    vertical-align: top;
+}
+
+/* ----------------------------------------------------------
+  Files
+---------------------------------------------------------- */
+
+.cc-block-downloads .block-downloads .files-list li {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 32%;
+    padding-right: 2em;
+    vertical-align: top;
+}
+
+/* ----------------------------------------------------------
+  Tables
+---------------------------------------------------------- */
+
+/* Table
+-------------------------- */
+
+.cc-block-rich-table table {
+    border-collapse: collapse;
+}
+
+.cc-block-rich-table p:first-child {
+    margin-top: 0;
+}
+
+.cc-block-rich-table p:last-child {
+    margin-bottom: 0;
+}
+
+.cc-block-rich-table th,
+.cc-block-rich-table td:not([data-empty="1"]) {
+    padding: 1em;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.cc-block-rich-table th {
+    font-weight: bold;
+    background-color: #efefef;
+}
+
+.cc-block-rich-table td:not([data-empty="1"]) {
+    background-color: #fafafa;
+}
+
+/* Downloads
+-------------------------- */
+
+.cc-block-logos .logos-list {
+    text-align: left;
+}
+
+.cc-block-logos .logos-list > * {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 25%;
+    vertical-align: top;
+}
+
+.cc-block-logos .logos-list a {
+    display: block;
+    z-index: 1;
+    position: relative;
+    box-sizing: border-box;
+    height: 150px;
+    border: 1px solid #F0F0F0;
+}
+
+.cc-block-logos .logos-list img {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: auto;
+    max-height: 80%;
+    max-width: 80%;
+    vertical-align: 0;
+    -webkit-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+}
+
+/* ----------------------------------------------------------
+  Blocks
+---------------------------------------------------------- */
+
+.cc-wpuacfflexible {
+    margin-bottom: 2em;
+}
+
+.cc-wpuacfflexible + .cc-wpuacfflexible {
+    margin-top: 2em;
+}
+
+.cc-wpuacfflexible .field-content:not(:last-child) {
+    margin-bottom: 1em;
+}

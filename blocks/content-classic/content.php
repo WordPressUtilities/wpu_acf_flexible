@@ -15,9 +15,7 @@ $_content = apply_filters('the_content', get_sub_field('content'));
         </div>
         <?php if (is_array($_cta_link)): ?>
         <div class="field-cta">
-        <a target="<?php echo $_cta_link['target']; ?>" href="<?php echo $_cta_link['url']; ?>">
-            <?php echo $_cta_link['title']; ?>
-        </a>
+        <?php echo get_wpu_acf_link($_cta_link); ?>
         </div>
         <?php endif;?>
     </div>

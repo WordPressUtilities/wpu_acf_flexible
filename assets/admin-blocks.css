@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+/* ----------------------------------------------------------
+  CSS Reset
+---------------------------------------------------------- */
+
+#poststuff .acfe-flexible-placeholder.-preview {
+    z-index: 0;
+    position: relative;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+.layout > .acfe-fc-placeholder .acfe-fc-overlay {
+    z-index: 1;
+}
+
+/* Titles
+-------------------------- */
+
+#poststuff .acfe-flexible-placeholder.-preview h3,
+#poststuff .acfe-flexible-placeholder.-preview h2 {
+    margin: 0 0 0.3em;
+    padding: 0;
+    font-weight: bold;
+}
+
+#poststuff .acfe-flexible-placeholder.-preview h2 {
+    font-size: 1.6em;
+}
+
+#poststuff .acfe-flexible-placeholder.-preview h3 {
+    font-size: 1.4em;
+}
+
+#poststuff .acfe-flexible-placeholder.-preview h4 {
+    font-size: 1.2em;
+}
+
+/* Tables
+-------------------------- */
+
+#poststuff .acfe-flexible-placeholder.-preview table {
+    width: 100%;
+}
+
+#poststuff .acfe-flexible-placeholder.-preview th {
+    font-weight: bold;
+}
+
+/* Images
+-------------------------- */
+
+#poststuff .acfe-flexible-placeholder.-preview .cc-block-image-content img,
+#poststuff .acfe-flexible-placeholder.-preview .cc-block-image img {
+    width: auto;
+    height: auto;
+    max-height: 300px;
+    max-width: 300px;
+}

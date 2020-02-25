@@ -17,7 +17,7 @@ while (has_sub_field('features')) {
     $_features_content .= '<h3 class="field-title">' . get_sub_field('title') . '</h3>';
     $_features_content .= '<div class="field-content">' . get_sub_field('content') . '</div>';
     if (is_array($link_link)) {
-        $_features_content .= '<div class="field-cta"><a class="field-link" target="' . $link_link['target'] . '" href="' . $link_link['url'] . '">' . $link_link['title'] . '</a></div>';
+        $_features_content .= '<div class="field-cta"><a class="field-link acfflex-link" target="' . $link_link['target'] . '" href="' . $link_link['url'] . '"><span>' . $link_link['title'] . '</span></a></div>';
     }
 
     $_features_content .= '</div></li>';

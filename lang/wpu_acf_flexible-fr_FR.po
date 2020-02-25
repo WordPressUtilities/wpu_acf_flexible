@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-02-21 18:24+0100\n"
+"POT-Creation-Date: 2020-02-25 16:05+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -21,18 +21,23 @@ msgstr "[WPUACF] Contenu"
 
 #: .././blocks/content-classic/model.php:7 .././blocks/downloads/model.php:7
 #: .././blocks/features/model.php:7 .././blocks/features/model.php:26
+#: .././blocks/image-content/model.php:33 .././blocks/image/model.php:7
 #: .././blocks/logos/model.php:7 .././blocks/rich-table/model.php:7
+#: .././blocks/video/model.php:6
 msgid "Title"
 msgstr "Titre"
 
 #: .././blocks/content-classic/model.php:11 .././blocks/downloads/model.php:10
 #: .././blocks/features/model.php:10 .././blocks/features/model.php:29
+#: .././blocks/image-content/model.php:36 .././blocks/image/model.php:10
 #: .././blocks/logos/model.php:10 .././blocks/rich-table/model.php:10
 #: .././blocks/rich-table/model.php:39 .././blocks/rich-table/model.php:87
+#: .././blocks/video/model.php:9
 msgid "Content"
 msgstr "Contenu"
 
 #: .././blocks/content-classic/model.php:16 .././blocks/features/model.php:34
+#: .././blocks/image-content/model.php:41
 msgid "Button"
 msgstr "Bouton"
 
@@ -72,10 +77,23 @@ msgstr "[WPUACF] Fonctionnalités"
 msgid "Features"
 msgstr "Caractéristiques"
 
-#: .././blocks/features/model.php:22 .././blocks/logos/model.php:19
+#: .././blocks/features/model.php:22 .././blocks/image-content/model.php:11
+#: .././blocks/image/model.php:15 .././blocks/logos/model.php:19
 #: .././blocks/rich-table/model.php:58
 msgid "Image"
 msgstr "Image"
+
+#: .././blocks/image-content/model.php:4
+msgid "[WPUACF] Image - Content"
+msgstr "[WPUACF] Image - Contenu"
+
+#: .././blocks/image-content/model.php:20
+msgid "Image position"
+msgstr "Position de l'image"
+
+#: .././blocks/image/model.php:4
+msgid "[WPUACF] Image"
+msgstr "[WPUACF] Image"
 
 #: .././blocks/logos/model.php:4
 msgid "[WPUACF] Logos"
@@ -137,15 +155,23 @@ msgstr "Nombre de colonnes"
 msgid "Number of rows"
 msgstr "Nombre de lignes"
 
-#: .././wpu_acf_flexible.php:188
+#: .././blocks/video/model.php:3
+msgid "[WPUACF] Video"
+msgstr "[WPUACF] Vidéo"
+
+#: .././blocks/video/model.php:14
+msgid "Video"
+msgstr "Vidéo"
+
+#: .././wpu_acf_flexible.php:201
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:188
+#: .././wpu_acf_flexible.php:201
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:441
+#: .././wpu_acf_flexible.php:454
 msgid "Add block"
 msgstr "Ajouter un bloc"
 

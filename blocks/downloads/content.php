@@ -51,7 +51,7 @@ foreach ($_files as $_file) {
         <ul class="files-list">
         <?php foreach ($files as $file): ?>
             <li>
-                <a <?php echo ($_download ? 'data-ext="' . $_extension . '" download=""' : ''); ?> href="<?php echo $file['url']; ?>"><?php echo $file['label']; ?></a>
+                <a class="acfflex-link" <?php echo ($_download ? 'data-ext="' . $_extension . '" download=""' : ''); ?> href="<?php echo $file['url']; ?>"><span><?php echo $file['label']; ?></span></a>
             </li>
         <?php endforeach;?>
         </ul>
