@@ -98,6 +98,10 @@ function example_wpu_acf_flexible_content($contents) {
             'image-content' => array(
                 'wpuacf_model' => 'image-content'
             ),
+            /* Anchor : A quick way to insert an anchor into the content */
+            'anchor' => array(
+                'wpuacf_model' => 'anchor'
+            ),
         )
     );
     return $contents;
@@ -122,5 +126,3 @@ function example_wpu_acf_flexible_content($contents) {
 - [ ] Slider : Images with title and content (<figure>).
 - [ ] Team Quote : Image + Name + Job + Quote + Details.
 - [ ] Text — Image : Image + Title + Text + Optional CTA + Image position.
-
-

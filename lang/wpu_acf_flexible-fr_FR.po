@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-02-25 16:05+0100\n"
+"POT-Creation-Date: 2020-02-28 19:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -14,6 +14,18 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ../.\n"
+
+#: .././blocks/anchor/model.php:3
+msgid "[WPUACF] Anchor"
+msgstr "[WPUACF] Ancre"
+
+#: .././blocks/anchor/model.php:6
+msgid "Slug"
+msgstr "Identifiant"
+
+#: .././blocks/anchor/model.php:7
+msgid "Please insert only lowercase letters without accents, numbers, and hyphens."
+msgstr "Merci d’insérer uniquement des lettres minuscules sans accents, des chiffres, et des traits d’union."
 
 #: .././blocks/content-classic/model.php:4
 msgid "[WPUACF] Content"
