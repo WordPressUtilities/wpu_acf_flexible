@@ -102,6 +102,10 @@ function example_wpu_acf_flexible_content($contents) {
             'anchor' => array(
                 'wpuacf_model' => 'anchor'
             ),
+            /* Pull Quote : A Quote + Optional Details. */
+            'quote' => array(
+                'wpuacf_model' => 'quote'
+            ),
         )
     );
     return $contents;
@@ -121,8 +125,5 @@ function example_wpu_acf_flexible_content($contents) {
 
 ### Blocks to create :
 
-- [ ] Image : Just an image with an optional title + content (<figure>).
-- [ ] Pull Quote : Quote + Optional Details.
 - [ ] Slider : Images with title and content (<figure>).
 - [ ] Team Quote : Image + Name + Job + Quote + Details.
-- [ ] Text — Image : Image + Title + Text + Optional CTA + Image position.

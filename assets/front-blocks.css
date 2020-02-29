@@ -171,3 +171,23 @@
 .cc-wpuacfflexible .field-content:not(:last-child) {
     margin-bottom: 1em;
 }
+
+/* ----------------------------------------------------------
+  Quote
+---------------------------------------------------------- */
+
+.cc-block-quote .field-quote p {
+    font-family: serif;
+    font-size: 2em;
+    font-style: italic;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.cc-block-quote blockquote footer {
+    text-align: right;
+}
+
+.cc-block-quote blockquote footer:before {
+    content: '— ';
+}
