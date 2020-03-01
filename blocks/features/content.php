@@ -1,6 +1,4 @@
 <?php
-$_title = get_sub_field('title');
-$_content = apply_filters('the_content', get_sub_field('content'));
 $_features = get_sub_field('features');
 if (empty($_features)) {
     return;
@@ -23,18 +21,9 @@ while (has_sub_field('features')) {
     $_features_content .= '</div></li>';
 }
 
-?><div class="centered-container cc-wpuacfflexible cc-block-features cc-block-features--<?php echo get_row_layout(); ?>">
+?><div class="<?php echo get_wpu_acf_wrapper_classname('features'); ?>">
     <div class="block-features">
-        <?php if ($_title): ?>
-            <h2 class="field-title">
-                <?php echo $_title; ?>
-            </h2>
-        <?php endif;?>
-        <?php if ($_content): ?>
-            <div class="field-content">
-                <?php echo $_content; ?>
-            </div>
-        <?php endif;?>
+        <?php echo get_wpu_acf_title_content(); ?>
         <ul class="features-list">
             <?php echo $_features_content; ?>
         </ul>

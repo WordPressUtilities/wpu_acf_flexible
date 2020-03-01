@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 1.2.0
+Version: 1.3.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '1.2.0';
+    private $plugin_version = '1.3.0';
 
     /* Base */
     private $base_field = array(
@@ -839,4 +839,42 @@ function get_wpu_acf_figure($image, $size = 'thumbnail') {
 
 function get_wpu_acf_link($link) {
     return '<a class="acfflex-link" target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
+}
+
+/* ----------------------------------------------------------
+  Internal helpers
+---------------------------------------------------------- */
+
+function get_wpu_acf_wrapper_classname($block_type) {
+    $classes = array(
+        'centered-container',
+        'cc-wpuacfflexible',
+        'cc-block-' . $block_type,
+        'cc-block-' . $block_type . '--' . get_row_layout()
+    );
+    return implode(' ', $classes);
+}
+
+function get_wpu_acf_title_content() {
+    $_title = get_sub_field('title');
+    $_content = apply_filters('the_content', get_sub_field('content'));
+    $_return = '';
+
+    if ($_title) {
+        $_return .= '<h2 class="field-title">' . $_title . '</h2>';
+    }
+    if ($_content) {
+        $_return .= '<div class="field-content">' . $_content . '</div>';
+    }
+    return $_return;
+}
+
+function get_wpu_acf_cta() {
+    $_cta_link = get_sub_field('cta');
+    $_return = '';
+    if (is_array($_cta_link)) {
+        $_return .= '<div class="field-cta">' . get_wpu_acf_link($_cta_link) . '</div>';
+    }
+
+    return $_return;
 }

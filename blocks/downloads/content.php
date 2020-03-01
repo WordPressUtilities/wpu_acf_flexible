@@ -1,6 +1,4 @@
 <?php
-$_title = get_sub_field('title');
-$_content = apply_filters('the_content', get_sub_field('content'));
 $_files = get_sub_field('files');
 if (empty($_files)) {
     return;
@@ -38,16 +36,9 @@ foreach ($_files as $_file) {
     );
 }
 
-?><div class="centered-container cc-wpuacfflexible cc-block-downloads cc-block-downloads--<?php echo get_row_layout(); ?>">
+?><div class="<?php echo get_wpu_acf_wrapper_classname('downloads'); ?>">
     <div class="block-downloads">
-        <?php if ($_title): ?>
-        <h2 class="field-title"><?php echo $_title; ?></h2>
-        <?php endif;?>
-        <?php if ($_content): ?>
-        <div class="field-content">
-            <?php echo $_content; ?>
-        </div>
-        <?php endif; ?>
+        <?php echo get_wpu_acf_title_content(); ?>
         <ul class="files-list">
         <?php foreach ($files as $file): ?>
             <li>

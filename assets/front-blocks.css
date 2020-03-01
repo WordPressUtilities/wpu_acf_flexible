@@ -176,7 +176,9 @@
   Quote
 ---------------------------------------------------------- */
 
+.block--team-quote .field-quote p,
 .cc-block-quote .field-quote p {
+    margin-top: 0;
     font-family: serif;
     font-size: 2em;
     font-style: italic;
@@ -184,10 +186,34 @@
     letter-spacing: -0.02em;
 }
 
+.block--team-quote blockquote footer,
 .cc-block-quote blockquote footer {
     text-align: right;
 }
 
+.block--team-quote blockquote footer:before,
 .cc-block-quote blockquote footer:before {
     content: '— ';
+}
+
+/* ----------------------------------------------------------
+  Team Quote
+---------------------------------------------------------- */
+
+.block--team-quote:after {
+    content: '';
+    display: table;
+    clear: both;
+    width: 100%;
+}
+
+.block--team-quote .quote-image {
+    float: left;
+    width: 150px;
+    margin-right: 20px;
+    max-width: 30%;
+}
+
+.block--team-quote .quote-inner {
+    overflow: hidden;
 }

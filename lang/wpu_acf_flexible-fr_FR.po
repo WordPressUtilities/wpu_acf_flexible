@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-02-29 22:24+0100\n"
+"POT-Creation-Date: 2020-03-01 20:40+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -38,7 +38,8 @@ msgstr "[WPUACF] Contenu"
 #: .././blocks/features/model.php:7 .././blocks/features/model.php:26
 #: .././blocks/image-content/model.php:33 .././blocks/image/model.php:7
 #: .././blocks/logos/model.php:7 .././blocks/quote/model.php:7
-#: .././blocks/rich-table/model.php:7 .././blocks/video/model.php:6
+#: .././blocks/rich-table/model.php:7 .././blocks/team-quote/model.php:7
+#: .././blocks/video/model.php:6
 msgid "Title"
 msgstr "Titre"
 
@@ -126,17 +127,17 @@ msgstr "Lien"
 msgid "[WPUACF] Quote"
 msgstr "[WPUACF] Citation"
 
-#: .././blocks/quote/model.php:10
-msgid "Quote"
-msgstr "Citation"
-
-#: .././blocks/quote/model.php:20
+#: .././blocks/quote/model.php:15 .././blocks/team-quote/model.php:23
 msgid "Author"
 msgstr "Auteur"
 
-#: .././blocks/quote/model.php:27
+#: .././blocks/quote/model.php:22 .././blocks/team-quote/model.php:31
 msgid "Author details"
 msgstr "Détails de l'auteur"
+
+#: .././blocks/quote/model.php:30 .././blocks/team-quote/model.php:39
+msgid "Quote"
+msgstr "Citation"
 
 #: .././blocks/rich-table/model.php:4
 msgid "[WPUACF] Table"
@@ -185,6 +186,14 @@ msgstr "Nombre de colonnes"
 #: .././blocks/rich-table/model.php:107
 msgid "Number of rows"
 msgstr "Nombre de lignes"
+
+#: .././blocks/team-quote/model.php:4
+msgid "[WPUACF] Team Quote"
+msgstr "[WPUACF] Citation de l’équipe"
+
+#: .././blocks/team-quote/model.php:14
+msgid "Author image"
+msgstr "Image de l'auteur"
 
 #: .././blocks/video/model.php:3
 msgid "[WPUACF] Video"

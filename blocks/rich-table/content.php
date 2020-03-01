@@ -3,9 +3,6 @@ if (!get_sub_field('lines')) {
     return;
 }
 
-$_title = get_sub_field('title');
-$_content = apply_filters('the_content', get_sub_field('content'));
-
 $_table_html = '';
 while (has_sub_field('lines')) {
     if (!get_sub_field('columns')) {
@@ -47,18 +44,9 @@ if (!$_table_html) {
     return;
 }
 ?>
-<div class="centered-container cc-wpuacfflexible cc-block-rich-table cc-block-rich-table--<?php echo get_row_layout(); ?>">
+<div class="<?php echo get_wpu_acf_wrapper_classname('rich-table'); ?>">
     <div class="block-rich-table">
-        <?php if ($_title): ?>
-            <h2 class="field-title">
-                <?php echo $_title; ?>
-            </h2>
-        <?php endif;?>
-        <?php if($_content): ?>
-        <div class="field-content">
-            <?php echo $_content; ?>
-        </div>
-        <?php endif; ?>
+        <?php echo get_wpu_acf_title_content(); ?>
         <table class="block-rich-table--<?php echo get_row_layout(); ?>">
             <?php echo $_table_html; ?>
         </table>
