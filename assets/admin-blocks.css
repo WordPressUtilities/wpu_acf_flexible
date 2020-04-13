@@ -37,6 +37,13 @@
     font-size: 1.2em;
 }
 
+/* Text
+-------------------------- */
+
+#poststuff .acfe-flexible-placeholder.-preview p:first-child {
+    margin-top: 0;
+}
+
 /* Tables
 -------------------------- */
 
@@ -50,6 +57,11 @@
 
 /* Images
 -------------------------- */
+
+#poststuff .acfe-flexible-placeholder.-preview figure {
+    margin: 0;
+    padding: 0;
+}
 
 #poststuff .acfe-flexible-placeholder.-preview img {
     height: auto;
