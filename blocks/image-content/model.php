@@ -10,7 +10,7 @@ $model = array(
         'image' => array(
             'label' => __('Image', 'wpu_acf_flexible'),
             'type' => 'image',
-            'required' => 1,
+            'required' => 1
         ),
         'col1b' => array(
             'type' => 'acfe_column',
@@ -20,14 +20,14 @@ $model = array(
             'label' => __('Image position', 'wpu_acf_flexible'),
             'type' => 'select',
             'choices' => array(
-                'left' => 'Left',
-                'right' => 'Right',
+                'left' => __('Left', 'wpu_acf_flexible'),
+                'right' => __('Right', 'wpu_acf_flexible')
             )
         ),
         'col1c' => array(
             'type' => 'acfe_column',
             'columns' => '6/6',
-            'endpoint' => true,
+            'endpoint' => true
         ),
         'title' => array(
             'label' => __('Title', 'wpu_acf_flexible')
@@ -40,6 +40,6 @@ $model = array(
         'cta' => array(
             'label' => __('Button', 'wpu_acf_flexible'),
             'type' => 'link'
-        ),
+        )
     )
 );

@@ -1,5 +1,4 @@
 <?php
-$_cta_link = get_sub_field('cta');
 $_image = get_wpu_acf_figure(get_sub_field('image'), 'medium');
 if (!$_image) {
     return;

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-03-01 20:40+0100\n"
+"POT-Creation-Date: 2020-04-13 15:10+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -106,6 +106,14 @@ msgstr "[WPUACF] Image - Contenu"
 #: .././blocks/image-content/model.php:20
 msgid "Image position"
 msgstr "Position de l'image"
+
+#: .././blocks/image-content/model.php:23
+msgid "Left"
+msgstr "Gauche"
+
+#: .././blocks/image-content/model.php:24
+msgid "Right"
+msgstr "Droite"
 
 #: .././blocks/image/model.php:4
 msgid "[WPUACF] Image"

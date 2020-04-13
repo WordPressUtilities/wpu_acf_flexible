@@ -51,6 +51,11 @@
 /* Images
 -------------------------- */
 
+#poststuff .acfe-flexible-placeholder.-preview img {
+    height: auto;
+    max-width: 100%;
+}
+
 #poststuff .acfe-flexible-placeholder.-preview .cc-block-image-content img,
 #poststuff .acfe-flexible-placeholder.-preview .cc-block-image img {
     width: auto;
