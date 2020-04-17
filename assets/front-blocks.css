@@ -217,3 +217,22 @@
 .block--team-quote .quote-inner {
     overflow: hidden;
 }
+
+/* ----------------------------------------------------------
+  Hero
+---------------------------------------------------------- */
+
+.cc-block-hero {
+    background: transparent no-repeat center center;
+    background-size: cover;
+}
+
+.block--hero {
+    padding: 2em;
+    color: #fff;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.block--hero .field-title {
+    color: inherit;
+}

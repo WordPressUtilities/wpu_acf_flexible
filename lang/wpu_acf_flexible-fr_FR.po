@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-04-13 15:10+0200\n"
+"POT-Creation-Date: 2020-04-17 20:52+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -36,10 +36,10 @@ msgstr "[WPUACF] Contenu"
 
 #: .././blocks/content-classic/model.php:7 .././blocks/downloads/model.php:7
 #: .././blocks/features/model.php:7 .././blocks/features/model.php:26
-#: .././blocks/image-content/model.php:33 .././blocks/image/model.php:7
-#: .././blocks/logos/model.php:7 .././blocks/quote/model.php:7
-#: .././blocks/rich-table/model.php:7 .././blocks/team-quote/model.php:7
-#: .././blocks/video/model.php:6
+#: .././blocks/hero/model.php:7 .././blocks/image-content/model.php:33
+#: .././blocks/image/model.php:7 .././blocks/logos/model.php:7
+#: .././blocks/quote/model.php:7 .././blocks/rich-table/model.php:7
+#: .././blocks/team-quote/model.php:7 .././blocks/video/model.php:6
 msgid "Title"
 msgstr "Titre"
 
@@ -53,7 +53,7 @@ msgid "Content"
 msgstr "Contenu"
 
 #: .././blocks/content-classic/model.php:16 .././blocks/features/model.php:34
-#: .././blocks/image-content/model.php:41
+#: .././blocks/hero/model.php:15 .././blocks/image-content/model.php:41
 msgid "Button"
 msgstr "Bouton"
 
@@ -93,11 +93,19 @@ msgstr "[WPUACF] Fonctionnalités"
 msgid "Features"
 msgstr "Caractéristiques"
 
-#: .././blocks/features/model.php:22 .././blocks/image-content/model.php:11
-#: .././blocks/image/model.php:15 .././blocks/logos/model.php:19
-#: .././blocks/rich-table/model.php:58
+#: .././blocks/features/model.php:22 .././blocks/hero/model.php:19
+#: .././blocks/image-content/model.php:11 .././blocks/image/model.php:15
+#: .././blocks/logos/model.php:19 .././blocks/rich-table/model.php:58
 msgid "Image"
 msgstr "Image"
+
+#: .././blocks/hero/model.php:4
+msgid "[WPUACF] Hero"
+msgstr "[WPUACF] Hero"
+
+#: .././blocks/hero/model.php:11
+msgid "Subtitle"
+msgstr "Sous-titre"
 
 #: .././blocks/image-content/model.php:4
 msgid "[WPUACF] Image - Content"
