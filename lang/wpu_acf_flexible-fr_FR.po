@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-04-17 20:52+0200\n"
+"POT-Creation-Date: 2020-04-21 08:02+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -219,15 +219,15 @@ msgstr "[WPUACF] Vidéo"
 msgid "Video"
 msgstr "Vidéo"
 
-#: .././wpu_acf_flexible.php:201
+#: .././wpu_acf_flexible.php:205
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:201
+#: .././wpu_acf_flexible.php:205
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:454
+#: .././wpu_acf_flexible.php:464
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
