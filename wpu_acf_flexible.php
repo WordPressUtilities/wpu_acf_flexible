@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 1.5.1
+Version: 1.5.2
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '1.5.1';
+    private $plugin_version = '1.5.2';
 
     /* Base */
     private $base_field = array(
@@ -848,8 +848,11 @@ function get_wpu_acf_figure($image, $size = 'thumbnail') {
     return '<figure>' . $html . '</figure>';
 }
 
-function get_wpu_acf_link($link) {
-    return '<a class="acfflex-link" target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
+function get_wpu_acf_link($link, $classname = '') {
+    if (!$link || !is_array($link) || !isset($link['url'])) {
+        return '';
+    }
+    return '<a class="acfflex-link ' . esc_attr($classname) . '" target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
 }
 
 /* ----------------------------------------------------------
