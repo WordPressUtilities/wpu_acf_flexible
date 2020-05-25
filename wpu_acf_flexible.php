@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 1.5.2
+Version: 2.0.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '1.5.2';
+    private $plugin_version = '2.0.0';
 
     /* Base */
     private $base_field = array(
@@ -67,16 +67,12 @@ class wpu_acf_flexible {
 </div>
 EOT;
 
-    private $default_content_twig = <<<EOT
-<div class="centered-container cc-block--###testblockid###">
-    <div class="block--###testblockid###">
-###valuesblockid###
-    </div>
-</div>
-EOT;
-
     private $default_var_image = <<<EOT
 $##ID##_src = get_wpu_acf_image_src(get_sub_field('##ID##'), 'thumbnail');
+EOT;
+
+    private $default_var_tax = <<<EOT
+$##ID##_tax = get_term_by('term_taxonomy_id', get_sub_field('##ID##'));
 EOT;
 
     private $default_var_gallery = <<<EOT
@@ -115,18 +111,6 @@ EOT;
     <?php endwhile;?>
     </ul>
 <?php endif; ?>
-EOT;
-
-    private $default_value_repeater_twig = <<<EOT
-{% if ##ID## %}
-    <ul class="##ID##-list">
-    {% for item in ##ID## %}
-        <li>
-##REPEAT##
-        </li>
-    {% endfor %}
-    </ul>
-{% endif %}
 EOT;
 
     public function __construct() {
@@ -230,7 +214,7 @@ EOT;
             if ($field['type'] == 'select' && !isset($field['return_format'])) {
                 $field['return_format'] = 'value';
             }
-            if (($field['type'] == 'image' || $field['type'] == 'file') && !isset($field['return_format'])) {
+            if (($field['type'] == 'image' || $field['type'] == 'file' || $field['type'] == 'taxonomy') && !isset($field['return_format'])) {
                 $field['return_format'] = 'id';
             }
             if ($field['type'] == 'color') {
@@ -284,6 +268,9 @@ EOT;
         case 'image':
             $vars = str_replace('##ID##', $id, $this->default_var_image) . "\n";
             break;
+        case 'taxonomy':
+            $vars = str_replace('##ID##', $id, $this->default_var_tax) . "\n";
+            break;
         case 'gallery':
             $vars = str_replace('##ID##', $id, $this->default_var_gallery) . "\n";
             break;
@@ -315,6 +302,9 @@ EOT;
         switch ($sub_field['type']) {
         case 'image':
             $values = '<img ' . $classname . ' src="<?php echo $' . $id . '_src ?>" alt="" />' . "\n";
+            break;
+        case 'taxonomy':
+            $values = '<?php if($' . $id . '_tax):?><a href="<?php echo get_term_link($' . $id . '_tax); ?>"><?php echo $' . $id . '_tax->name; ?></a><?php endif; ?>' . "\n";
             break;
         case 'gallery':
             $values = '<?php foreach($' . $id . '_gallery as $img): ?><?php echo wp_get_attachment_image($img[\'ID\']);?><?php endforeach; ?>' . "\n";
@@ -362,54 +352,6 @@ EOT;
                 $tag = 'h' . $level;
             }
             $values = '<' . $tag . ' ' . $classname . '><?php echo ' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\') ?></' . $tag . '>' . "\n";
-        }
-
-        return $values;
-    }
-
-    public function get_value_content_field_twig($id, $sub_field, $level = 2) {
-        if (!isset($sub_field['type'])) {
-            $sub_field['type'] = 'text';
-        }
-        $values = '';
-        $classname = 'class="field-' . $id . '"';
-        switch ($sub_field['type']) {
-        case 'image':
-            $values = '<img ' . $classname . ' src="{{' . $id . '}}" alt="" />' . "\n";
-            break;
-        case 'url':
-            $values = '{% if ' . $id . ' %}<a ' . $classname . ' href="{{' . $id . '}}">{{' . $id . '}}</a>{% endif %}' . "\n";
-            break;
-        case 'color':
-        case 'color_picker':
-            $values = '{% if ' . $id . ' %}<div ' . $classname . ' style="background-color:{{' . $id . '}};">{{' . $id . '}}</div>{% endif %}' . "\n";
-            break;
-
-        case 'relationship':
-            $values = str_replace('##ID##', $id, $this->default_value_relationship) . "\n";
-            if ($level < 2) {
-                $tmp_value = str_replace('get_sub_field', 'get_field', $tmp_value);
-            }
-            break;
-        case 'repeater':
-            $tmp_value_content = '';
-            foreach ($sub_field['sub_fields'] as $sub_id => $sub_sub_field) {
-                $tmp_value_content .= $this->get_value_content_field_twig($sub_id, $sub_sub_field, $level + 1);
-            }
-            $tmp_value = str_replace('##ID##', $id, $this->default_value_repeater_twig) . "\n";
-            $tmp_value_content = str_replace('{{', '{{item.', $tmp_value_content);
-            $tmp_value_content = trim($tmp_value_content);
-            if (!empty($tmp_value_content)) {
-                $values = str_replace('##REPEAT##', $tmp_value_content, $tmp_value) . "\n";
-            }
-
-            break;
-        default:
-            $tag = 'div';
-            if ($id == 'title') {
-                $tag = 'h2';
-            }
-            $values = '<' . $tag . ' ' . $classname . '>{{' . ($level < 3 ? '' : 'parentfield.') . $id . '}}</' . $tag . '>' . "\n";
         }
 
         return $values;
@@ -495,20 +437,14 @@ EOT;
                     }
                     $vars = '';
                     $values = '';
-                    $valuesTwig = '';
                     if (!isset($layout['sub_fields']) || !is_array($layout['sub_fields'])) {
                         continue;
                     }
                     foreach ($layout['sub_fields'] as $id => $sub_field) {
                         $vars .= $this->get_var_content_field($id, $sub_field);
                         $values .= $this->get_value_content_field($id, $sub_field);
-                        $valuesTwig .= $this->get_value_content_field_twig($id, $sub_field);
                     }
                     $this->set_file_content($layout_id, $vars, $values, $content);
-
-                    if (class_exists('TimberPost')) {
-                        $this->set_view_content($layout_id, $valuesTwig);
-                    }
                 }
             }
 
@@ -611,17 +547,6 @@ EOT;
         }
     }
 
-    public function set_view_content($layout_id, $values) {
-        $content = str_replace('###valuesblockid###', $values, $this->default_content_twig);
-        $content = str_replace('###testblockid###', $layout_id, $content);
-
-        $file_path = $this->get_view_path();
-        $file_id = $file_path . $layout_id . '.twig';
-        if (!file_exists($file_id)) {
-            file_put_contents($file_id, $content);
-        }
-    }
-
     public function get_controller_path($group = false) {
 
         $folder_name = 'blocks';
@@ -635,15 +560,6 @@ EOT;
             @chmod($controller_path, 0755);
         }
         return $controller_path;
-    }
-
-    public function get_view_path() {
-        $view_path = apply_filters('wpu_acf_flexible__viewpath', get_stylesheet_directory() . '/tpl/views/');
-        if (!is_dir($view_path)) {
-            @mkdir($view_path, 0755);
-            @chmod($view_path, 0755);
-        }
-        return $view_path;
     }
 
     public function get_block_context($value, $field) {
@@ -757,8 +673,6 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
         return '';
     }
 
-    $has_timber = class_exists('TimberPost');
-
     ob_start();
 
     $group_item = $group;
@@ -795,18 +709,6 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
             if (isset($_layout_settings['wpuacf_model'])) {
                 include $wpu_acf_flexible->plugin_dir_path . 'blocks/' . $_layout_settings['wpuacf_model'] . '/content.php';
             }
-        }
-
-        /* Load view file if Timber is installed and context is available */
-        if ($has_timber && !empty($context)) {
-
-            if (!isset($context['skinurl'])) {
-                $context['skinurl'] = get_stylesheet_directory_uri();
-            }
-
-            $view_path = $wpu_acf_flexible->get_view_path();
-            $layout_file = $view_path . get_row_layout() . '.twig';
-            Timber::render($layout_file, $context);
         }
 
     endwhile;
