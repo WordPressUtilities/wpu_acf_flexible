@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.0.0
+Version: 2.1.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.0.0';
+    private $plugin_version = '2.1.0';
 
     /* Base */
     private $base_field = array(
@@ -417,7 +417,14 @@ EOT;
                 if (isset($layout['wpuacf_model'])) {
                     $layout_tmp = $this->get_layout_model($layout['wpuacf_model'], $layout_id);
                     if (is_array($layout_tmp)) {
+                        $base_layout = $layout;
                         $layout = $layout_tmp;
+                        foreach ($base_layout as $property => $value) {
+                            if ($property != 'wpuacf_model') {
+                                $layout[$property] = $value;
+                            }
+                        }
+                        $layouts[$layout_id] = $layout;
                     }
                 }
 
@@ -432,7 +439,7 @@ EOT;
             if (!empty($layouts)) {
                 foreach ($layouts as $layout_id => $layout) {
                     /* Do not create file if it's a Model */
-                    if (isset($layout['wpuacf_model'])) {
+                    if (isset($layout['wpuacf_model']) && !isset($layout['override_view'])) {
                         continue;
                     }
                     $vars = '';
@@ -514,6 +521,7 @@ EOT;
 
         acf_add_local_field_group($group);
 
+        return $group;
     }
 
     public function get_layout_model($id, $layout_id) {
@@ -663,6 +671,8 @@ EOT;
 
 $wpu_acf_flexible = new wpu_acf_flexible();
 
+include dirname( __FILE__ ) . '/inc/master-generator.php';
+
 /* ----------------------------------------------------------
   Get flexible blocks
 ---------------------------------------------------------- */
@@ -720,6 +730,9 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
 ---------------------------------------------------------- */
 
 function get_wpu_acf_image_src($image, $size = 'thumbnail') {
+    if (!is_numeric($image)) {
+        return '';
+    }
     $item_src = '';
     if (is_numeric($image)) {
         $image = wp_get_attachment_image_src($image, $size);
@@ -730,20 +743,35 @@ function get_wpu_acf_image_src($image, $size = 'thumbnail') {
     return $item_src;
 }
 
+function get_wpu_acf_image($image, $size = 'thumbnail') {
+    if (!is_numeric($image)) {
+        return '';
+    }
+    /* Retrieve image HTML without srcset */
+    add_filter('wp_calculate_image_srcset_meta', '__return_null');
+    $html = wp_get_attachment_image($image, $size);
+    remove_filter('wp_calculate_image_srcset_meta', '__return_null');
+    return $html;
+}
+
 function get_wpu_acf_figure($image, $size = 'thumbnail') {
     if (!is_numeric($image)) {
         return '';
     }
 
-    /* Retrieve image HTML without  */
-    add_filter('wp_calculate_image_srcset_meta', '__return_null');
-    $html = wp_get_attachment_image($image, $size);
-    remove_filter('wp_calculate_image_srcset_meta', '__return_null');
+    $html = get_wpu_acf_image($image, $size);
 
     if (apply_filters('get_wpu_acf_figure__display_figcaption', true)) {
         $thumb_details = get_post($image);
+        $_figure_content = '';
+        if (isset($thumb_details->post_title) && $thumb_details->post_title) {
+            $_figure_content .= '<p class="figure-title">' . trim($thumb_details->post_title) . '</p>';
+        }
         if (isset($thumb_details->post_excerpt) && $thumb_details->post_excerpt) {
-            $html .= '<figcaption>' . $thumb_details->post_excerpt . '</figcaption>';
+            $_figure_content .= '<p class="figure-excerpt">' . trim($thumb_details->post_excerpt) . '</p>';
+        }
+        if (!empty($_figure_content)) {
+            $html .= '<figcaption>' . $_figure_content . '</figcaption>';
         }
     }
 
@@ -773,17 +801,23 @@ function get_wpu_acf_wrapper_classname($block_type) {
 }
 
 function get_wpu_acf_title_content() {
-    $_title = get_sub_field('title');
-    $_content = apply_filters('the_content', get_sub_field('content'));
-    $_return = '';
+    return get_wpu_acf__title() . get_wpu_acf__content();
+}
 
+function get_wpu_acf__title() {
+    $_title = get_sub_field('title');
     if ($_title) {
-        $_return .= '<h2 class="field-title">' . $_title . '</h2>';
+        return '<h2 class="field-title">' . $_title . '</h2>';
     }
+    return '';
+}
+
+function get_wpu_acf__content() {
+    $_content = apply_filters('the_content', get_sub_field('content'));
     if ($_content) {
-        $_return .= '<div class="field-content">' . $_content . '</div>';
+        return '<div class="field-content">' . $_content . '</div>';
     }
-    return $_return;
+    return '';
 }
 
 function get_wpu_acf_cta() {

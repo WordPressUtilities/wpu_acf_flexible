@@ -16,9 +16,10 @@ foreach ($_files as $_file) {
         $_url = $_file['url'];
     }
     if (is_numeric($_file['file'])) {
+        $_download = true;
         $_url = wp_get_attachment_url($_file['file']);
         $_label = pathinfo($_url, PATHINFO_BASENAME);
-        $_extension = pathinfo($_url, PATHINFO_EXTENSION);
+        $_extension = strtolower(pathinfo($_url, PATHINFO_EXTENSION));
     }
     if (!$_url) {
         return false;
@@ -32,7 +33,8 @@ foreach ($_files as $_file) {
     $files[] = array(
         'url' => $_url,
         'label' => $_label,
-        'download' => $_download
+        'download' => $_download,
+        'extension' => $_extension
     );
 }
 
@@ -42,7 +44,7 @@ foreach ($_files as $_file) {
         <ul class="files-list">
         <?php foreach ($files as $file): ?>
             <li>
-                <a class="acfflex-link" <?php echo ($_download ? 'data-ext="' . $_extension . '" download=""' : ''); ?> href="<?php echo $file['url']; ?>"><span><?php echo $file['label']; ?></span></a>
+                <a class="acfflex-link" <?php echo ($file['download'] ? 'data-ext="' . $file['extension'] . '" download=""' : ''); ?> href="<?php echo $file['url']; ?>"><span><?php echo $file['label']; ?></span></a>
             </li>
         <?php endforeach;?>
         </ul>

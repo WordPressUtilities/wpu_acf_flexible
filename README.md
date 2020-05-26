@@ -15,6 +15,93 @@ echo get_wpu_acf_flexible_content('home-blocks');
 ```php
 add_filter('wpu_acf_flexible_content', 'example_wpu_acf_flexible_content', 10, 1);
 function example_wpu_acf_flexible_content($contents) {
+
+    $layouts = array();
+
+    $layouts['basique'] = array(
+        'label' => 'Basique',
+        'sub_fields' => array(
+            'title' => array(
+                'label' => 'Titre'
+            ),
+            'content' => array(
+                'label' => 'Contenu',
+                'type' => 'textarea'
+            ),
+            'link' => array(
+                'label' => 'URL Bouton',
+                'type' => 'link'
+            )
+        )
+    );
+
+    $layouts['icons'] = array(
+        'label' => 'Icones',
+        'sub_fields' => array(
+            'title' => array(
+                'label' => 'Titre'
+            ),
+            'icons' => array(
+                'label' => 'Icones',
+                'type' => 'repeater',
+                'sub_fields' => array(
+                    'icons_title' => array(
+                        'label' => 'Titre'
+                    ),
+                    'icons_image' => array(
+                        'label' => 'Image',
+                        'type' => 'image'
+                    )
+                )
+            )
+        )
+    );
+
+    /* Rich table : A rich table with images and content */
+    $layouts['rich_table'] = array(
+        'wpuacf_model' => 'rich-table'
+    );
+    /* Classic content */
+    $layouts['content_classic'] = array(
+        'wpuacf_model' => 'content-classic'
+    );
+    /* Features : Columns of content with an image, a text and an optional CTA */
+    $layouts['features_list'] = array(
+        'wpuacf_model' => 'features'
+    );
+    /* Downloads : A list of downloadable files */
+    $layouts['downloads'] = array(
+        'wpuacf_model' => 'downloads'
+    );
+    /* Logos : A list of clickable logos */
+    $layouts['logos'] = array(
+        'wpuacf_model' => 'logos'
+    );
+    /* Video : A simple embed with optional title and content */
+    $layouts['video'] = array(
+        'wpuacf_model' => 'video'
+    );
+    /* Image : A simple image with optional title and content */
+    $layouts['image'] = array(
+        'wpuacf_model' => 'image',
+    );
+    /* Image - Content : A simple image with title, content and CTA */
+    $layouts['image-content'] = array(
+        'wpuacf_model' => 'image-content'
+    );
+    /* Anchor : A quick way to insert an anchor into the content */
+    $layouts['anchor'] = array(
+        'wpuacf_model' => 'anchor'
+    );
+    /* Pull Quote : A Quote + Optional Details. */
+    $layouts['quote'] = array(
+        'wpuacf_model' => 'quote'
+    );
+    /* Team Quote : A Quote + A Picture + Optional Details. */
+    $layouts['team-quote'] = array(
+        'wpuacf_model' => 'team-quote'
+    );
+
     $contents['home-blocks'] = array(
         /* Save HTML content in post_content */
         'save_post' => 1,
@@ -28,89 +115,7 @@ function example_wpu_acf_flexible_content($contents) {
         # 'page_ids' => array(1234),
         /* Global Conf */
         'name' => 'Blocks',
-        'layouts' => array(
-            'basique' => array(
-                'label' => 'Basique',
-                'sub_fields' => array(
-                    'title' => array(
-                        'label' => 'Titre'
-                    ),
-                    'content' => array(
-                        'label' => 'Contenu',
-                        'type' => 'textarea'
-                    ),
-                    'link' => array(
-                        'label' => 'URL Bouton',
-                        'type' => 'link'
-                    )
-                )
-            ),
-            'icons' => array(
-                'label' => 'Icones',
-                'sub_fields' => array(
-                    'title' => array(
-                        'label' => 'Titre'
-                    ),
-                    'icons' => array(
-                        'label' => 'Icones',
-                        'type' => 'repeater',
-                        'sub_fields' => array(
-                            'icons_title' => array(
-                                'label' => 'Titre'
-                            ),
-                            'icons_image' => array(
-                                'label' => 'Image',
-                                'type' => 'image'
-                            )
-                        )
-                    )
-                )
-            ),
-            /* Rich table : A rich table with images and content */
-            'rich_table' => array(
-                'wpuacf_model' => 'rich-table'
-            ),
-            /* Use native model with a rich table */
-            'content_classic' => array(
-                'wpuacf_model' => 'content-classic'
-            ),
-            /* Features : Columns of content with an image, a text and an optional CTA */
-            'features_list' => array(
-                'wpuacf_model' => 'features'
-            ),
-            /* Downloads : A list of downloadable files */
-            'downloads' => array(
-                'wpuacf_model' => 'downloads'
-            ),
-            /* Logos : A list of clickable logos */
-            'logos' => array(
-                'wpuacf_model' => 'logos'
-            )
-            /* Video : A simple embed with optional title and content */
-            'video' => array(
-                'wpuacf_model' => 'video'
-            ),
-            /* Image : A simple image with optional title and content */
-            'image' => array(
-                'wpuacf_model' => 'image',
-            ),
-            /* Image - Content : A simple image with title, content and CTA */
-            'image-content' => array(
-                'wpuacf_model' => 'image-content'
-            ),
-            /* Anchor : A quick way to insert an anchor into the content */
-            'anchor' => array(
-                'wpuacf_model' => 'anchor'
-            ),
-            /* Pull Quote : A Quote + Optional Details. */
-            'quote' => array(
-                'wpuacf_model' => 'quote'
-            ),
-            /* Team Quote : A Quote + A Picture + Optional Details. */
-            'team-quote' => array(
-                'wpuacf_model' => 'team-quote'
-            ),
-        )
+        'layouts' => $layouts
     );
     return $contents;
 }
