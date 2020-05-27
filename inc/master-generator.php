@@ -7,9 +7,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     private $is_dry_run = false;
     private $option_id = 'wpu_acf_flexible_page_master';
     private $post_details = array(
-        'post_type' => 'actualites',
+        'post_type' => 'page',
         'post_title' => 'Page Master',
-        'post_status' => 'publish'
+        'post_status' => 'draft'
     );
 
     public function __construct($args = array()) {
@@ -27,6 +27,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
     public function _plugins_loaded() {
         $layout_id = 'content-blocks';
+        $this->random_datas = $this->generate_random_datas();
+        $this->post_details = apply_filters('wpu_acf_flexible__master_generator__post_details', $this->post_details);
+
         $layouts = apply_filters('wpu_acf_flexible_content', array());
         $layouts_details = $this->add_field_group($layout_id, $layouts[$layout_id]);
         $layouts_details_list = $layouts_details['fields'][0]['layouts'];
@@ -34,7 +37,6 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             '_' . $layout_id => $layouts_details['fields'][0]['key'],
             $layout_id => array()
         );
-        $this->random_datas = $this->generate_random_datas();
 
         /* Parse layout */
         $i = 0;
@@ -231,6 +233,10 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             //echo '<pre>';
             //var_dump($field['type']);
             //echo '</pre>';
+        }
+
+        if (isset($metas[$base_field_key])) {
+            $metas[$base_field_key] = apply_filters('wpu_acf_flexible__master_generator__meta_item', $metas[$base_field_key], $metas, $field);
         }
 
         return $metas;

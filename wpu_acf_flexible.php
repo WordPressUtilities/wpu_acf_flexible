@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.1.0
+Version: 2.1.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.1.0';
+    private $plugin_version = '2.1.1';
 
     /* Base */
     private $base_field = array(
@@ -556,7 +556,6 @@ EOT;
     }
 
     public function get_controller_path($group = false) {
-
         $folder_name = 'blocks';
         if (is_array($group) && isset($group['folder_name'])) {
             $folder_name = $group['folder_name'];
