@@ -105,12 +105,12 @@ function get_wpu_acf_figure($image, $size = 'thumbnail') {
     return '<figure class="acfflex-figure">' . $html . '</figure>';
 }
 
-function get_wpu_acf_link($link, $classname = '') {
+function get_wpu_acf_link($link, $classname = '', $attributes = '') {
     if (!$link || !is_array($link) || !isset($link['url'])) {
         return '';
     }
     $classname = apply_filters('get_wpu_acf_link_classname', $classname);
-    return '<a class="acfflex-link ' . esc_attr($classname) . '" target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
+    return '<a class="acfflex-link ' . esc_attr($classname) . '" ' . $attributes . ' target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
 }
 
 /* ----------------------------------------------------------
