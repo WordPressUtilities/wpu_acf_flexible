@@ -47,12 +47,12 @@ $_content_before = apply_filters('wpu_acf_flexible__content__rich_table__before'
 $_content_after = apply_filters('wpu_acf_flexible__content__rich_table__after', '');
 ?>
 <div class="<?php echo get_wpu_acf_wrapper_classname('rich-table'); ?>">
+    <?php echo $_content_before; ?>
     <div class="block-rich-table">
-        <?php echo $_content_before; ?>
         <?php echo get_wpu_acf_title_content(); ?>
         <table class="block-rich-table--<?php echo get_row_layout(); ?>">
             <?php echo $_table_html; ?>
         </table>
-        <?php echo $_content_after; ?>
     </div>
+    <?php echo $_content_after; ?>
 </div>
