@@ -14,8 +14,10 @@ if (!$_image_position) {
 $_image_container = '<div class="main-grid__image">' . $_image . '</div>';
 
 $_title_position = apply_filters('wpu_acf_flexible__content__image_content__title_position', 'inner');
-
+$_content_before = apply_filters('wpu_acf_flexible__content__image_content__before', '');
+$_content_after = apply_filters('wpu_acf_flexible__content__image_content__after', '');
 ?><div class="<?php echo get_wpu_acf_wrapper_classname('image-content'); ?>">
+    <?php echo $_content_before; ?>
     <div class="block--image-content">
         <?php echo $_title_position == 'over' ? get_wpu_acf__title() : ''; ?>
         <div class="acfflex-grid">
@@ -28,4 +30,5 @@ $_title_position = apply_filters('wpu_acf_flexible__content__image_content__titl
         <?php echo $_image_position == 'right' ? $_image_container : ''; ?>
         </div>
     </div>
+    <?php echo $_content_after; ?>
 </div>

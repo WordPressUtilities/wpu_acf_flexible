@@ -10,6 +10,10 @@ $model = array(
             'type' => 'textarea',
             'rows' => 2
         ),
+        'image' => array(
+            'label' => __('Cover image', 'wpu_acf_flexible'),
+            'type' => 'image'
+        ),
         'video' => array(
             'label' => __('Video', 'wpu_acf_flexible'),
             'type' => 'oembed',
