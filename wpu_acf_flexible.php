@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.2.2
+Version: 2.2.3
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.2.2';
+    private $plugin_version = '2.2.3';
 
     /* Base */
     private $base_field = array(
@@ -77,10 +77,6 @@ EOT;
 
     private $default_var_gallery = <<<EOT
 $##ID##_gallery = get_sub_field('##ID##');
-EOT;
-
-    private $default_var_link = <<<EOT
-$##ID##_link = get_sub_field('##ID##');
 EOT;
 
     private $default_value_relationship = <<<EOT
@@ -274,9 +270,6 @@ EOT;
         case 'gallery':
             $vars = str_replace('##ID##', $id, $this->default_var_gallery) . "\n";
             break;
-        case 'link':
-            $vars = str_replace('##ID##', $id, $this->default_var_link) . "\n";
-            break;
         case 'color':
         case 'color_picker':
         case 'url':
@@ -310,7 +303,7 @@ EOT;
             $values = '<?php foreach($' . $id . '_gallery as $img): ?><?php echo wp_get_attachment_image($img[\'ID\']);?><?php endforeach; ?>' . "\n";
             break;
         case 'link':
-            $values = '<?php if(is_array($' . $id . '_link)): ?><a target="<?php echo $' . $id . '_link[\'target\'] ?>" href="<?php echo $' . $id . '_link[\'url\'] ?>"><?php echo $' . $id . '_link[\'title\'] ?></a><?php endif; ?>' . "\n";
+            $values = '<?php echo get_wpu_acf_link(get_sub_field(\''.$id.'\')); ?>' . "\n";
             break;
         case 'url':
             $values = '<?php if(!empty($' . $id . ')): ?><a ' . $classname . ' href="<?php echo $' . $id . '; ?>"><?php echo $' . $id . '; ?></a><?php endif; ?>' . "\n";
