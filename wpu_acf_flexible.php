@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.2.3
+Version: 2.2.4
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.2.3';
+    private $plugin_version = '2.2.4';
 
     /* Base */
     private $base_field = array(
@@ -631,7 +631,7 @@ EOT;
 
         $allowed_tags = apply_filters('wpu_acf_flexible__save_post_allowed_tags', '<p><a><strong><em><h1><h2><h3><h4><h5><ol><ul><li><img>');
 
-        $content = '';
+        $content_html = '';
         foreach ($this->contents as $group => $blocks) {
             if (!isset($blocks['save_post']) || !$blocks['save_post']) {
                 continue;
@@ -644,18 +644,18 @@ EOT;
             /* Remove useless spaces */
             $content = preg_replace('/\s+/', ' ', $content);
             $content = str_replace('<p></p>', '', $content);
-            $content = trim($content);
+            $content_html .= trim($content);
         }
 
-        if (!empty($content)) {
+        if (!empty($content_html)) {
             $_post = get_post($post_ID);
             $post_infos = array(
                 'ID' => $post_ID,
-                'post_content' => $content
+                'post_content' => $content_html
             );
 
             if (empty($_post->post_excerpt)) {
-                $post_infos['post_excerpt'] = wp_trim_words(wp_strip_all_tags($content), 20, '');
+                $post_infos['post_excerpt'] = wp_trim_words(wp_strip_all_tags($content_html), 20, '');
             }
 
             wp_update_post($post_infos);
