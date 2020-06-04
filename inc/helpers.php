@@ -74,10 +74,21 @@ function get_wpu_acf_image($image, $size = 'thumbnail') {
     if (!is_numeric($image)) {
         return '';
     }
+
+    $attr = apply_filters('get_wpu_acf_image__image_attr', array(
+        'loading' => 'lazy'
+    ));
+
+    $has_srcset = apply_filters('get_wpu_acf_image__has_srcset', false);
+
     /* Retrieve image HTML without srcset */
-    add_filter('wp_calculate_image_srcset_meta', '__return_null');
-    $html = wp_get_attachment_image($image, $size);
-    remove_filter('wp_calculate_image_srcset_meta', '__return_null');
+    if (!$has_srcset) {
+        add_filter('wp_calculate_image_srcset_meta', '__return_null');
+    }
+    $html = wp_get_attachment_image($image, $size, false, $attr);
+    if (!$has_srcset) {
+        remove_filter('wp_calculate_image_srcset_meta', '__return_null');
+    }
     return $html;
 }
 
