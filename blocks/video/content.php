@@ -4,6 +4,9 @@ if (!$_video) {
     return;
 }
 $_video = '<div class="content-video">' . $_video . '</div>';
+if (apply_filters('wpu_acf_flexible__video__nocookie', true) || is_admin()) {
+    $_video = str_replace('youtube.com/embed', 'youtube-nocookie.com/embed', $_video);
+}
 
 $_image_size = apply_filters('wpu_acf_flexible__content__video__image_size', 'large');
 $_content_before = apply_filters('wpu_acf_flexible__content__video__before', '');
