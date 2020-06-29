@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.2.6
+Version: 2.2.7
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.2.6';
+    private $plugin_version = '2.2.7';
 
     /* Base */
     private $base_field = array(
@@ -303,7 +303,7 @@ EOT;
             $values = '<?php foreach($' . $id . '_gallery as $img): ?><?php echo wp_get_attachment_image($img[\'ID\']);?><?php endforeach; ?>' . "\n";
             break;
         case 'link':
-            $values = '<?php echo get_wpu_acf_link(get_sub_field(\''.$id.'\')); ?>' . "\n";
+            $values = '<?php echo get_wpu_acf_link(get_sub_field(\'' . $id . '\')); ?>' . "\n";
             break;
         case 'url':
             $values = '<?php if(!empty($' . $id . ')): ?><a ' . $classname . ' href="<?php echo $' . $id . '; ?>"><?php echo $' . $id . '; ?></a><?php endif; ?>' . "\n";

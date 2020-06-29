@@ -151,8 +151,8 @@ function get_wpu_acf__title() {
     return '';
 }
 
-function get_wpu_acf__content() {
-    $_content = apply_filters('the_content', get_sub_field('content'));
+function get_wpu_acf__content($field_name='content') {
+    $_content = apply_filters('the_content', get_sub_field($field_name));
     if ($_content) {
         return '<div class="field-content cssc-content">' . $_content . '</div>';
     }
