@@ -121,7 +121,7 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         return '';
     }
     $classname = apply_filters('get_wpu_acf_link_classname', $classname);
-    return '<a class="acfflex-link ' . esc_attr($classname) . '" ' . $attributes . ' target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
+    return '<a title="' . esc_attr(strip_tags($link['title'])) . '" class="acfflex-link ' . esc_attr($classname) . '" ' . $attributes . ' target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
 }
 
 /* ----------------------------------------------------------
@@ -151,7 +151,7 @@ function get_wpu_acf__title() {
     return '';
 }
 
-function get_wpu_acf__content($field_name='content') {
+function get_wpu_acf__content($field_name = 'content') {
     $_content = apply_filters('the_content', get_sub_field($field_name));
     if ($_content) {
         return '<div class="field-content cssc-content">' . $_content . '</div>';
