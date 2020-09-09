@@ -26,7 +26,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     }
 
     public function _plugins_loaded() {
-        $layout_id = 'content-blocks';
+        $layout_id = apply_filters('wpu_acf_flexible__master_generator__layout_id', 'content-blocks');
         $this->random_datas = $this->generate_random_datas();
         $this->post_details = apply_filters('wpu_acf_flexible__master_generator__post_details', $this->post_details);
 
@@ -71,6 +71,8 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         foreach ($metas as $key => $value) {
             update_post_meta($post_id, $key, $value);
         }
+
+        do_action('wpu_acf_flexible__master_generator__after_insert_post', $post_id);
     }
 
     public function generate_random_datas() {
@@ -85,6 +87,11 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             'posts_per_page' => 5,
             'orderby' => 'rand'
         ));
+
+        if(empty($random_datas['images'])){
+            echo "You should add some images";
+            die;
+        }
 
         /* Texts */
         $random_datas['texts'] = array(
