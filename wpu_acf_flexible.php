@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.3.0
+Version: 2.3.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.3.0';
+    private $plugin_version = '2.3.1';
 
     /* Base */
     private $base_field = array(
@@ -184,20 +184,15 @@ EOT;
         return apply_filters('wpu_acf_flexible__field_types', $field_types);
     }
 
-    public function set_field($id, $field, $field_id, $extras = array()) {
-        $acf_field = $this->base_field;
+    public function get_default_field($field, $field_id){
 
-        /* Load from common field */
+        /* Load from common fields */
         if (!is_array($field)) {
             if (array_key_exists($field, $this->field_types)) {
                 $field = $this->field_types[$field];
             } else {
                 $field = array();
             }
-        }
-
-        if (!is_array($extras)) {
-            $extras = array();
         }
 
         /* Label */
@@ -208,6 +203,23 @@ EOT;
             $field['title'] = $field['label'];
         }
         $field['name'] = $field_id;
+
+        /* Type */
+        if (!isset($field['type'])) {
+            $field['type'] = 'text';
+        }
+
+        return $field;
+    }
+
+    public function set_field($id, $field, $field_id, $extras = array()) {
+        $acf_field = $this->base_field;
+
+        $field = $this->get_default_field($field, $field_id);
+
+        if (!is_array($extras)) {
+            $extras = array();
+        }
 
         /* Choices */
         if (!isset($field['choices'])) {
@@ -285,9 +297,8 @@ EOT;
     }
 
     public function get_var_content_field($id, $sub_field, $level = 2) {
-        if (!isset($sub_field['type'])) {
-            $sub_field['type'] = 'text';
-        }
+        $sub_field = $this->get_default_field($sub_field, $id);
+
         $vars = '';
         switch ($sub_field['type']) {
         case 'image':
@@ -316,9 +327,8 @@ EOT;
     }
 
     public function get_value_content_field($id, $sub_field, $level = 2) {
-        if (!isset($sub_field['type'])) {
-            $sub_field['type'] = 'text';
-        }
+        $sub_field = $this->get_default_field($sub_field, $id);
+
         $values = '';
         $classname = 'class="field-' . $id . '"';
         switch ($sub_field['type']) {
