@@ -7,23 +7,12 @@ $model = array(
             'type' => 'acfe_column',
             'columns' => '3/6'
         ),
-        'image' => array(
-            'label' => __('Image', 'wpu_acf_flexible'),
-            'type' => 'image',
-            'required' => 1
-        ),
+        'image' => 'wpuacf_image',
         'col1b' => array(
             'type' => 'acfe_column',
             'columns' => '3/6'
         ),
-        'image_position' => array(
-            'label' => __('Image position', 'wpu_acf_flexible'),
-            'type' => 'select',
-            'choices' => array(
-                'left' => __('Left', 'wpu_acf_flexible'),
-                'right' => __('Right', 'wpu_acf_flexible')
-            )
-        ),
+        'image_position' => 'wpuacf_image_position',
         'col1c' => array(
             'type' => 'acfe_column',
             'columns' => '6/6',

@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.2.11
+Version: 2.3.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.2.11';
+    private $plugin_version = '2.3.0';
 
     /* Base */
     private $base_field = array(
@@ -136,6 +136,7 @@ EOT;
         if (!function_exists('acf_add_local_field_group')) {
             return;
         }
+        $this->field_types = $this->get_custom_field_types();
         $this->contents = apply_filters('wpu_acf_flexible_content', array());
         foreach ($this->contents as $id => $content) {
             $this->add_field_group($id, $content);
@@ -164,8 +165,36 @@ EOT;
         }
     }
 
+    public function get_custom_field_types() {
+        $field_types = array(
+            'wpuacf_image' => array(
+                'label' => __('Image', 'wpu_acf_flexible'),
+                'type' => 'image',
+                'required' => 1
+            ),
+            'wpuacf_image_position' => array(
+                'label' => __('Image position', 'wpu_acf_flexible'),
+                'type' => 'select',
+                'choices' => array(
+                    'left' => __('Left', 'wpu_acf_flexible'),
+                    'right' => __('Right', 'wpu_acf_flexible')
+                )
+            )
+        );
+        return apply_filters('wpu_acf_flexible__field_types', $field_types);
+    }
+
     public function set_field($id, $field, $field_id, $extras = array()) {
         $acf_field = $this->base_field;
+
+        /* Load from common field */
+        if (!is_array($field)) {
+            if (array_key_exists($field, $this->field_types)) {
+                $field = $this->field_types[$field];
+            } else {
+                $field = array();
+            }
+        }
 
         if (!is_array($extras)) {
             $extras = array();

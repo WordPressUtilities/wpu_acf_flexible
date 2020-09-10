@@ -11,10 +11,6 @@ $model = array(
             'type' => 'textarea',
             'rows' => 2
         ),
-        'image' => array(
-            'label' => __('Image', 'wpu_acf_flexible'),
-            'type' => 'image',
-            'required' => 1,
-        )
+        'image' => 'wpuacf_image'
     )
 );

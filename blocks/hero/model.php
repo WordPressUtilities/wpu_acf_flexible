@@ -15,10 +15,6 @@ $model = array(
             'label' => __('Button', 'wpu_acf_flexible'),
             'type' => 'link'
         ),
-        'image' => array(
-            'label' => __('Image', 'wpu_acf_flexible'),
-            'type' => 'image',
-            'required' => 1,
-        )
+        'image' => 'wpuacf_image',
     )
 );
