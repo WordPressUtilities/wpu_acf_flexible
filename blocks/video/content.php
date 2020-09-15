@@ -18,14 +18,14 @@ if ($_image_id && !is_admin()) {
     $_video = str_replace('src=', 'data-src=', $_video);
     $_video = str_replace('app_id=', 'autoplay=1&app_id=', $_video);
     $_video = str_replace('feature=oembed', 'feature=oembed&autoplay=1', $_video);
-    $_image = '<div class="cursor"></div><div class="cover-image">' . get_wpu_acf_image($_image_id, $_image_size) . '</div>';
+    $_image = '<div class="wpuacf-video"><div class="cursor"></div><div class="cover-image">' . get_wpu_acf_image($_image_id, $_image_size) . '</div>' . $_video . '</div>';
 }
 
 ?><div class="<?php echo get_wpu_acf_wrapper_classname('video'); ?>">
     <?php echo $_content_before; ?>
     <div class="block--video">
         <?php echo get_wpu_acf_title_content(); ?>
-        <div class="field-video"><?php echo $_image . $_video; ?></div>
+        <div class="field-video"><?php echo $_image; ?></div>
     </div>
     <?php echo $_content_after; ?>
 </div>
