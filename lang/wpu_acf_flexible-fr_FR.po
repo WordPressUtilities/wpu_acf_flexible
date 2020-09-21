@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2020-09-10 17:37+0200\n"
+"POT-Creation-Date: 2020-09-21 16:21+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -97,6 +97,10 @@ msgstr "Caractéristiques"
 #: .././blocks/rich-table/model.php:58 .././wpu_acf_flexible.php:171
 msgid "Image"
 msgstr "Image"
+
+#: .././blocks/form/model.php:4
+msgid "[WPUACF] Form"
+msgstr "[WPUACF] Formulaire"
 
 #: .././blocks/hero/model.php:4
 msgid "[WPUACF] Hero"
@@ -222,15 +226,15 @@ msgstr "Gauche"
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:214
+#: .././wpu_acf_flexible.php:226
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:214
+#: .././wpu_acf_flexible.php:226
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:433
+#: .././wpu_acf_flexible.php:443
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
