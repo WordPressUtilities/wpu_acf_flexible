@@ -146,7 +146,7 @@ function get_wpu_acf_title_content() {
 function get_wpu_acf__title() {
     $_title = get_sub_field('title');
     if ($_title) {
-        return '<h2 class="field-title"><span>' . $_title . '</span></h2>';
+        return '<h2 class="field-title"><span>' . nl2br(trim($_title)) . '</span></h2>';
     }
     return '';
 }
