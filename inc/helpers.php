@@ -120,6 +120,7 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
     if (!$link || !is_array($link) || !isset($link['url'])) {
         return '';
     }
+    $link = apply_filters('get_wpu_acf_link__link', $link);
     $classname = apply_filters('get_wpu_acf_link_classname', $classname);
     return '<a title="' . esc_attr(strip_tags($link['title'])) . '" class="acfflex-link ' . esc_attr($classname) . '" ' . $attributes . ' target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
 }
