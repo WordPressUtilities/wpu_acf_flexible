@@ -21,6 +21,11 @@ if ($_image_id && !is_admin()) {
     $_image = '<div class="wpuacf-video"><div class="cursor"></div><div class="cover-image">' . get_wpu_acf_image($_image_id, $_image_size) . '</div>' . $_video . '</div>';
 }
 
+if (is_admin()) {
+    $_video = str_replace('autoplay=1', '', $_video);
+    $_image = $_video;
+}
+
 ?><div class="<?php echo get_wpu_acf_wrapper_classname('video'); ?>">
     <?php echo $_content_before; ?>
     <div class="block--video">
