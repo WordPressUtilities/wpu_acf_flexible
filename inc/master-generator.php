@@ -21,6 +21,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         if (in_array('dry-run', $args)) {
             $this->is_dry_run = true;
         }
+        parent::init();
 
         add_action('init', array(&$this, '_plugins_loaded'), 999);
     }
