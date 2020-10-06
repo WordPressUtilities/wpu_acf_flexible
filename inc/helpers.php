@@ -6,8 +6,16 @@
 
 function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
     global $post, $wpu_acf_flexible;
-    if (!have_rows($group)) {
-        return '';
+
+    $opt_group = get_the_ID();
+
+    if (!have_rows($group, $opt_group)) {
+        if (is_post_type_archive()) {
+            $opt_group = get_post_type() . '_options';
+        }
+        if (!have_rows($group, $opt_group)) {
+            return '';
+        }
     }
 
     ob_start();
@@ -19,7 +27,7 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
     }
     $group_item = $groups[$group];
 
-    while (have_rows($group)):
+    while (have_rows($group, $opt_group)):
         the_row();
         $layout = get_row_layout();
         if (!isset($group_item['layouts'][$layout])) {
