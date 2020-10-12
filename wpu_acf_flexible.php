@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.5.2
+Version: 2.5.3
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.5.2';
+    private $plugin_version = '2.5.3';
     private $field_types = array();
 
     /* Base */
@@ -221,6 +221,12 @@ EOT;
             } else {
                 $field = array();
             }
+        }
+
+        /* Allow common fields with overrides */
+        if (isset($field['type']) && array_key_exists($field['type'], $this->field_types)) {
+            $field = array_merge($this->field_types[$field['type']], $field);
+            $field['type'] = $this->field_types[$field['type']]['type'];
         }
 
         /* Label */
