@@ -155,7 +155,7 @@ function get_wpu_acf_title_content() {
 function get_wpu_acf__title() {
     $_title = get_sub_field('title');
     if ($_title) {
-        return '<h2 class="field-title"><span>' . nl2br(trim($_title)) . '</span></h2>';
+        return apply_filters('get_wpu_acf__title__html', '<h2 class="field-title"><span>' . nl2br(trim($_title)) . '</span></h2>', $_title);
     }
     return '';
 }
@@ -163,7 +163,7 @@ function get_wpu_acf__title() {
 function get_wpu_acf__content($field_name = 'content') {
     $_content = apply_filters('the_content', get_sub_field($field_name));
     if ($_content) {
-        return '<div class="field-content cssc-content">' . $_content . '</div>';
+        return apply_filters('get_wpu_acf__content__html', '<div class="field-content cssc-content">' . trim($_content) . '</div>', $_content);
     }
     return '';
 }
