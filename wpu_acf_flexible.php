@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.5.4
+Version: 2.5.5
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.5.4';
+    private $plugin_version = '2.5.5';
     private $field_types = array();
 
     /* Base */
@@ -613,6 +613,7 @@ EOT;
         $content = str_replace('###varsblockid###', $vars, $this->default_content);
         $content = str_replace('###valuesblockid###', $values, $content);
         $content = str_replace('###testblockid###', $layout_id, $content);
+        $content = apply_filters('wpu_acf_flexible__file_content', $content, $layout_id, $vars, $values, $group);
 
         /* Remove empty */
         $content = preg_replace('/<\?php(\s\n)\?>/isU', '', $content);
