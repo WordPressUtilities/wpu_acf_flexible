@@ -64,18 +64,25 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
   Helpers
 ---------------------------------------------------------- */
 
+function get_wpu_acf_video($video_id) {
+    if (!is_numeric($video_id)) {
+        return '';
+    }
+    $attachment_url = wp_get_attachment_url($video_id);
+    $item_src = '';
+    if ($attachment_url) {
+        $item_src = '<video autoplay loop muted playsinline><source src="' . $attachment_url . '" type="video/mp4" /></video>';
+    }
+
+    return $item_src;
+}
+
 function get_wpu_acf_image_src($image, $size = 'thumbnail') {
     if (!is_numeric($image)) {
         return '';
     }
-    $item_src = '';
-    if (is_numeric($image)) {
-        $image = wp_get_attachment_image_src($image, $size);
-        if (is_array($image)) {
-            $item_src = $image[0];
-        }
-    }
-    return $item_src;
+    $image = wp_get_attachment_image_src($image, $size);
+    return is_array($image) ? $image[0] : '';
 }
 
 function get_wpu_acf_image($image, $size = 'thumbnail') {

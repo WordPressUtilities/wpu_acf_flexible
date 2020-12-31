@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.5.5
+Version: 2.6.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.5.5';
+    private $plugin_version = '2.6.0';
     private $field_types = array();
 
     /* Base */
@@ -66,10 +66,6 @@ class wpu_acf_flexible {
 ###valuesblockid###
     </div>
 </div>
-EOT;
-
-    private $default_var_image = <<<EOT
-$##ID##_src = get_wpu_acf_image_src(get_sub_field('##ID##'), 'thumbnail');
 EOT;
 
     private $default_var_tax = <<<EOT
@@ -172,6 +168,7 @@ EOT;
     }
 
     public function get_custom_field_types() {
+        $upload_size = floor(wp_max_upload_size() / 1024 / 1024);
         $field_types = array(
             'wpuacf_25p' => array(
                 'type' => 'acfe_column',
@@ -180,6 +177,10 @@ EOT;
             'wpuacf_50p' => array(
                 'type' => 'acfe_column',
                 'columns' => '3/6'
+            ),
+            'wpuacf_66p' => array(
+                'type' => 'acfe_column',
+                'columns' => '8/12'
             ),
             'wpuacf_100p' => array(
                 'type' => 'acfe_column',
@@ -191,9 +192,18 @@ EOT;
                 'type' => 'image',
                 'required' => 1
             ),
+            'wpuacf_video' => array(
+                'label' => __('Video', 'wpu_acf_flexible'),
+                'instructions' => sprintf(__('MP4 format. Max %sMB. Rec: 1.5MB.', 'wpu_acf_flexible'), $upload_size),
+                'type' => 'file',
+                'mime_types' => 'mp4'
+            ),
             'wpuacf_cta' => array(
                 'label' => __('Link', 'wpu_acf_flexible'),
                 'type' => 'link'
+            ),
+            'wpuacf_title' => array(
+                'label' => __('Title', 'wpu_acf_flexible')
             ),
             'wpuacf_text' => array(
                 'label' => __('Text', 'wpu_acf_flexible'),
@@ -335,9 +345,6 @@ EOT;
 
         $vars = '';
         switch ($sub_field['type']) {
-        case 'image':
-            $vars = str_replace('##ID##', $id, $this->default_var_image) . "\n";
-            break;
         case 'taxonomy':
             $vars = str_replace('##ID##', $id, $this->default_var_tax) . "\n";
             break;
@@ -345,8 +352,11 @@ EOT;
             $vars = str_replace('##ID##', $id, $this->default_var_gallery) . "\n";
             break;
         case 'color':
+        case 'image':
+        case 'textarea':
         case 'color_picker':
         case 'url':
+        case 'file':
             $vars = '$' . $id . ' = get_sub_field(\'' . $id . '\');' . "\n";
             break;
         default:
@@ -367,13 +377,24 @@ EOT;
         $classname = 'class="field-' . $id . '"';
         switch ($sub_field['type']) {
         case 'image':
-            $values = '<img ' . $classname . ' src="<?php echo $' . $id . '_src ?>" alt="" />' . "\n";
+            $values = '<?php if($' . $id . '):?><img ' . $classname . ' src="<?php echo get_wpu_acf_image_src($' . $id . '); ?>" alt="" loading="lazy" /><?php endif; ?>' . "\n";
+            break;
+        case 'file':
+            $attachment_url = '<?php echo wp_get_attachment_url($' . $id . '); ?>';
+            if (isset($sub_field['mime_types']) && $sub_field['mime_types'] == 'mp4') {
+                $values = '<?php if($' . $id . '): ?><?php echo get_wpu_acf_video($' . $id . '); ?><?php endif; ?>' . "\n";
+            } else {
+                $values = '<?php if($' . $id . '): ?>' . $attachment_url . '<?php endif; ?>' . "\n";
+            }
+            break;
+        case 'textarea':
+            $values = '<?php if($' . $id . '):?><div ' . $classname . '><?php echo wpautop($' . $id . '); ?></div><?php endif; ?>' . "\n";
             break;
         case 'taxonomy':
             $values = '<?php if($' . $id . '_tax):?><a href="<?php echo get_term_link($' . $id . '_tax); ?>"><?php echo $' . $id . '_tax->name; ?></a><?php endif; ?>' . "\n";
             break;
         case 'gallery':
-            $values = '<?php foreach($' . $id . '_gallery as $img): ?><?php echo wp_get_attachment_image($img[\'ID\']);?><?php endforeach; ?>' . "\n";
+            $values = '<div ' . $classname . '><?php foreach($' . $id . '_gallery as $img): ?><?php echo wp_get_attachment_image($img[\'ID\']);?><?php endforeach; ?></div>' . "\n";
             break;
         case 'link':
             $values = '<?php echo get_wpu_acf_link(get_sub_field(\'' . $id . '\')); ?>' . "\n";
@@ -383,9 +404,8 @@ EOT;
             break;
         case 'color':
         case 'color_picker':
-            $values = '<?php if(!empty($' . $id . ')): ?><div ' . $classname . ' style="background-color:<?php echo $' . $id . ' ?>;"><?php echo $' . $id . '; ?></div><?php endif; ?>' . "\n";
+            $values = '<?php if($' . $id . '): ?><div ' . $classname . ' style="background-color:<?php echo $' . $id . ' ?>;"><?php echo $' . $id . '; ?></div><?php endif; ?>' . "\n";
             break;
-
         case 'relationship':
             $values = str_replace('##ID##', $id, $this->default_value_relationship) . "\n";
             if ($level < 2) {
