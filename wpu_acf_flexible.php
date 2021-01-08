@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.6.0
+Version: 2.7.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.6.0';
+    private $plugin_version = '2.7.0';
     private $field_types = array();
 
     /* Base */
@@ -115,10 +115,10 @@ EOT;
             'save_post'
         ));
         add_action('admin_enqueue_scripts', array(&$this,
-            'admin_styles'
+            'admin_assets'
         ));
         add_action('wp_enqueue_scripts', array(&$this,
-            'front_styles'
+            'front_assets'
         ));
         add_action('plugins_loaded', array(&$this,
             'load_translation'
@@ -140,7 +140,7 @@ EOT;
         }
     }
 
-    public function admin_styles($hook_details) {
+    public function admin_assets($hook_details) {
         $hooks_ok = array(
             'post.php',
             'post-new.php',
@@ -158,12 +158,20 @@ EOT;
         }
     }
 
-    public function front_styles($hook_details) {
+    public function front_assets($hook_details) {
+        /* Styles */
         $custom_css = apply_filters('wpu_acf_flexible__front_css', array(
             'front-blocks' => plugins_url('assets/front-blocks.css', __FILE__)
         ));
         foreach ($custom_css as $id => $file) {
             wp_enqueue_style('wpu_acf_flexible-style-front-' . $id, $file, array(), $this->plugin_version);
+        }
+        /* Front */
+        $custom_js = apply_filters('wpu_acf_flexible__front_js', array(
+            'front-blocks' => plugins_url('assets/front-blocks.js', __FILE__)
+        ));
+        foreach ($custom_js as $id => $file) {
+            wp_enqueue_script('wpu_acf_flexible-script-front-' . $id, $file, array(), $this->plugin_version);
         }
     }
 
@@ -173,6 +181,10 @@ EOT;
             'wpuacf_25p' => array(
                 'type' => 'acfe_column',
                 'columns' => '3/12'
+            ),
+            'wpuacf_33p' => array(
+                'type' => 'acfe_column',
+                'columns' => '4/12'
             ),
             'wpuacf_50p' => array(
                 'type' => 'acfe_column',

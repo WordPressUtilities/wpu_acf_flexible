@@ -234,3 +234,81 @@
 .block--hero .field-title {
     color: inherit;
 }
+
+/* ----------------------------------------------------------
+  Video
+---------------------------------------------------------- */
+
+/* Wrapper
+-------------------------- */
+
+.wpuacf-video {
+    z-index: 1;
+    position: relative;
+    height: 0;
+    padding-top: 56.25%;
+}
+
+/* Common
+-------------------------- */
+
+.wpuacf-video .cover-image img,
+.wpuacf-video .cover-image,
+.wpuacf-video .content-video iframe,
+.wpuacf-video .content-video {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Cursor
+-------------------------- */
+
+.wpuacf-video .cursor {
+    z-index: 3;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3em;
+    height: 3em;
+    border: 1px solid;
+    border-radius: 99em;
+    text-align: center;
+    line-height: 3;
+    background-color: #fff;
+    transform: translate3d(-50%,-50%,0);
+    cursor: pointer;
+}
+
+.wpuacf-video .cursor:before {
+    content: '►';
+}
+
+/* Cover
+-------------------------- */
+
+.wpuacf-video .cover-image {
+    z-index: 2;
+}
+
+.wpuacf-video .cover-image img {
+    object-fit: cover;
+}
+
+/* Anim
+-------------------------- */
+
+.wpuacf-video .cursor,
+.wpuacf-video .cover-image {
+    opacity: 0.999;
+    transition: all 0.3s ease;
+}
+
+.wpuacf-video[data-is-loading="1"] .cursor,
+.wpuacf-video[data-is-playing="1"] .cover-image {
+    opacity: 0;
+    pointer-events: none;
+}
