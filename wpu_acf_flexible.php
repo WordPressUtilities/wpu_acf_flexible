@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.7.0
+Version: 2.7.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.7.0';
+    private $plugin_version = '2.7.1';
     private $field_types = array();
 
     /* Base */
@@ -385,38 +385,44 @@ EOT;
     public function get_value_content_field($id, $sub_field, $level = 2) {
         $sub_field = $this->get_default_field($sub_field, $id);
 
+        $c__start = '<?php if($' . $id . '): ?>';
+        $c__end = '<?php endif; ?>';
+
         $values = '';
-        $classname = 'class="field-' . $id . '"';
+        $class_id = 'field-' . $id;
+        $classname = 'class="' . $class_id . '"';
         switch ($sub_field['type']) {
         case 'image':
-            $values = '<?php if($' . $id . '):?><img ' . $classname . ' src="<?php echo get_wpu_acf_image_src($' . $id . '); ?>" alt="" loading="lazy" /><?php endif; ?>' . "\n";
+            $values = '<?php echo $' . $id . ' ? get_wpu_acf_image($' . $id . ',\'medium\') : \'\'; ?>' . "\n";
             break;
         case 'file':
             $attachment_url = '<?php echo wp_get_attachment_url($' . $id . '); ?>';
             if (isset($sub_field['mime_types']) && $sub_field['mime_types'] == 'mp4') {
-                $values = '<?php if($' . $id . '): ?><?php echo get_wpu_acf_video($' . $id . '); ?><?php endif; ?>' . "\n";
+                $values = $c__start . '<?php echo get_wpu_acf_video($' . $id . '); ?>' . $c__end . "\n";
             } else {
-                $values = '<?php if($' . $id . '): ?>' . $attachment_url . '<?php endif; ?>' . "\n";
+                $values = $c__start . $attachment_url . '' . $c__end . "\n";
             }
             break;
         case 'textarea':
-            $values = '<?php if($' . $id . '):?><div ' . $classname . '><?php echo wpautop($' . $id . '); ?></div><?php endif; ?>' . "\n";
+            $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop($' . $id . '); ?></div>' . $c__end . "\n";
             break;
         case 'taxonomy':
-            $values = '<?php if($' . $id . '_tax):?><a href="<?php echo get_term_link($' . $id . '_tax); ?>"><?php echo $' . $id . '_tax->name; ?></a><?php endif; ?>' . "\n";
+            $values = '<?php if($' . $id . '_tax):?><a href="<?php echo get_term_link($' . $id . '_tax); ?>"><?php echo $' . $id . '_tax->name; ?></a>' . $c__end . "\n";
             break;
         case 'gallery':
-            $values = '<div ' . $classname . '><?php foreach($' . $id . '_gallery as $img): ?><?php echo wp_get_attachment_image($img[\'ID\']);?><?php endforeach; ?></div>' . "\n";
+            $values = '<div ' . $classname . '><?php foreach($' . $id . '_gallery as $img): ?><?php echo get_wpu_acf_image($img[\'ID\'], \'large\');?><?php endforeach; ?></div>' . "\n";
             break;
         case 'link':
             $values = '<?php echo get_wpu_acf_link(get_sub_field(\'' . $id . '\')); ?>' . "\n";
             break;
         case 'url':
-            $values = '<?php if(!empty($' . $id . ')): ?><a ' . $classname . ' href="<?php echo $' . $id . '; ?>"><?php echo $' . $id . '; ?></a><?php endif; ?>' . "\n";
+            $values =
+                $c__start . '<a ' . $classname . ' href="<?php echo esc_url($' . $id . '); ?>">' . $c__end . "\n" .
+                $c__start . '</a>' . $c__end . "\n";
             break;
         case 'color':
         case 'color_picker':
-            $values = '<?php if($' . $id . '): ?><div ' . $classname . ' style="background-color:<?php echo $' . $id . ' ?>;"><?php echo $' . $id . '; ?></div><?php endif; ?>' . "\n";
+            $values = $c__start . '<div ' . $classname . ' style="background-color:<?php echo $' . $id . ' ?>;"><?php echo $' . $id . '; ?></div>' . $c__end . "\n";
             break;
         case 'relationship':
             $values = str_replace('##ID##', $id, $this->default_value_relationship) . "\n";
@@ -425,13 +431,17 @@ EOT;
             }
             break;
         case 'repeater':
+            $tmp_value_values = '';
             $tmp_value_content = '';
             foreach ($sub_field['sub_fields'] as $sub_id => $sub_sub_field) {
                 $field_value = trim($this->get_var_content_field($sub_id, $sub_sub_field));
-                if (!empty($field_value)) {
-                    $tmp_value_content .= '<?php ' . $field_value . ' ?>' . "\n";
+                if ($field_value) {
+                    $tmp_value_values .= $field_value . "\n";
                 }
                 $tmp_value_content .= $this->get_value_content_field($sub_id, $sub_sub_field, $level + 1);
+            }
+            if ($tmp_value_values) {
+                $tmp_value_content = "<?php\n" . trim($tmp_value_values) . "\n?>\n" . $tmp_value_content;
             }
             $tmp_value = str_replace('##ID##', $id, $this->default_value_repeater) . "\n";
             if ($level < 2) {
