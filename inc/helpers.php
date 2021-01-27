@@ -64,7 +64,7 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front') {
   Helpers
 ---------------------------------------------------------- */
 
-function get_wpu_acf_video_embed_image(){
+function get_wpu_acf_video_embed_image() {
     $_video = get_sub_field('video');
     if (!$_video) {
         return false;
@@ -210,4 +210,32 @@ function get_wpu_acf_cta($link_id = 'cta', $classname = '') {
         $_return .= '<div class="field-cta">' . get_wpu_acf_link($_cta_link, $classname) . '</div>';
     }
     return $_return;
+}
+
+/* ----------------------------------------------------------
+  Loop
+---------------------------------------------------------- */
+
+function get_wpu_acf_loop() {
+    $_loop_files = apply_filters('get_wpu_acf_loop__files', array(
+        'loop-short.php',
+        'tpl/loop-short.php'
+    ));
+    $_loop_dirs = apply_filters('get_wpu_acf_loop__dirs', array(
+        get_stylesheet_directory(),
+        get_template_directory()
+    ));
+
+    foreach ($_loop_files as $file) {
+        foreach ($_loop_dirs as $dir) {
+            $_file = $dir . '/' . $file;
+            if (file_exists($_file)) {
+                ob_start();
+                include $_file;
+                return ob_get_clean();
+            }
+        }
+    }
+
+    return '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
 }
