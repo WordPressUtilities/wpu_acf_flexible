@@ -77,18 +77,19 @@ function get_wpu_acf_video_embed_image() {
     $_image_size = apply_filters('wpu_acf_flexible__content__video__image_size', 'large');
     $_image_id = get_sub_field('image');
     $_image = '';
-    if ($_image_id && !is_admin()) {
-        $_video = str_replace('src=', 'data-src=', $_video);
-        $_video = str_replace('app_id=', 'autoplay=1&app_id=', $_video);
-        $_video = str_replace('feature=oembed', 'feature=oembed&autoplay=1', $_video);
-        $_image = '<div class="wpuacf-video"><div class="cursor"></div><div class="cover-image">' . get_wpu_acf_image($_image_id, $_image_size) . '</div>' . $_video . '</div>';
-    }
-
-    if (is_admin()) {
+    if (!is_admin()) {
+        if ($_image_id) {
+            $_video = str_replace('src=', 'data-src=', $_video);
+            $_video = str_replace('app_id=', 'autoplay=1&app_id=', $_video);
+            $_video = str_replace('feature=oembed', 'feature=oembed&autoplay=1', $_video);
+            $_image = '<div class="wpuacf-video"><div class="cursor"></div><div class="cover-image">' . get_wpu_acf_image($_image_id, $_image_size) . '</div>' . $_video . '</div>';
+        } else {
+            $_image = $_video;
+        }
+    } else {
         $_video = str_replace('autoplay=1', '', $_video);
         $_image = $_video;
     }
-
     return $_image;
 }
 
