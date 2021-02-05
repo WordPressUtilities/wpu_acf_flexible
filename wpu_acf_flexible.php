@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.9.1
+Version: 2.10.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.9.1';
+    private $plugin_version = '2.10.0';
     private $field_types = array();
 
     /* Base */
@@ -97,7 +97,7 @@ EOT;
     private $default_value_repeater = <<<EOT
 <?php if (get_sub_field('##ID##')): ?>
     <ul class="##ID##-list">
-    <?php while (has_sub_field('##ID##')): ?>
+    <?php while (have_rows('##ID##')): the_row(); ?>
         <li>
 ##REPEAT##
         </li>
@@ -215,7 +215,8 @@ EOT;
                 'type' => 'link'
             ),
             'wpuacf_title' => array(
-                'label' => __('Title', 'wpu_acf_flexible')
+                'label' => __('Title', 'wpu_acf_flexible'),
+                'type' => 'text'
             ),
             'wpuacf_text' => array(
                 'label' => __('Text', 'wpu_acf_flexible'),
@@ -456,7 +457,9 @@ EOT;
             $tmp_value = str_replace('##ID##', $id, $this->default_value_repeater) . "\n";
             if ($level < 2) {
                 $tmp_value = str_replace('get_sub_field', 'get_field', $tmp_value);
-                $tmp_value = str_replace('has_sub_field', 'has_field', $tmp_value);
+                $tmp_value = str_replace('has_sub_field', 'has_rows', $tmp_value);
+            } else {
+                $tmp_value = str_replace('the_row()', '', $tmp_value);
             }
             $tmp_value_content = trim($tmp_value_content);
             if (!empty($tmp_value_content)) {
@@ -581,8 +584,16 @@ EOT;
                 $vars = '';
                 $values = '';
                 foreach ($fields as $id => $field) {
-                    $vars .= $this->get_var_content_field($id, $field, 1);
-                    $values .= $this->get_value_content_field($id, $field, 1);
+                    if (isset($field['type']) && $field['type'] == 'group') {
+                        foreach ($field['sub_fields'] as $child_id => $sub_field) {
+                            $vars .= $this->get_var_content_field($id . '_' . $child_id, $sub_field, 1);
+                            $values .= $this->get_value_content_field($id . '_' . $child_id, $sub_field, 1);
+                        }
+
+                    } else {
+                        $vars .= $this->get_var_content_field($id, $field, 1);
+                        $values .= $this->get_value_content_field($id, $field, 1);
+                    }
                 }
                 $this->set_file_content($content_id, $vars, $values, $content);
             }
