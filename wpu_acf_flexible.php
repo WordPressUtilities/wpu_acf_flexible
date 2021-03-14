@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.10.1
+Version: 2.10.2
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.10.1';
+    private $plugin_version = '2.10.2';
     private $field_types = array();
 
     /* Base */
@@ -414,6 +414,7 @@ EOT;
                 $values = $c__start . $attachment_url . '' . $c__end . "\n";
             }
             break;
+        case 'editor':
         case 'textarea':
             $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop($' . $id . '); ?></div>' . $c__end . "\n";
             break;
