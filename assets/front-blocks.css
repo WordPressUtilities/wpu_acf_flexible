@@ -126,18 +126,17 @@
 
 .cc-block-logos .logos-list > * {
     display: inline-block;
+    z-index: 1;
+    position: relative;
     box-sizing: border-box;
     width: 25%;
+    height: 150px;
+    border: 1px solid #F0F0F0;
     vertical-align: top;
 }
 
 .cc-block-logos .logos-list a {
     display: block;
-    z-index: 1;
-    position: relative;
-    box-sizing: border-box;
-    height: 150px;
-    border: 1px solid #F0F0F0;
 }
 
 .cc-block-logos .logos-list img {
