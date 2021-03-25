@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.10.3
+Version: 2.11.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.10.3';
+    private $plugin_version = '2.11.0';
     private $field_types = array();
 
     /* Base */
@@ -123,6 +123,10 @@ EOT;
         add_action('plugins_loaded', array(&$this,
             'load_translation'
         ));
+        add_filter('acf/fields/wysiwyg/toolbars', array(&$this,
+            'add_toolbars'
+        ));
+
     }
 
     public function load_translation() {
@@ -178,22 +182,6 @@ EOT;
     public function get_custom_field_types() {
         $upload_size = floor(wp_max_upload_size() / 1024 / 1024);
         $field_types = array(
-            'wpuacf_25p' => array(
-                'type' => 'acfe_column',
-                'columns' => '3/12'
-            ),
-            'wpuacf_33p' => array(
-                'type' => 'acfe_column',
-                'columns' => '4/12'
-            ),
-            'wpuacf_50p' => array(
-                'type' => 'acfe_column',
-                'columns' => '3/6'
-            ),
-            'wpuacf_66p' => array(
-                'type' => 'acfe_column',
-                'columns' => '8/12'
-            ),
             'wpuacf_100p' => array(
                 'type' => 'acfe_column',
                 'columns' => '6/6',
@@ -223,6 +211,11 @@ EOT;
                 'type' => 'textarea',
                 'rows' => 3
             ),
+            'wpuacf_minieditor' => array(
+                'label' => __('Editor', 'wpu_acf_flexible'),
+                'type' => 'editor',
+                'toolbar' => 'wpuacf_mini'
+            ),
             'wpuacf_image_position' => array(
                 'label' => __('Image position', 'wpu_acf_flexible'),
                 'type' => 'select',
@@ -232,7 +225,32 @@ EOT;
                 )
             )
         );
+        $columns = array(
+            '25' => '3/12',
+            '33' => '4/12',
+            '50' => '6/12',
+            '66' => '8/12',
+            '75' => '9/12'
+        );
+        foreach ($columns as $col_width => $col_value) {
+            $field_types['wpuacf_' . $col_width . 'p'] = array(
+                'type' => 'acfe_column',
+                'columns' => $col_value
+            );
+        }
+
         return apply_filters('wpu_acf_flexible__field_types', $field_types);
+    }
+
+    public function add_toolbars($toolbars) {
+        $toolbars['wpuacf_mini'] = array();
+        $toolbars['wpuacf_mini'][1] = array(
+            'bold',
+            'italic',
+            'underline',
+            'link'
+        );
+        return $toolbars;
     }
 
     public function get_default_field($field, $field_id) {
