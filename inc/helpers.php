@@ -93,14 +93,22 @@ function get_wpu_acf_video_embed_image() {
     return $_image;
 }
 
-function get_wpu_acf_video($video_id) {
+function get_wpu_acf_video($video_id, $args = array()) {
     if (!is_numeric($video_id)) {
         return '';
+    }
+    if (!is_array($args)) {
+        $args = array();
+    }
+    $args['data-wpu-acf-video'] = '1';
+    $args_html = '';
+    foreach ($args as $k => $v) {
+        $args_html .= ' ' . $k . '="' . esc_attr($v) . '"';
     }
     $attachment_url = wp_get_attachment_url($video_id);
     $item_src = '';
     if ($attachment_url) {
-        $item_src = '<video autoplay loop muted playsinline><source src="' . $attachment_url . '" type="video/mp4" /></video>';
+        $item_src = '<video ' . $args_html . ' autoplay loop muted playsinline><source src="' . $attachment_url . '" type="video/mp4" /></video>';
     }
 
     return $item_src;

@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", function(e) {
 
+    /* Video blocks */
     (function() {
         var $videos = document.querySelectorAll('.wpuacf-video');
         for (var i = 0, len = $videos.length; i < len; i++) {
@@ -16,6 +17,18 @@ window.addEventListener("DOMContentLoaded", function(e) {
                 }, 500);
             }, false);
         }
+    }());
+
+    /* Force autoplay on mobile videos */
+    (function() {
+        document.body.addEventListener('touchstart', function() {
+            var $videos = document.querySelectorAll('[data-wpu-acf-video="1"][autoplay]');
+            for (var i = 0, len = $videos.length; i < len; i++) {
+                if (!$videos[i].playing) {
+                    $videos[i].play();
+                }
+            }
+        }, false);
     }());
 
 });
