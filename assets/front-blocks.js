@@ -28,7 +28,9 @@ window.addEventListener("DOMContentLoaded", function(e) {
                     $videos[i].play();
                 }
             }
-        }, false);
+        }, {
+            once: true
+        });
     }());
 
 });
