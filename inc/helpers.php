@@ -97,20 +97,20 @@ function get_wpu_acf_video($video_id, $args = array()) {
     if (!is_numeric($video_id)) {
         return '';
     }
+    $attachment_url = wp_get_attachment_url($video_id);
+    if (!$attachment_url) {
+        return '';
+    }
     if (!is_array($args)) {
         $args = array();
     }
     $args['data-wpu-acf-video'] = '1';
-    $args_html = '';
+    $item_src = '<video';
     foreach ($args as $k => $v) {
-        $args_html .= ' ' . $k . '="' . esc_attr($v) . '"';
+        $item_src .= ' ' . $k . '="' . esc_attr($v) . '"';
     }
-    $attachment_url = wp_get_attachment_url($video_id);
-    $item_src = '';
-    if ($attachment_url) {
-        $item_src = '<video ' . $args_html . ' autoplay loop muted playsinline><source src="' . $attachment_url . '" type="video/mp4" /></video>';
-    }
-
+    $item_src .= $args_html;
+    $item_src .= ' autoplay loop muted playsinline><source src="' . $attachment_url . '" type="video/mp4" /></video>';
     return $item_src;
 }
 
@@ -174,7 +174,13 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
     }
     $link = apply_filters('get_wpu_acf_link__link', $link);
     $classname = apply_filters('get_wpu_acf_link_classname', $classname);
-    return '<a title="' . esc_attr(strip_tags($link['title'])) . '" class="acfflex-link ' . esc_attr($classname) . '" ' . $attributes . ' target="' . $link['target'] . '" href="' . $link['url'] . '"><span>' . $link['title'] . '</span></a>';
+    return '<a title="' . esc_attr(strip_tags($link['title'])) . '"' .
+    ' class="acfflex-link ' . esc_attr($classname) . '"' .
+        ' ' . $attributes .
+        ' rel="noopener" target="' . $link['target'] . '"' .
+        ' href="' . $link['url'] . '">' .
+        ' <span>' . $link['title'] . '</span>' .
+        ' </a>';
 }
 
 /* ----------------------------------------------------------
@@ -196,10 +202,10 @@ function get_wpu_acf_title_content() {
     return get_wpu_acf__title() . get_wpu_acf__content();
 }
 
-function get_wpu_acf__title() {
-    $_title = get_sub_field('title');
+function get_wpu_acf__title($field_name = 'title') {
+    $_title = get_sub_field($field_name);
     if ($_title) {
-        return apply_filters('get_wpu_acf__title__html', '<h2 class="field-title"><span>' . nl2br(trim($_title)) . '</span></h2>', $_title);
+        return apply_filters('get_wpu_acf__title__html', '<h2 class="field-title"><span>' . nl2br(trim($_title)) . '</span></h2>', $_title, $field_name);
     }
     return '';
 }
@@ -207,7 +213,7 @@ function get_wpu_acf__title() {
 function get_wpu_acf__content($field_name = 'content') {
     $_content = apply_filters('the_content', get_sub_field($field_name));
     if ($_content) {
-        return apply_filters('get_wpu_acf__content__html', '<div class="field-content cssc-content">' . trim($_content) . '</div>', $_content);
+        return apply_filters('get_wpu_acf__content__html', '<div class="field-content cssc-content">' . trim($_content) . '</div>', $_content, $field_name);
     }
     return '';
 }
