@@ -33,4 +33,77 @@ window.addEventListener("DOMContentLoaded", function(e) {
         });
     }());
 
+    /* Responsive videos & lazy loading */
+    (function() {
+        var windowWidth = window.innerWidth,
+            $videos = document.querySelectorAll('[data-wpu-acf-video="1"][autoplay]');
+
+        check_videos_sources();
+        window.addEventListener('resize', function() {
+            windowWidth = window.innerWidth;
+            check_videos_sources();
+        });
+
+        /* Intersect only */
+        if ("IntersectionObserver" in window) {
+            var lazyVideos = [].slice.call(document.querySelectorAll('[data-wpu-acf-video="1"][data-intersect-only]'));
+            var lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(video) {
+                    if (video.isIntersecting) {
+                        set_query_source(video.target, true);
+                    }
+                });
+            }, {
+                rootMargin: "300px",
+            });
+
+            lazyVideos.forEach(function(lazyVideo) {
+                lazyVideoObserver.observe(lazyVideo);
+            });
+        }
+
+        function check_videos_sources() {
+            for (var i = 0, len = $videos.length; i < len; i++) {
+                set_query_source($videos[i], false);
+            }
+        }
+
+        function set_query_source($video, hasIntersect) {
+            var $source = $video.querySelector('source'),
+                currentSrc = $source.getAttribute('src'),
+                dataSrc = $source.getAttribute('data-src');
+
+            /* Not needed */
+            if (!dataSrc) {
+                return;
+            }
+
+            /* Source is already ok */
+            if (currentSrc == dataSrc) {
+                return;
+            }
+
+            /* Intersect only video */
+            if ($video.getAttribute('data-intersect-only') == '1' && !hasIntersect) {
+                return;
+            }
+
+            /* Mobile only video */
+            if ($video.getAttribute('data-mobile-only') == '1' && windowWidth > 768) {
+                return;
+            }
+
+            /* Desktop only video */
+            if ($video.getAttribute('data-desktop-only') == '1' && windowWidth <= 768) {
+                return;
+            }
+
+            /* Set source */
+            $source.setAttribute('src', dataSrc);
+            $video.load();
+            $video.play();
+        }
+
+    }());
+
 });

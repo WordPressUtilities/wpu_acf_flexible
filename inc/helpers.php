@@ -105,12 +105,18 @@ function get_wpu_acf_video($video_id, $args = array()) {
         $args = array();
     }
     $args['data-wpu-acf-video'] = '1';
+
+    $src_attr = 'src';
+    if (isset($args['data-intersect-only']) || isset($args['data-mobile-only']) || isset($args['data-desktop-only'])) {
+        $src_attr = 'data-src';
+    }
+
     $item_src = '<video';
     foreach ($args as $k => $v) {
         $item_src .= ' ' . $k . '="' . esc_attr($v) . '"';
     }
     $item_src .= $args_html;
-    $item_src .= ' autoplay loop muted playsinline><source src="' . $attachment_url . '" type="video/mp4" /></video>';
+    $item_src .= ' autoplay loop muted playsinline><source ' . $src_attr . '="' . $attachment_url . '" type="video/mp4" /></video>';
     return $item_src;
 }
 
