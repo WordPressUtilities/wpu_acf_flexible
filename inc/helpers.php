@@ -115,7 +115,6 @@ function get_wpu_acf_video($video_id, $args = array()) {
     foreach ($args as $k => $v) {
         $item_src .= ' ' . $k . '="' . esc_attr($v) . '"';
     }
-    $item_src .= $args_html;
     $item_src .= ' autoplay loop muted playsinline><source ' . $src_attr . '="' . $attachment_url . '" type="video/mp4" /></video>';
     return $item_src;
 }
