@@ -184,8 +184,8 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         ' ' . $attributes .
         ' rel="noopener" target="' . $link['target'] . '"' .
         ' href="' . $link['url'] . '">' .
-        ' <span>' . $link['title'] . '</span>' .
-        ' </a>';
+        '<span>' . $link['title'] . '</span>' .
+        '</a>';
 }
 
 /* ----------------------------------------------------------
