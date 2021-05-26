@@ -127,14 +127,16 @@ function get_wpu_acf_image_src($image, $size = 'thumbnail') {
     return is_array($image) ? $image[0] : '';
 }
 
-function get_wpu_acf_image($image, $size = 'thumbnail') {
+function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
     if (!is_numeric($image)) {
         return '';
     }
 
-    $attr = apply_filters('get_wpu_acf_image__image_attr', array(
-        'loading' => 'lazy'
-    ));
+    if (!is_array($attr)) {
+        $attr = array();
+    }
+    $attr['loading'] = 'lazy';
+    $attr = apply_filters('get_wpu_acf_image__image_attr', $attr);
 
     $has_srcset = apply_filters('get_wpu_acf_image__has_srcset', false);
 
