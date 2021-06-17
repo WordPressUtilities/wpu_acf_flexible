@@ -11,6 +11,6 @@ $_content_before = apply_filters('wpu_acf_flexible__content__content_classic__be
 $_content_after = apply_filters('wpu_acf_flexible__content__content_classic__after', '');
 ?><div class="<?php echo get_wpu_acf_wrapper_classname('content-classic'); ?>">
     <?php echo $_content_before; ?>
-    <div class="block--content-classic cssc-content"><?php echo $_content . $_cta_link; ?></div>
+    <div class="block--content-classic"><?php echo $_content . $_cta_link; ?></div>
     <?php echo $_content_after; ?>
 </div>

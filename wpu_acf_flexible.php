@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.13.6
+Version: 2.14.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.13.6';
+    private $plugin_version = '2.14.0';
     private $field_types = array();
 
     /* Base */
@@ -142,6 +142,12 @@ EOT;
         foreach ($this->contents as $id => $content) {
             $this->add_field_group($id, $content);
         }
+
+        /* Hook to disable base CSS in front-end */
+        if (apply_filters('wpu_acf_flexible__disable_front_css', false)) {
+            add_filter('wpu_acf_flexible__admin_css', array(&$this, 'disable_front_css'), 10, 1);
+            add_filter('wpu_acf_flexible__front_css', array(&$this, 'disable_front_css'), 10, 1);
+        }
     }
 
     public function admin_assets($hook_details) {
@@ -177,6 +183,13 @@ EOT;
         foreach ($custom_js as $id => $file) {
             wp_enqueue_script('wpu_acf_flexible-script-front-' . $id, $file, array(), $this->plugin_version);
         }
+    }
+
+    public function disable_front_css($styles = array()) {
+        if (isset($styles['front-blocks'])) {
+            unset($styles['front-blocks']);
+        }
+        return $styles;
     }
 
     public function get_custom_field_types() {
@@ -243,7 +256,7 @@ EOT;
         $fields_types = apply_filters('wpu_acf_flexible__field_types', $field_types);
 
         /* Ensure field format is ok */
-        foreach($fields_types as $k => $field_type){
+        foreach ($fields_types as $k => $field_type) {
             $fields_types[$k] = $this->get_default_field($field_type, $k);
         }
 
