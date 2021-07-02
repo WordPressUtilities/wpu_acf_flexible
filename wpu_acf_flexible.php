@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.14.0
+Version: 2.15.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.14.0';
+    private $plugin_version = '2.15.0';
     private $field_types = array();
 
     /* Base */
@@ -69,7 +69,17 @@ class wpu_acf_flexible {
 EOT;
 
     private $default_var_tax = <<<EOT
-$##ID##_tax = get_term_by('term_taxonomy_id', get_sub_field('##ID##'));
+$##ID##_tax = get_sub_field('##ID##');
+if(is_numeric($##ID##_tax)){
+    $##ID##_tax = get_term_by('term_taxonomy_id', $##ID##_tax);
+}
+EOT;
+
+    private $default_var_relationship_repeater = <<<EOT
+$##ID## = get_sub_field('##ID##');
+if(!$##ID##){
+    return;
+}
 EOT;
 
     private $default_var_gallery = <<<EOT
@@ -94,16 +104,43 @@ endif;
 ?>
 EOT;
 
+    private $default_value_relationship_nocond = <<<EOT
+<?php
+foreach ($##ID## as \$tmp_post_id):
+    \$thumb_url = get_the_post_thumbnail_url(\$tmp_post_id,'thumbnail');
+    \$post_title = get_the_title(\$tmp_post_id);
+    echo '<a href="'.get_permalink(\$tmp_post_id).'">';
+    if(!empty(\$thumb_url)){
+        echo '<img src="'.\$thumb_url.'" alt="'.esc_attr(\$post_title).'" />';
+    }
+    echo \$post_title;
+    echo '</a>';
+endforeach;
+?>
+EOT;
+
     private $default_value_repeater = <<<EOT
-<?php if (get_sub_field('##ID##')): ?>
-    <ul class="##ID##-list">
-    <?php while (have_rows('##ID##')): the_row(); ?>
-        <li>
+<?php
+$##ID## = get_sub_field('##ID##');
+if($##ID##):
+?>
+<ul class="##ID##-list">
+<?php while (have_rows('##ID##')): the_row(); ?>
+    <li>
 ##REPEAT##
-        </li>
-    <?php endwhile;?>
-    </ul>
+    </li>
+<?php endwhile;?>
+</ul>
 <?php endif; ?>
+EOT;
+    private $default_value_repeater_nocond = <<<EOT
+<ul class="##ID##-list">
+<?php while (have_rows('##ID##')): the_row(); ?>
+    <li>
+##REPEAT##
+    </li>
+<?php endwhile;?>
+</ul>
 EOT;
 
     public function __construct() {
@@ -402,7 +439,7 @@ EOT;
 
     }
 
-    public function get_var_content_field($id, $sub_field, $level = 2) {
+    public function get_var_content_field($id, $sub_field, $level = 2, $nb_subfields = 0) {
         $sub_field = $this->get_default_field($sub_field, $id);
 
         $vars = '';
@@ -430,10 +467,14 @@ EOT;
             $vars = str_replace('get_sub_field', 'get_field', $vars);
         }
 
+        if ($nb_subfields == 1 && ($sub_field['type'] == 'relationship' || $sub_field['type'] == 'repeater')) {
+            $vars = str_replace('##ID##', $id, $this->default_var_relationship_repeater) . "\n";
+        }
+
         return $vars;
     }
 
-    public function get_value_content_field($id, $sub_field, $level = 2) {
+    public function get_value_content_field($id, $sub_field, $level = 2, $nb_subfields = 0) {
         $sub_field = $this->get_default_field($sub_field, $id);
 
         $c__start = '<?php if($' . $id . '): ?>';
@@ -477,9 +518,10 @@ EOT;
             $values = $c__start . '<div ' . $classname . ' style="background-color:<?php echo $' . $id . ' ?>;"><?php echo $' . $id . '; ?></div>' . $c__end . "\n";
             break;
         case 'relationship':
-            $values = str_replace('##ID##', $id, $this->default_value_relationship) . "\n";
+            $tmp_val = ($nb_subfields == 1 && $level == 2) ? $this->default_value_relationship_nocond : $this->default_value_relationship;
+            $values = str_replace('##ID##', $id, $tmp_val) . "\n";
             if ($level < 2) {
-                $tmp_value = str_replace('get_sub_field', 'get_field', $tmp_value);
+                $values = str_replace('get_sub_field', 'get_field', $tmp_value);
             }
             break;
         case 'repeater':
@@ -495,7 +537,8 @@ EOT;
             if ($tmp_value_values) {
                 $tmp_value_content = "<?php\n" . trim($tmp_value_values) . "\n?>\n" . $tmp_value_content;
             }
-            $tmp_value = str_replace('##ID##', $id, $this->default_value_repeater) . "\n";
+            $tmp_val = ($nb_subfields == 1 && $level == 2) ? $this->default_value_repeater_nocond : $this->default_value_repeater;
+            $tmp_value = str_replace('##ID##', $id, $tmp_val) . "\n";
             if ($level < 2) {
                 $tmp_value = str_replace('get_sub_field', 'get_field', $tmp_value);
                 $tmp_value = str_replace('has_sub_field', 'has_rows', $tmp_value);
@@ -611,9 +654,10 @@ EOT;
                     if (!isset($layout['sub_fields']) || !is_array($layout['sub_fields'])) {
                         continue;
                     }
+                    $nb_subfields = count($layout['sub_fields']);
                     foreach ($layout['sub_fields'] as $id => $sub_field) {
-                        $vars .= $this->get_var_content_field($id, $sub_field);
-                        $values .= $this->get_value_content_field($id, $sub_field);
+                        $vars .= $this->get_var_content_field($id, $sub_field, 2, $nb_subfields);
+                        $values .= $this->get_value_content_field($id, $sub_field, 2, $nb_subfields);
                     }
                     $this->set_file_content($layout_id, $vars, $values, $content);
                 }
@@ -628,7 +672,6 @@ EOT;
                             $vars .= $this->get_var_content_field($id . '_' . $child_id, $sub_field, 1);
                             $values .= $this->get_value_content_field($id . '_' . $child_id, $sub_field, 1);
                         }
-
                     } else {
                         $vars .= $this->get_var_content_field($id, $field, 1);
                         $values .= $this->get_value_content_field($id, $field, 1);
