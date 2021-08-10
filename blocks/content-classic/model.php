@@ -1,5 +1,7 @@
 <?php
 
+$nb_buttons = apply_filters('wpu_acf_flexible__content__content_classic__buttons_number', 3);
+
 $model = array(
     'label' => __('[WPUACF] Content', 'wpu_acf_flexible'),
     'sub_fields' => array(
@@ -12,20 +14,16 @@ $model = array(
             'type' => 'editor',
             'toolbar' => 'full'
         ),
-        'cola' => 'wpuacf_33p',
         'cta' => array(
-            'label' => sprintf(__('Button %s', 'wpu_acf_flexible'),1),
-            'type' => 'link'
-        ),
-        'colb' => 'wpuacf_33p',
-        'cta2' => array(
-            'label' => sprintf(__('Button %s', 'wpu_acf_flexible'),2),
-            'type' => 'link'
-        ),
-        'colc' => 'wpuacf_33p',
-        'cta3' => array(
-            'label' => sprintf(__('Button %s', 'wpu_acf_flexible'),3),
+            'label' => $nb_buttons == 1 ? __('Button', 'wpu_acf_flexible') : sprintf(__('Button %s', 'wpu_acf_flexible'), 1),
             'type' => 'link'
         )
     )
 );
+
+for ($i = 2; $i <= $nb_buttons; $i++) {
+    $model['sub_fields']['cta' . $i] = array(
+        'label' => sprintf(__('Button %s', 'wpu_acf_flexible'), $i),
+        'type' => 'link'
+    );
+}
