@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.15.2
+Version: 2.15.3
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.15.2';
+    private $plugin_version = '2.15.3';
     private $field_types = array();
 
     /* Base */
@@ -456,6 +456,7 @@ EOT;
         case 'editor':
         case 'color_picker':
         case 'url':
+        case 'true_false':
         case 'file':
             $vars = '$' . $id . ' = get_sub_field(\'' . $id . '\');' . "\n";
             break;
@@ -498,6 +499,9 @@ EOT;
         case 'editor':
         case 'textarea':
             $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop($' . $id . '); ?></div>' . $c__end . "\n";
+            break;
+        case 'true_false':
+            $values = $c__start . $c__end . "\n";
             break;
         case 'taxonomy':
             $values = '<?php if($' . $id . '_tax):?><a href="<?php echo get_term_link($' . $id . '_tax); ?>"><?php echo $' . $id . '_tax->name; ?></a>' . $c__end . "\n";
