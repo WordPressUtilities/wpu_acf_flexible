@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.17.0
+Version: 2.17.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.17.0';
+    private $plugin_version = '2.17.1';
     private $field_types = array();
 
     /* Base */
@@ -550,7 +550,7 @@ EOT;
             if ($tmp_value_values) {
                 $tmp_value_content = "<?php\n" . trim($tmp_value_values) . "\n?>\n" . $tmp_value_content;
             }
-            $tmp_val = ($nb_subfields == 1 && $level == 2) ? $this->default_value_repeater_nocond : $this->default_value_repeater;
+            $tmp_val = (($nb_subfields == 1 && $level == 2) || $sub_field['required']) ? $this->default_value_repeater_nocond : $this->default_value_repeater;
             $tmp_value = str_replace('##ID##', $id, $tmp_val) . "\n";
             if ($level < 2) {
                 $tmp_value = str_replace('get_sub_field', 'get_field', $tmp_value);
