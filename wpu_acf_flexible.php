@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.16.0
+Version: 2.17.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.16.0';
+    private $plugin_version = '2.17.0';
     private $field_types = array();
 
     /* Base */
@@ -342,6 +342,15 @@ EOT;
             $field['type'] = 'text';
         }
 
+        if($field['type'] == 'true_false' && !isset($field['ui'])){
+            $field['ui'] = 1;
+        }
+
+        /* Required */
+        if (!isset($field['required'])) {
+            $field['required'] = false;
+        }
+
         return $field;
     }
 
@@ -468,7 +477,7 @@ EOT;
             $vars = str_replace('get_sub_field', 'get_field', $vars);
         }
 
-        if ($nb_subfields == 1 && ($sub_field['type'] == 'relationship' || $sub_field['type'] == 'repeater')) {
+        if (($nb_subfields == 1 || $sub_field['required']) && ($sub_field['type'] == 'relationship' || $sub_field['type'] == 'repeater')) {
             $vars = str_replace('##ID##', $id, $this->default_var_relationship_repeater) . "\n";
         }
 
@@ -522,7 +531,7 @@ EOT;
             $values = $c__start . '<div ' . $classname . ' style="background-color:<?php echo $' . $id . ' ?>;"><?php echo $' . $id . '; ?></div>' . $c__end . "\n";
             break;
         case 'relationship':
-            $tmp_val = ($nb_subfields == 1 && $level == 2) ? $this->default_value_relationship_nocond : $this->default_value_relationship;
+            $tmp_val = (($nb_subfields == 1 && $level == 2) || $sub_field['required']) ? $this->default_value_relationship_nocond : $this->default_value_relationship;
             $values = str_replace('##ID##', $id, $tmp_val) . "\n";
             if ($level < 2) {
                 $values = str_replace('get_sub_field', 'get_field', $values);
