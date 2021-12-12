@@ -53,6 +53,8 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $args 
             $context = $wpu_acf_flexible->get_row_context($group, $layout);
         }
 
+        $is_last_block = false;
+
         /* Include theme layout file */
         if (file_exists($layout_file)) {
             include $layout_file;
@@ -61,6 +63,12 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $args 
             if (isset($_layout_settings['wpuacf_model'])) {
                 include $wpu_acf_flexible->plugin_dir_path . 'blocks/' . $_layout_settings['wpuacf_model'] . '/content.php';
             }
+        }
+
+        $is_last_block = apply_filters('get_wpu_acf_flexible_content__is_last_block', $is_last_block, $layout, $_layout_settings);
+
+        if ($is_last_block) {
+            break;
         }
 
     endwhile;
