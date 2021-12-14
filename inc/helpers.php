@@ -150,7 +150,9 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
     if (!is_array($attr)) {
         $attr = array();
     }
-    $attr['loading'] = 'lazy';
+    if (!isset($attr['loading'])) {
+        $attr['loading'] = 'lazy';
+    }
     $attr = apply_filters('get_wpu_acf_image__image_attr', $attr);
 
     $has_srcset = apply_filters('get_wpu_acf_image__has_srcset', false);
