@@ -4,15 +4,15 @@
   Get flexible blocks
 ---------------------------------------------------------- */
 
-function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $args = array()) {
+function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuacfflex_args = array()) {
     global $post, $wpu_acf_flexible;
 
     $opt_group = get_the_ID();
 
-    if (!is_array($args)) {
-        $args = array();
+    if (!is_array($wpuacfflex_args)) {
+        $wpuacfflex_args = array();
     }
-    $args['init_context'] = isset($args['init_context']) ? $args['init_context'] : false;
+    $wpuacfflex_args['init_context'] = isset($wpuacfflex_args['init_context']) ? $wpuacfflex_args['init_context'] : false;
 
     if (!have_rows($group, $opt_group)) {
         if (is_post_type_archive()) {
@@ -49,7 +49,7 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $args 
         /* Load controller or template file */
         $controller_path = $wpu_acf_flexible->get_controller_path($group_item);
         $layout_file = $controller_path . $layout . '.php';
-        if ($args['init_context']) {
+        if ($wpuacfflex_args['init_context']) {
             $context = $wpu_acf_flexible->get_row_context($group, $layout);
         }
 

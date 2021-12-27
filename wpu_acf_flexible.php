@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.17.4
+Version: 2.17.5
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.17.4';
+    private $plugin_version = '2.17.5';
     private $field_types = array();
 
     /* Base */
@@ -342,7 +342,7 @@ EOT;
             $field['type'] = 'text';
         }
 
-        if($field['type'] == 'true_false' && !isset($field['ui'])){
+        if ($field['type'] == 'true_false' && !isset($field['ui'])) {
             $field['ui'] = 1;
         }
 
@@ -567,8 +567,9 @@ EOT;
             break;
         default:
             $tag = 'div';
-            if ($id == 'title') {
+            if ($id == 'title' || $name == 'title') {
                 $tag = 'h' . $level;
+                $classname = str_replace('class="', 'class="h' . $level . ' ', $classname);
             }
             $values = '<' . $tag . ' ' . $classname . '><?php echo ' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\') ?></' . $tag . '>' . "\n";
         }
