@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.17.7
+Version: 2.18.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.17.7';
+    private $plugin_version = '2.18.0';
     private $field_types = array();
 
     /* Base */
@@ -486,6 +486,10 @@ EOT;
             $vars = str_replace('##ID##', $id, $this->default_var_relationship_repeater) . "\n";
         }
 
+        if (isset($sub_field['field_vars_callback'])) {
+            $vars = call_user_func($sub_field['field_vars_callback'], $id, $sub_field, $level);
+        }
+
         return $vars;
     }
 
@@ -577,6 +581,10 @@ EOT;
                 $classname = str_replace('class="', 'class="h' . $level . ' ', $classname);
             }
             $values = '<' . $tag . ' ' . $classname . '><?php echo ' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\') ?></' . $tag . '>' . "\n";
+        }
+
+        if (isset($sub_field['field_html_callback'])) {
+            $values = call_user_func($sub_field['field_html_callback'], $id, $sub_field, $level);
         }
 
         $values = apply_filters('wpu_acf_flexible__value_content_field', $values, $id, $sub_field, $level);
