@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.18.0
+Version: 2.19.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.18.0';
+    private $plugin_version = '2.19.0';
     private $field_types = array();
 
     /* Base */
@@ -163,7 +163,9 @@ EOT;
         add_filter('acf/fields/wysiwyg/toolbars', array(&$this,
             'add_toolbars'
         ));
-
+        add_filter('acf/prepare_field', array(&$this,
+            'conditionally_hide_fields'
+        ));
     }
 
     public function load_translation() {
@@ -866,6 +868,23 @@ EOT;
 
         return $context;
 
+    }
+
+    /**
+     * Hide a field conditionally
+     * @param  object $field ACF field
+     * @return object
+     */
+    public function conditionally_hide_fields($field) {
+        if (is_admin() && isset($field['wpuacf_hidden_on']) && is_array($field['wpuacf_hidden_on'])) {
+            global $pagenow;
+            foreach ($field['wpuacf_hidden_on'] as $post_type) {
+                if ('post.php' === $pagenow && isset($_GET['post']) && get_post_type($_GET['post']) == $post_type) {
+                    return false;
+                }
+            }
+        }
+        return $field;
     }
 
     /**
