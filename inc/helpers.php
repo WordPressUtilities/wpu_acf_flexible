@@ -193,6 +193,17 @@ function get_wpu_acf_figure($image, $size = 'thumbnail') {
 }
 
 function get_wpu_acf_link($link, $classname = '', $attributes = '') {
+    if ($link && is_string($link) && substr($link, 0, 1) == '{') {
+        $link = json_decode($link, true);
+    }
+    if (is_array($link)) {
+        if (!isset($link['url']) && isset($link['href'])) {
+            $link['url'] = $link['href'];
+        }
+        if (!isset($link['title']) && isset($link['text'])) {
+            $link['title'] = $link['text'];
+        }
+    }
     if (!$link || !is_array($link) || !isset($link['url'])) {
         return '';
     }
