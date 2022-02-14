@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.19.1
+Version: 2.20.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.19.1';
+    private $plugin_version = '2.20.0';
     private $field_types = array();
 
     /* Base */
@@ -133,6 +133,7 @@ if($##ID##):
 </ul>
 <?php endif; ?>
 EOT;
+
     private $default_value_repeater_nocond = <<<EOT
 <ul class="##ID##-list">
 <?php while (have_rows('##ID##')): the_row(); ?>
@@ -141,6 +142,11 @@ EOT;
     </li>
 <?php endwhile;?>
 </ul>
+EOT;
+    private $default_value_group = <<<EOT
+<div class="group-##ID##">
+##REPEAT##
+</div>
 EOT;
 
     public function __construct() {
@@ -548,10 +554,15 @@ EOT;
                 $values = str_replace('get_sub_field', 'get_field', $values);
             }
             break;
+        case 'group':
         case 'repeater':
+            $is_group = ($sub_field['type'] == 'group');
             $tmp_value_values = '';
             $tmp_value_content = '';
             foreach ($sub_field['sub_fields'] as $sub_id => $sub_sub_field) {
+                if ($is_group) {
+                    $sub_id = $id . '_' . $sub_id;
+                }
                 $field_value = trim($this->get_var_content_field($sub_id, $sub_sub_field));
                 if ($field_value) {
                     $tmp_value_values .= $field_value . "\n";
@@ -562,10 +573,15 @@ EOT;
                 $tmp_value_content = "<?php\n" . trim($tmp_value_values) . "\n?>\n" . $tmp_value_content;
             }
             $tmp_val = (($nb_subfields == 1 && $level == 2) || $sub_field['required']) ? $this->default_value_repeater_nocond : $this->default_value_repeater;
+            if ($is_group) {
+                $tmp_val = $this->default_value_group;
+            }
             $tmp_value = str_replace('##ID##', $id, $tmp_val) . "\n";
             if ($level < 2) {
                 $tmp_value = str_replace('get_sub_field', 'get_field', $tmp_value);
                 $tmp_value = str_replace('has_sub_field', 'has_rows', $tmp_value);
+                $tmp_value_content = str_replace('get_sub_field', 'get_field', $tmp_value_content);
+                $tmp_value_content = str_replace('has_sub_field', 'has_rows', $tmp_value_content);
             }
             $tmp_value_content = trim($tmp_value_content);
             if (!empty($tmp_value_content)) {
