@@ -6,6 +6,9 @@
 
 function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuacfflex_args = array()) {
     global $post, $wpu_acf_flexible;
+    if (!is_object($wpu_acf_flexible)) {
+        return '';
+    }
 
     $opt_group = get_the_ID();
 
