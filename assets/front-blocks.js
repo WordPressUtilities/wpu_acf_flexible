@@ -43,8 +43,16 @@ window.addEventListener("DOMContentLoaded", function(e) {
             $videos = document.querySelectorAll('[data-wpu-acf-video="1"][autoplay]');
 
         check_videos_sources();
+
+        /* Check resize */
         window.addEventListener('resize', function() {
             windowWidth = window.innerWidth;
+            check_videos_sources();
+        });
+
+        /* Allow ajax reload */
+        window.addEventListener('wpu-acf-video-check-sources', function() {
+            $videos = document.querySelectorAll('[data-wpu-acf-video="1"][autoplay]');
             check_videos_sources();
         });
 
