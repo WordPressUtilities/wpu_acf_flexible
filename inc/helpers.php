@@ -10,20 +10,25 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         return '';
     }
 
-    $opt_group = get_the_ID();
-
+    /* Test args */
     if (!is_array($wpuacfflex_args)) {
         $wpuacfflex_args = array();
     }
+
+    /* Init context */
     $wpuacfflex_args['init_context'] = isset($wpuacfflex_args['init_context']) ? $wpuacfflex_args['init_context'] : false;
 
+    /* Specify opt group (post id, option name, ...) */
+    $opt_group = get_the_ID();
+    if (is_post_type_archive()) {
+        $opt_group = get_post_type() . '_options';
+    }
+    if (isset($wpuacfflex_args['opt_group'])) {
+        $opt_group = $wpuacfflex_args['opt_group'];
+    }
+
     if (!have_rows($group, $opt_group)) {
-        if (is_post_type_archive()) {
-            $opt_group = get_post_type() . '_options';
-        }
-        if (!have_rows($group, $opt_group)) {
-            return '';
-        }
+        return '';
     }
 
     ob_start();
