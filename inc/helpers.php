@@ -44,7 +44,7 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         the_row();
         $layout = get_row_layout();
         if (!isset($group_item['layouts'][$layout])) {
-            return '';
+            continue;
         }
 
         $_layout_settings = $group_item['layouts'][$layout];
