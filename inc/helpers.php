@@ -143,6 +143,9 @@ function get_wpu_acf_video($video_id, $args = array()) {
 }
 
 function get_wpu_acf_image_src($image, $size = 'thumbnail') {
+    if(is_array($image) && isset($image['ID']) && is_numeric($image['ID'])){
+        $image = $image['ID'];
+    }
     if (!is_numeric($image)) {
         return '';
     }
@@ -151,6 +154,9 @@ function get_wpu_acf_image_src($image, $size = 'thumbnail') {
 }
 
 function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
+    if(is_array($image) && isset($image['ID']) && is_numeric($image['ID'])){
+        $image = $image['ID'];
+    }
     if (!is_numeric($image)) {
         return '';
     }
