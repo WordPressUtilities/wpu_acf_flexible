@@ -143,7 +143,7 @@ function get_wpu_acf_video($video_id, $args = array()) {
 }
 
 function get_wpu_acf_image_src($image, $size = 'thumbnail') {
-    if(is_array($image) && isset($image['ID']) && is_numeric($image['ID'])){
+    if (is_array($image) && isset($image['ID']) && is_numeric($image['ID'])) {
         $image = $image['ID'];
     }
     if (!is_numeric($image)) {
@@ -154,7 +154,7 @@ function get_wpu_acf_image_src($image, $size = 'thumbnail') {
 }
 
 function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
-    if(is_array($image) && isset($image['ID']) && is_numeric($image['ID'])){
+    if (is_array($image) && isset($image['ID']) && is_numeric($image['ID'])) {
         $image = $image['ID'];
     }
     if (!is_numeric($image)) {
@@ -226,7 +226,8 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
     return '<a title="' . esc_attr(strip_tags($link['title'])) . '"' .
     ' class="acfflex-link ' . esc_attr($classname) . '"' .
         ' ' . $attributes .
-        ' rel="noopener" target="' . $link['target'] . '"' .
+        ' rel="noopener" ' .
+        ($link['target'] ? ' target="' . $link['target'] . '"' : '') .
         ' href="' . $link['url'] . '">' .
         '<span>' . $link['title'] . '</span>' .
         '</a>';
