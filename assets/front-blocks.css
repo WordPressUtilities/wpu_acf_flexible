@@ -24,7 +24,7 @@
   Grid
 ---------------------------------------------------------- */
 
-@media(min-width:769px) {
+@media (min-width:769px) {
     .acfflex-grid {
         display: table;
         width: 100%;
@@ -45,7 +45,7 @@
     }
 }
 
-@media(max-width:768px) {
+@media (max-width:768px) {
     .acfflex-grid > *:not(:first-child) {
         padding-top: 15px;
     }
@@ -310,4 +310,48 @@
 .wpuacf-video[data-is-playing="1"] .cover-image {
     opacity: 0;
     pointer-events: none;
+}
+
+/* ----------------------------------------------------------
+  FAQ
+---------------------------------------------------------- */
+
+/* Question
+-------------------------- */
+
+.wpuacfflexfaq-list__item .field-question button {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: inherit;
+    font: inherit;
+    white-space: normal;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.wpuacfflexfaq-list__item .field-question button:after {
+    content: '+';
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.wpuacfflexfaq-list__item[data-is-open="true"] .field-question button:after {
+    content: '-';
+}
+
+/* Answer
+-------------------------- */
+
+.wpuacfflexfaq-list__item:not([data-is-open="true"]) .block-answer {
+    display: none;
 }

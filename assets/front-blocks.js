@@ -23,6 +23,22 @@ window.addEventListener("DOMContentLoaded", function(e) {
         }
     }());
 
+    /* FAQ */
+    (function() {
+        document.body.addEventListener('click', function(e) {
+            var $wrapper, wasExpanded;
+            for (var target = e.target; target && target != this; target = target.parentNode) {
+                if (target.matches('.wpuacfflexfaq-list__item .field-question[itemprop="name"] button')) {
+                    $wrapper = target.closest('.wpuacfflexfaq-list__item');
+                    wasExpanded = (target.getAttribute('aria-expanded') == 'true');
+                    target.setAttribute('aria-expanded', wasExpanded ? 'false' : 'true');
+                    $wrapper.setAttribute('data-is-open', wasExpanded ? 'false' : 'true');
+                    break;
+                }
+            }
+        });
+    }());
+
     /* Force autoplay on mobile videos */
     (function() {
         document.body.addEventListener('touchstart', function() {
