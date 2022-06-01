@@ -304,3 +304,39 @@ function get_wpu_acf_loop() {
 
     return '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
 }
+
+/* ----------------------------------------------------------
+  Multilingual
+---------------------------------------------------------- */
+
+function wpuacfflex_get_languages() {
+    global $polylang;
+    if (function_exists('pll_the_languages') && is_object($polylang)) {
+        $poly_langs = $polylang->model->get_languages_list();
+        $languages = array();
+        foreach ($poly_langs as $lang) {
+            $languages[$lang->slug] = $lang->slug;
+        }
+        return $languages;
+    }
+
+    return array();
+}
+
+function wpuacfflex_get_current_language() {
+    global $polylang;
+    if (function_exists('pll_current_language')) {
+        return pll_current_language();
+    }
+    return false;
+}
+
+function wpuacfflex_lang_get_field($selector, $post_id = false, $format_value = true) {
+    $lang = wpuacfflex_get_languages();
+    $current_lang = wpuacfflex_get_current_language();
+    $base_field = get_field($selector, $post_id, $format_value);
+    if (!$lang || !is_array($lang) || !$current_lang || !is_array($base_field) || !isset($base_field['val_' . $current_lang])) {
+        return $base_field;
+    }
+    return $base_field['val_' . $current_lang];
+}
