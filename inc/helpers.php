@@ -315,7 +315,10 @@ function wpuacfflex_get_languages() {
         $poly_langs = $polylang->model->get_languages_list();
         $languages = array();
         foreach ($poly_langs as $lang) {
-            $languages[$lang->slug] = $lang->slug;
+            $languages[$lang->slug] = array(
+                'name' => $lang->name,
+                'flag' => $lang->flag
+            );
         }
         return $languages;
     }
