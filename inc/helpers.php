@@ -182,14 +182,26 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
     return $html;
 }
 
-function get_wpu_acf_figure($image, $size = 'thumbnail') {
+function get_wpu_acf_figure($image, $size = 'thumbnail', $attr = array()) {
     if (!is_numeric($image)) {
         return '';
     }
+    if (!is_array($attr)) {
+        $attr = array();
+    }
+    if (!isset($attr['figcaption'])) {
+        $attr['figcaption'] = true;
+    }
+    if (!isset($attr['img_wrapper'])) {
+        $attr['img_wrapper'] = false;
+    }
 
     $html = get_wpu_acf_image($image, $size);
+    if ($attr['img_wrapper']) {
+        $html = '<div class="figure-img-wrapper">' . $html . '</div>';
+    }
 
-    if (apply_filters('get_wpu_acf_figure__display_figcaption', true)) {
+    if (apply_filters('get_wpu_acf_figure__display_figcaption', $attr['figcaption'])) {
         $thumb_details = get_post($image);
         $_figure_content = '';
         if (isset($thumb_details->post_title) && $thumb_details->post_title) {
