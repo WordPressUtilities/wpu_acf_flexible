@@ -230,6 +230,9 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
             $link['title'] = $link['text'];
         }
     }
+    if (!isset($link['target'])) {
+        $link['target'] = '';
+    }
     if (!$link || !is_array($link) || !isset($link['url'])) {
         return '';
     }
@@ -354,4 +357,26 @@ function wpuacfflex_lang_get_field($selector, $post_id = false, $format_value = 
         return $base_field;
     }
     return $base_field['val_' . $current_lang];
+}
+
+/* ----------------------------------------------------------
+  Template
+---------------------------------------------------------- */
+
+function wpuacfflex_template_get_layout_css($layout_id, $layout, $css_rule_prefix = '') {
+    $css = '';
+    $fields = isset($layout['sub_fields']) && is_array($layout['sub_fields']) ? $layout['sub_fields'] : array();
+
+    /* Ensure prefix has a space */
+    if ($css_rule_prefix) {
+        $css_rule_prefix = trim($css_rule_prefix) . ' ';
+    }
+
+    /* Add a rule for each field */
+    foreach ($fields as $field_id => $field) {
+        $css .= "\n" . $css_rule_prefix;
+        $css .= ".field-" . $field_id;
+        $css .= " {\n\n}\n";
+    }
+    return $css;
 }
