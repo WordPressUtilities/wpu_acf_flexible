@@ -229,9 +229,9 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         if (!isset($link['title']) && isset($link['text'])) {
             $link['title'] = $link['text'];
         }
-    }
-    if (!isset($link['target'])) {
-        $link['target'] = '';
+        if (!isset($link['target'])) {
+            $link['target'] = '';
+        }
     }
     if (!$link || !is_array($link) || !isset($link['url'])) {
         return '';
