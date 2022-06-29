@@ -248,6 +248,18 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         '</a>';
 }
 
+function get_wpu_acf_responsive_image($field_value, $classname = '') {
+    $mobile_max = apply_filters('get_wpu_acf_responsive_image__mobile_max', 767);
+    $classname = apply_filters('get_wpu_acf_responsive_image__classname', 'wpu-acf-responsive-image ' . $classname);
+    $html = '<picture class="' . trim(esc_attr($classname)) . '">';
+    if ($field_value['image_mobile']):
+        $html .= '<source media="(max-width: ' . $mobile_max . 'px)" srcset="' . get_wpu_acf_image_src($field_value['image_mobile'], 'large') . '">';
+    endif;
+    $html .= get_wpu_acf_image($field_value['image'], 'large');
+    $html .= '</picture>';
+    return $html;
+}
+
 /* ----------------------------------------------------------
   Internal helpers
 ---------------------------------------------------------- */
