@@ -361,6 +361,22 @@ function wpuacfflex_get_current_language() {
     return false;
 }
 
+
+function wpuacfflex_get_current_admin_language() {
+    global $polylang;
+    $current_language = false;
+
+    // Obtaining from Polylang
+    if (function_exists('pll_the_languages') && is_object($polylang)) {
+        $current_language_tmp = $polylang->pref_lang->slug;
+        if ($current_language_tmp != 'all') {
+            $current_language = $current_language_tmp;
+        }
+    }
+
+    return $current_language;
+}
+
 function wpuacfflex_lang_get_field($selector, $post_id = false, $format_value = true) {
     $lang = wpuacfflex_get_languages();
     $current_lang = wpuacfflex_get_current_language();

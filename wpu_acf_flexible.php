@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.24.0
+Version: 2.25.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.24.0';
+    private $plugin_version = '2.25.0';
     private $field_types = array();
 
     /* Base */
@@ -166,6 +166,9 @@ EOT;
         add_action('plugins_loaded', array(&$this,
             'load_translation'
         ));
+        add_action('admin_head', array(&$this,
+            'admin_head'
+        ));
         add_filter('acf/fields/wysiwyg/toolbars', array(&$this,
             'add_toolbars'
         ));
@@ -211,6 +214,8 @@ EOT;
         foreach ($custom_css as $id => $file) {
             wp_enqueue_style('wpu_acf_flexible-style-admin-' . $id, $file, array(), $this->plugin_version);
         }
+        /* Extra JS */
+        wp_enqueue_script('wpu_acf_flexible-script-wpuacfadmin', plugins_url('assets/admin-scripts.js', __FILE__), array(), $this->plugin_version);
     }
 
     public function front_assets($hook_details) {
@@ -227,6 +232,13 @@ EOT;
         ));
         foreach ($custom_js as $id => $file) {
             wp_enqueue_script('wpu_acf_flexible-script-front-' . $id, $file, array(), $this->plugin_version);
+        }
+    }
+
+    function admin_head() {
+        $current_admin_language = wpuacfflex_get_current_admin_language();
+        if ($current_admin_language) {
+            echo '<script>window.wpuacfflex_current_admin_language="' . esc_attr($current_admin_language) . '";</script>';
         }
     }
 
@@ -458,7 +470,7 @@ EOT;
             $field['type'] = 'group';
             $field['sub_fields'] = array();
             foreach ($languages as $key => $lang) {
-                $field['sub_fields']['tab_' . $key] = array(
+                $field['sub_fields']['wpuacf_lang_tab_' . $key] = array(
                     'type' => 'tab',
                     'label' => $lang['name']
                 );
