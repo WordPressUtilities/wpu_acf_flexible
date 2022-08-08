@@ -195,6 +195,9 @@ function get_wpu_acf_figure($image, $size = 'thumbnail', $attr = array()) {
     if (!isset($attr['figcaption'])) {
         $attr['figcaption'] = true;
     }
+    if (!isset($attr['figcaption_content'])) {
+        $attr['figcaption_content'] = '';
+    }
     if (!isset($attr['img_wrapper'])) {
         $attr['img_wrapper'] = false;
     }
@@ -207,11 +210,15 @@ function get_wpu_acf_figure($image, $size = 'thumbnail', $attr = array()) {
     if (apply_filters('get_wpu_acf_figure__display_figcaption', $attr['figcaption'])) {
         $thumb_details = get_post($image);
         $_figure_content = '';
-        if (isset($thumb_details->post_title) && $thumb_details->post_title) {
-            $_figure_content .= '<p class="figure-title">' . trim($thumb_details->post_title) . '</p>';
-        }
-        if (isset($thumb_details->post_excerpt) && $thumb_details->post_excerpt) {
-            $_figure_content .= '<p class="figure-excerpt">' . trim($thumb_details->post_excerpt) . '</p>';
+        if ($attr['figcaption_content']) {
+            $_figure_content .= '<p class="figure-title">' . trim($attr['figcaption_content']) . '</p>';
+        } else {
+            if (isset($thumb_details->post_title) && $thumb_details->post_title) {
+                $_figure_content .= '<p class="figure-title">' . trim($thumb_details->post_title) . '</p>';
+            }
+            if (isset($thumb_details->post_excerpt) && $thumb_details->post_excerpt) {
+                $_figure_content .= '<p class="figure-excerpt">' . trim($thumb_details->post_excerpt) . '</p>';
+            }
         }
         if (!empty($_figure_content)) {
             $html .= '<figcaption>' . $_figure_content . '</figcaption>';
@@ -363,7 +370,6 @@ function wpuacfflex_get_current_language() {
     }
     return false;
 }
-
 
 function wpuacfflex_get_current_admin_language() {
     global $polylang;
