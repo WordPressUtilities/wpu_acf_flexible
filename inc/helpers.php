@@ -170,6 +170,9 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
     $attr = apply_filters('get_wpu_acf_image__image_attr', $attr);
 
     $has_srcset = apply_filters('get_wpu_acf_image__has_srcset', false);
+    if (isset($attr['has_srcset'])) {
+        $has_srcset = $attr['has_srcset'];
+    }
 
     /* Retrieve image HTML without srcset */
     if (!$has_srcset) {
