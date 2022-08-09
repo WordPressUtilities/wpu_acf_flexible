@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.25.2
+Version: 2.26.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -57,6 +57,8 @@ class wpu_acf_flexible {
         'taxonomy' => array(),
         'ui' => 0
     );
+
+    public $editor_heights = array();
 
     private $default_content = <<<EOT
 <?php
@@ -175,6 +177,9 @@ EOT;
         add_filter('acf/prepare_field', array(&$this,
             'conditionally_hide_fields'
         ));
+        add_action('admin_head', array(&$this,
+            'admin_set_editor_height'
+        ));
     }
 
     public function load_translation() {
@@ -284,6 +289,8 @@ EOT;
             'wpuacf_minieditor' => array(
                 'label' => __('Editor', 'wpu_acf_flexible'),
                 'type' => 'editor',
+                'textarea_rows' => 2,
+
                 'toolbar' => 'wpuacf_mini'
             ),
             'wpuacf_image_position' => array(
@@ -447,6 +454,12 @@ EOT;
                 }
                 if (!isset($field['toolbar'])) {
                     $field['toolbar'] = 'basic';
+                }
+                if (isset($field['editor_height']) && is_numeric($field['editor_height'])) {
+                    $this->editor_heights[] = array(
+                        'field_id' => $id,
+                        'editor_height' => $field['editor_height']
+                    );
                 }
             }
             if ($field['type'] == 'post' || $field['type'] == 'post_object') {
@@ -994,6 +1007,22 @@ EOT;
             }
 
             wp_update_post($post_infos);
+        }
+    }
+
+    /* Set editor height */
+    function admin_set_editor_height() {
+        $css = '';
+        foreach ($this->editor_heights as $editor) {
+            $css .= '[data-key="' . $editor['field_id'] . '"] iframe,';
+            $css .= '[data-key="' . $editor['field_id'] . '"] textarea';
+            $css .= '{';
+            $css .= 'min-height:' . $editor['editor_height'] . 'px!important;';
+            $css .= 'height: ' . $editor['editor_height'] . 'px!important;';
+            $css .= '}';
+        }
+        if ($css) {
+            echo '<style>' . $css . '</style>';
         }
     }
 }
