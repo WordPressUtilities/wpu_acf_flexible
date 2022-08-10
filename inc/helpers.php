@@ -87,8 +87,18 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
   Helpers
 ---------------------------------------------------------- */
 
-function get_wpu_acf_video_embed_image() {
-    $_video = get_sub_field('video');
+function get_wpu_acf_video_embed_image($args = array()) {
+    if (!is_array($args)) {
+        $args = array();
+    }
+    if (!isset($args['video_field_id'])) {
+        $args['video_field_id'] = 'video';
+    }
+    if (!isset($args['image_field_id'])) {
+        $args['image_field_id'] = 'image';
+    }
+
+    $_video = get_sub_field($args['video_field_id']);
     if (!$_video) {
         return false;
     }
@@ -98,7 +108,7 @@ function get_wpu_acf_video_embed_image() {
     }
 
     $_image_size = apply_filters('wpu_acf_flexible__content__video__image_size', 'large');
-    $_image_id = get_sub_field('image');
+    $_image_id = get_sub_field($args['image_field_id']);
     $_image = '';
     if (!is_admin()) {
         if ($_image_id) {
