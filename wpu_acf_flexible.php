@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.26.3
+Version: 2.26.4
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.26.3';
+    private $plugin_version = '2.26.4';
     private $field_types = array();
 
     /* Base */
@@ -960,6 +960,24 @@ EOT;
         return $field;
     }
 
+    function secure_post_content($content) {
+        $allowed_tags = apply_filters('wpu_acf_flexible__save_post_allowed_tags', '<p><a><strong><em><h1><h2><h3><h4><h5><ol><ul><li><img>');
+        /* Keep only some useful tags */
+        $content = strip_tags($content, $allowed_tags);
+
+        /* Ensure content is correct and secure */
+        $content = wp_kses_post($content);
+
+        /* Remove useless spaces */
+        $content = preg_replace('/\s+/', ' ', $content);
+        $content = str_replace('<p></p>', '', $content);
+
+        /* Remove useless attributes */
+        $content = preg_replace('/\s(class|style|loading|target|rel)=[\'|"][^\'"]*[\'|"]/', '', $content);
+
+        return trim($content);
+    }
+
     /**
      * Save post rows HTML in content
      * @param  int $post_ID
@@ -969,30 +987,16 @@ EOT;
             return;
         }
 
-        $allowed_tags = apply_filters('wpu_acf_flexible__save_post_allowed_tags', '<p><a><strong><em><h1><h2><h3><h4><h5><ol><ul><li><img>');
+        $content_html = $this->secure_post_content(apply_filters('wpu_acf_flexible__save_post_default_content_html', '', $post_ID));
 
-        $content_html = '';
         foreach ($this->contents as $group => $blocks) {
             if (!isset($blocks['save_post']) || !$blocks['save_post']) {
                 continue;
             }
-            $content = get_wpu_acf_flexible_content($group, 'admin');
-
-            /* Keep only some useful tags */
-            $content = strip_tags($content, $allowed_tags);
-
-            /* Ensure content is correct and secure */
-            $content = wp_kses_post($content);
-
-            /* Remove useless spaces */
-            $content = preg_replace('/\s+/', ' ', $content);
-            $content = str_replace('<p></p>', '', $content);
-
-            /* Remove useless attributes */
-            $content = preg_replace('/\s(class|style|loading|target|rel)=[\'|"][^\'"]*[\'|"]/', '', $content);
-
-            $content_html .= trim($content);
+            $content_html .= $this->secure_post_content(get_wpu_acf_flexible_content($group, 'admin'));
         }
+
+        $content_html .= $this->secure_post_content(apply_filters('wpu_acf_flexible__save_post_default_content_html__after', '', $post_ID));
 
         if (!empty($content_html)) {
             $_post = get_post($post_ID);
