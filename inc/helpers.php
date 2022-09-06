@@ -102,6 +102,11 @@ function get_wpu_acf_video_embed_image($args = array()) {
     if (!$_video) {
         return false;
     }
+
+    if (strpos($_video, '<a') !== false) {
+        $_video = '<iframe allowfullscreen allow="autoplay" width="560" height="315" src="' . strip_tags($_video) . '"></iframe>';
+    }
+
     $_video = '<div class="content-video">' . $_video . '</div>';
     if (apply_filters('wpu_acf_flexible__video__nocookie', true) || is_admin()) {
         $_video = str_replace('youtube.com/embed', 'youtube-nocookie.com/embed', $_video);
