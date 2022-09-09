@@ -391,7 +391,7 @@ function wpuacfflex_get_current_admin_language() {
     $current_language = false;
 
     // Obtaining from Polylang
-    if (function_exists('pll_the_languages') && is_object($polylang)) {
+    if (function_exists('pll_the_languages') && is_object($polylang) && $polylang->pref_lang) {
         $current_language_tmp = $polylang->pref_lang->slug;
         if ($current_language_tmp != 'all') {
             $current_language = $current_language_tmp;
