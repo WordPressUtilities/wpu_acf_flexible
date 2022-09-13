@@ -254,6 +254,9 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         if (!isset($link['title']) && isset($link['text'])) {
             $link['title'] = $link['text'];
         }
+        if (!isset($link['title_visible'])) {
+            $link['title_visible'] = $link['title'];
+        }
         if (!isset($link['target'])) {
             $link['target'] = '';
         }
@@ -269,7 +272,7 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         ' rel="noopener" ' .
         ($link['target'] ? ' target="' . $link['target'] . '"' : '') .
         ' href="' . $link['url'] . '">' .
-        '<span>' . $link['title'] . '</span>' .
+        '<span>' . $link['title_visible'] . '</span>' .
         '</a>';
 }
 
