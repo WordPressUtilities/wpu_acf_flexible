@@ -333,6 +333,23 @@ function get_wpu_acf_cta($link_id = 'cta', $classname = '') {
 }
 
 /* ----------------------------------------------------------
+  Mini editor
+---------------------------------------------------------- */
+
+function get_wpu_acf_minieditor($field, $args = array()) {
+    if (!is_array($args)) {
+        $args = array();
+    }
+    if (!isset($args['allowed_tags'])) {
+        $args['allowed_tags'] = '<u><a><strong><span><em>';
+    }
+    if (isset($args['extra_allowed_tags'])) {
+        $args['allowed_tags'] .= $args['extra_allowed_tags'];
+    }
+    return wpautop(strip_tags($field, $args['allowed_tags']));
+}
+
+/* ----------------------------------------------------------
   Loop
 ---------------------------------------------------------- */
 

@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.27.2
+Version: 2.28.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.27.2';
+    private $plugin_version = '2.28.0';
     private $field_types = array();
 
     /* Base */
@@ -129,7 +129,9 @@ if($##ID##):
 <ul class="##ID##-list">
 <?php while (have_rows('##ID##')): the_row(); ?>
     <li>
+    <div class="##ID##-list__item">
 ##REPEAT##
+    </div>
     </li>
 <?php endwhile;?>
 </ul>
@@ -578,7 +580,11 @@ EOT;
             }
             break;
         case 'editor':
-            $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop($' . $id . '); ?></div>' . $c__end . "\n";
+            $value_content = 'wpautop($' . $id . ')';
+            if (isset($sub_field['toolbar']) && $sub_field['toolbar'] == 'wpuacf_mini') {
+                $value_content = 'get_wpu_acf_minieditor($' . $id . ')';
+            }
+            $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo ' . $value_content . '; ?></div>' . $c__end . "\n";
             break;
         case 'textarea':
             $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop(strip_tags($' . $id . ')); ?></div>' . $c__end . "\n";
