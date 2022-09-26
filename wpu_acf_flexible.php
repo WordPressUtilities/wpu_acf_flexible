@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.28.0
+Version: 2.29.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.28.0';
+    private $plugin_version = '2.29.0';
     private $field_types = array();
 
     /* Base */
@@ -430,8 +430,31 @@ EOT;
                 }
             }
 
+            $thumbnail = false;
+
+            $thumbnail_paths = array(
+                '/images/blocks/',
+                '/assets/images/blocks/'
+            );
+            $thumbnails_formats = array(
+                'jpg',
+                'png'
+            );
+
+            foreach ($thumbnail_paths as $thumbnails_path_item) {
+                $thumb_path = $thumbnails_path_item . $field_id;
+                $thumb_dir_base = get_stylesheet_directory() . $thumb_path;
+                $thumb_url_base = get_stylesheet_directory_uri() . $thumb_path;
+                foreach ($thumbnails_formats as $thumb_format) {
+                    if (file_exists($thumb_dir_base . '.' . $thumb_format)) {
+                        $thumbnail = $thumb_url_base . '.' . $thumb_format;
+                    }
+                }
+            }
+
             if ($tpl_file) {
                 $field['acfe_flexible_render_template'] = $tpl_file;
+                $field['acfe_flexible_thumbnail'] = $thumbnail;
                 $field['acfe_flexible_render_style'] = '';
                 $field['acfe_flexible_render_script'] = '';
             }
@@ -723,6 +746,18 @@ EOT;
                 'min' => '',
                 'max' => ''
             );
+
+            if (apply_filters('wpu_acf_flexible__enable_thumbnails', false, $content_id)) {
+                $base_field_layouts['acfe_flexible_layouts_thumbnails'] = 1;
+                $base_field_layouts['acfe_flexible_modal'] = array(
+                    'acfe_flexible_modal_enabled' => '1',
+                    'acfe_flexible_modal_title' => __('Add block', 'wpu_acf_flexible'),
+                    'acfe_flexible_modal_size' => 'large',
+                    'acfe_flexible_modal_col' => '6',
+                    'acfe_flexible_modal_categories' => true
+                );
+            }
+
             if (is_array($acf_extras_layout)) {
                 $base_field_layouts = array_merge($base_field_layouts, $acf_extras_layout);
             }
