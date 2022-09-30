@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.29.0
+Version: 2.30.0
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -11,7 +11,7 @@ License URI: http://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.29.0';
+    private $plugin_version = '2.30.0';
     private $field_types = array();
 
     /* Base */
@@ -182,6 +182,9 @@ EOT;
         add_action('admin_head', array(&$this,
             'admin_set_editor_height'
         ));
+        add_action('admin_head', array(&$this,
+            'admin_set_hidden_fields'
+        ));
     }
 
     public function load_translation() {
@@ -282,6 +285,15 @@ EOT;
             'wpuacf_title' => array(
                 'label' => __('Title', 'wpu_acf_flexible'),
                 'type' => 'text'
+            ),
+            'wpuacf_uniqid' => array(
+                'label' => __('Unique ID', 'wpu_acf_flexible'),
+                'type' => 'text',
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => 'wpu-acf-flex-hidden-field',
+                    'id' => ''
+                ),
             ),
             'wpuacf_text' => array(
                 'label' => __('Text', 'wpu_acf_flexible'),
@@ -1068,6 +1080,18 @@ EOT;
         if ($css) {
             echo '<style>' . $css . '</style>';
         }
+    }
+
+    function admin_set_hidden_fields() {
+        echo '<style>.wpu-acf-flex-hidden-field{z-index:1!important;position:absolute!important;top:0!important;left:-999em!important;height:1px!important;width:1px!important;overflow:hidden!important;}</style>';
+        echo '<script>if(acf){';
+        echo 'acf.addAction(\'new_field\', function( field ){';
+        echo 'if(field.$el.hasClass(\'wpu-acf-flex-hidden-field\')){';
+        echo 'var _tmpField = field.$el.find(\'input[name*="acf"]\');';
+        echo 'if(!_tmpField.val()){_tmpField.val(\'hidden_\'+Math.random().toString(36).slice(2,12)+Date.now());}';
+        echo '}';
+        echo '});';
+        echo '}</script>';
     }
 }
 
