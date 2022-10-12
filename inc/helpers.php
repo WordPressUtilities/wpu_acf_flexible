@@ -323,8 +323,14 @@ function get_wpu_acf__content($field_name = 'content') {
     return '';
 }
 
-function get_wpu_acf_cta($link_id = 'cta', $classname = '') {
-    $_cta_link = get_sub_field($link_id);
+function get_wpu_acf_cta($link_item = 'cta', $classname = '') {
+    if (substr($link_item, 0, 2) == '{"') {
+        $_cta_link = json_decode($link_item, true);
+    } elseif (is_array($link_item)) {
+        $_cta_link = $link_item;
+    } else {
+        $_cta_link = get_sub_field($link_item);
+    }
     $_return = '';
     if (is_array($_cta_link)) {
         $_return .= '<div class="field-cta">' . get_wpu_acf_link($_cta_link, $classname) . '</div>';
