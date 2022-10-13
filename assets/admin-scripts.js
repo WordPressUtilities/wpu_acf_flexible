@@ -23,15 +23,22 @@ document.addEventListener("DOMContentLoaded", function() {
             _field.val('hidden_' + Math.random().toString(36).slice(2, 12) + Date.now());
         }
 
-        /* Set initial random value */
-        acf.addAction('new_field', function(field) {
-            if (field.$el.hasClass('wpu-acf-flex-hidden-field')) {
-                var _tmpField = field.$el.find('input[name*="acf"]');
-                if (!_tmpField.val()) {
-                    _field_set_random_value(_tmpField);
-                }
+        var _createActionsCallback = function(field) {
+            if (!field.$el.hasClass('wpu-acf-flex-hidden-field')) {
+                return;
             }
-        });
+            var _tmpField = field.$el.find('input[name*="acf"]');
+            if (!_tmpField.val()) {
+                _field_set_random_value(_tmpField);
+            }
+        };
+
+        /* Load value on existing empty fields */
+        acf.addAction('load_field/type=text', _createActionsCallback);
+
+        /* Set initial random value */
+        acf.addAction('new_field', _createActionsCallback);
+
         /* On duplicate : randomize new value */
         acf.addAction('append', function($el) {
             if (!$el.hasClass('layout')) {
