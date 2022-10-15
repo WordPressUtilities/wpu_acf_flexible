@@ -103,8 +103,19 @@ function get_wpu_acf_video_embed_image($args = array()) {
         return false;
     }
 
-    if (strpos($_video, '<a') !== false) {
-        $_video = '<iframe allowfullscreen allow="autoplay" width="560" height="315" src="' . strip_tags($_video) . '"></iframe>';
+    global $content_width;
+    $iframe_width = 560;
+    if (isset($content_width) && is_numeric($content_width)) {
+        $iframe_width = $content_width;
+    }
+    $iframe_height = floor($iframe_width * 0.5625);
+    if (filter_var($_video, FILTER_VALIDATE_URL) !== false) {
+        $_video = '<iframe allowfullscreen allow="autoplay" width="' . $iframe_width . '" height="' . $iframe_height . '" src="' . strip_tags($_video) . '"></iframe>';
+    }
+
+    /* Do not embed if not an iframe */
+    if (strpos($_video, '<iframe') === false) {
+        return false;
     }
 
     $_video = '<div class="content-video">' . $_video . '</div>';
