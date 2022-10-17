@@ -335,7 +335,7 @@ function get_wpu_acf__content($field_name = 'content') {
 }
 
 function get_wpu_acf_cta($link_item = 'cta', $classname = '') {
-    if (substr($link_item, 0, 2) == '{"') {
+    if (is_string($link_item) && substr($link_item, 0, 2) == '{"') {
         $_cta_link = json_decode($link_item, true);
     } elseif (is_array($link_item)) {
         $_cta_link = $link_item;
