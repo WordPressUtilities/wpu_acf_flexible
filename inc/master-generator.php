@@ -92,7 +92,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             'orderby' => 'rand'
         ));
 
-        if(empty($random_datas['images'])){
+        if (empty($random_datas['images'])) {
             echo "You should add some images";
             die;
         }
@@ -156,8 +156,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     }
 
     public function get_field_value($metas, $field, $prefix, $base_field_key) {
-        if (!$field['max']) {
-            $field['max'] = 3;
+
+        if ($field['type'] == 'taxonomy' || $field['type'] == 'relationship') {
+            $field['max'] = isset($field['max']) && $field['max'] ? $field['max'] : 3;
         }
 
         switch ($field['type']) {
@@ -229,7 +230,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             $metas[$base_field_key] = $this->get_random_value($this->random_datas['images']);
             break;
         case 'number':
-            $metas[$base_field_key] = rand(5,300);
+            $field['min'] = isset($field['min']) && $field['min'] ? $field['min'] : 5;
+            $field['max'] = isset($field['max']) && $field['max'] ? $field['max'] : 600;
+            $metas[$base_field_key] = mt_rand($field['min'], $field['max']);
             break;
         case 'link':
             $metas[$base_field_key] = array(
@@ -239,7 +242,11 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             );
             break;
         case 'tab':
+        case 'group':
         case 'acfe_column':
+            break;
+        case 'true_false':
+            $metas[$base_field_key] = !!mt_rand(0,1);
             break;
         default:
             //echo '<pre>';
