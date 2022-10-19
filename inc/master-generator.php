@@ -152,7 +152,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         $base_prefix = $prefix;
 
         if ($is_repeater) {
-            $nb_repeats = isset($fields['max']) && is_numeric($fields['max']) ? $fields['max'] : 3;
+            $nb_repeats = isset($fields['max']) && is_numeric($fields['max']) ? $fields['max'] : mt_rand(3,10);
             $fields = $fields['sub_fields'];
             $metas[$base_prefix] = $nb_repeats;
         }
@@ -172,7 +172,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     public function get_field_value($metas, $field, $prefix, $base_field_key) {
 
         if ($field['type'] == 'taxonomy' || $field['type'] == 'relationship') {
-            $field['max'] = isset($field['max']) && $field['max'] ? $field['max'] : 3;
+            $field['max'] = isset($field['max']) && $field['max'] ? $field['max'] : mt_rand(3,10);
         }
 
         switch ($field['type']) {
