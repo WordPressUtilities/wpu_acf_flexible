@@ -4,6 +4,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
     private $is_debug = false;
     private $random_datas = array();
+    private $only_layout = false;
     private $is_dry_run = false;
     private $option_id = 'wpu_acf_flexible_page_master';
     private $post_details = array(
@@ -12,14 +13,16 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         'post_status' => 'draft'
     );
 
-    public function __construct($args = array()) {
+    public function __construct($args = array(), $assoc_args = array()) {
         parent::__construct();
-
         if (in_array('debug', $args)) {
             $this->is_debug = true;
         }
         if (in_array('dry-run', $args)) {
             $this->is_dry_run = true;
+        }
+        if (isset($assoc_args['only_layout'])) {
+            $this->only_layout = $assoc_args['only_layout'];
         }
         parent::init();
 
@@ -39,16 +42,27 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             $layout_id => array()
         );
 
+        /* If only_layout mode is enabled : load 10 random versions of the same block */
+        $number_of_iterations = 1;
+        if ($this->only_layout && isset($layouts_details_list[$this->only_layout . '_layout'])) {
+            $layouts_details_list = array(
+                $this->only_layout . '_layout' => $layouts_details_list[$this->only_layout . '_layout']
+            );
+            $number_of_iterations = 10;
+        }
+
         /* Shuffle layouts order */
         shuffle($layouts_details_list);
 
         /* Parse layout */
         $i = 0;
-        foreach ($layouts_details_list as $layout_key => $layout) {
-            $metas[$layout_id][] = $layout['name'];
-            $prefix = $layout_id . '_' . $i;
-            $metas = $this->get_layout_value($metas, $layout['sub_fields'], $prefix);
-            $i++;
+        for ($y = 0; $y < $number_of_iterations; $y++) {
+            foreach ($layouts_details_list as $layout_key => $layout) {
+                $metas[$layout_id][] = $layout['name'];
+                $prefix = $layout_id . '_' . $i;
+                $metas = $this->get_layout_value($metas, $layout['sub_fields'], $prefix);
+                $i++;
+            }
         }
 
         /* Display debug values */
@@ -246,12 +260,19 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         case 'acfe_column':
             break;
         case 'true_false':
-            $metas[$base_field_key] = !!mt_rand(0,1);
+            $metas[$base_field_key] = !!mt_rand(0, 1);
             break;
         default:
             //echo '<pre>';
             //var_dump($field['type']);
             //echo '</pre>';
+        }
+
+        /* 1 in 5 chances to set an empty field if not required  */
+        if (!isset($field['required']) || !$field['required']) {
+            if (!mt_rand(0, 5)) {
+                $metas[$base_field_key] = '';
+            }
         }
 
         if (isset($metas[$base_field_key])) {
@@ -267,8 +288,8 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 }
 
 if (defined('WP_CLI')) {
-    WP_CLI::add_command('wpu-acf-flex-master-generator', function ($args) {
-        $wpu_acf_flexible__master_generator = new wpu_acf_flexible__master_generator($args);
+    WP_CLI::add_command('wpu-acf-flex-master-generator', function ($args, $assoc_args) {
+        $wpu_acf_flexible__master_generator = new wpu_acf_flexible__master_generator($args, $assoc_args);
         $wpu_acf_flexible__master_generator->_plugins_loaded();
         WP_CLI::success('Page Master');
     });
