@@ -157,10 +157,10 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         $base_prefix = $prefix;
 
         if ($is_repeater) {
-            if (!isset($fields['max'])) {
+            if (!isset($fields['max']) || !$fields['max']) {
                 $fields['max'] = mt_rand(3, 10);
             }
-            if (!isset($fields['min'])) {
+            if (!isset($fields['min']) || !$fields['min']) {
                 $fields['min'] = mt_rand(0, $fields['max']);
             }
             $nb_repeats = mt_rand($fields['min'], $fields['max']);
