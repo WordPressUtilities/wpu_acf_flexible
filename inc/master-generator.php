@@ -111,10 +111,13 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             die;
         }
 
+        $html_string = '<a href="#">a</a> text with <strong><em><span style="text-decoration:underline">HTML</span></em></strong> and an emoji 😬';
+
         /* Texts */
         $random_datas['texts'] = array(
             'a text',
             'a long text',
+            $html_string,
             'a longer text, but not the longest',
             'a longer text : seriously, this should probably not happen, but just in case dont forget to have a look at me.'
         );
@@ -122,6 +125,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         /* Textareas */
         $random_datas['textareas'] = array(
             "lorem\nipsum\nfacto",
+            $html_string,
             "We don’t get a chance to do that many things, and every one should be really excellent. Because this is our life. Life is brief, and then you die, you know? And we’ve all chosen to do this with our lives. So it better be damn good. It better be worth it.",
             "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do.\n\nIf you haven’t found it yet, keep looking. Don’t settle. As with all matters of the heart, you’ll know when you find it. And, like any great relationship, it just gets better and better as the years roll on. So keep looking until you find it. Don’t settle."
         );
@@ -130,6 +134,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         $random_datas['link_labels'] = array(
             'My Link',
             'Click here',
+            $html_string,
             'A long label, which is rare but happens'
         );
 
@@ -152,7 +157,13 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         $base_prefix = $prefix;
 
         if ($is_repeater) {
-            $nb_repeats = isset($fields['max']) && is_numeric($fields['max']) ? $fields['max'] : mt_rand(3,10);
+            if (!isset($fields['max'])) {
+                $fields['max'] = mt_rand(3, 10);
+            }
+            if (!isset($fields['min'])) {
+                $fields['min'] = mt_rand(0, $fields['max']);
+            }
+            $nb_repeats = mt_rand($fields['min'], $fields['max']);
             $fields = $fields['sub_fields'];
             $metas[$base_prefix] = $nb_repeats;
         }
@@ -172,7 +183,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     public function get_field_value($metas, $field, $prefix, $base_field_key) {
 
         if ($field['type'] == 'taxonomy' || $field['type'] == 'relationship') {
-            $field['max'] = isset($field['max']) && $field['max'] ? $field['max'] : mt_rand(3,10);
+            $field['max'] = isset($field['max']) && $field['max'] ? $field['max'] : mt_rand(3, 10);
         }
 
         switch ($field['type']) {
