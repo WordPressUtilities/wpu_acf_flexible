@@ -223,7 +223,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
                 }
             }
             $metas[$base_field_key] = $terms;
-            if ($field['field_type'] == 'select') {
+            if (isset($field['field_type']) && $field['field_type'] == 'select') {
                 $metas[$base_field_key] = $terms[0];
             }
 

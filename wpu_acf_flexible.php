@@ -3,15 +3,17 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.32.3
+Version: 2.32.4
+Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
+Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
-Author URI: http://darklg.me/
+Author URI: https://darklg.me/
 License: MIT License
-License URI: http://opensource.org/licenses/MIT
+License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.32.3';
+    private $plugin_version = '2.32.4';
     private $field_types = array();
 
     /* Base */
