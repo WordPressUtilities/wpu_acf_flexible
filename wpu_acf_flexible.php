@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.32.4
+Version: 2.32.5
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -13,7 +13,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.32.4';
+    private $plugin_version = '2.32.5';
     private $field_types = array();
 
     /* Base */
@@ -190,7 +190,9 @@ EOT;
     }
 
     public function load_translation() {
-        load_muplugin_textdomain('wpu_acf_flexible', dirname(plugin_basename(__FILE__)) . '/lang/');
+        if (!load_plugin_textdomain('wpu_acf_flexible', false, dirname(plugin_basename(__FILE__)) . '/lang/')) {
+            load_muplugin_textdomain('wpu_acf_flexible', dirname(plugin_basename(__FILE__)) . '/lang/');
+        }
     }
 
     public function init() {
@@ -295,7 +297,7 @@ EOT;
                     'width' => '',
                     'class' => 'wpu-acf-flex-hidden-field',
                     'id' => ''
-                ),
+                )
             ),
             'wpuacf_text' => array(
                 'label' => __('Text', 'wpu_acf_flexible'),

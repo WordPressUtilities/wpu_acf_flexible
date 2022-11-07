@@ -335,7 +335,7 @@ function get_wpu_acf__content($field_name = 'content') {
     return '';
 }
 
-function get_wpu_acf_cta($link_item = 'cta', $classname = '') {
+function get_wpu_acf_cta($link_item = 'cta', $classname = '', $attributes = '') {
     if (is_string($link_item) && substr($link_item, 0, 2) == '{"') {
         $_cta_link = json_decode($link_item, true);
     } elseif (is_array($link_item)) {
@@ -345,7 +345,7 @@ function get_wpu_acf_cta($link_item = 'cta', $classname = '') {
     }
     $_return = '';
     if (is_array($_cta_link)) {
-        $_return .= '<div class="field-cta">' . get_wpu_acf_link($_cta_link, $classname) . '</div>';
+        $_return .= '<div class="field-cta">' . get_wpu_acf_link($_cta_link, $classname, $attributes) . '</div>';
     }
     return $_return;
 }
