@@ -151,12 +151,12 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         return apply_filters('wpu_acf_flexible__master_generator__random_datas', $random_datas);
     }
 
-    public function get_layout_value($metas, $fields, $prefix, $is_repeater = false) {
+    public function get_layout_value($metas, $fields, $prefix, $layout_type = 'default') {
 
         $nb_repeats = 1;
         $base_prefix = $prefix;
 
-        if ($is_repeater) {
+        if ($layout_type == 'repeater') {
             if (!isset($fields['max']) || !$fields['max']) {
                 $fields['max'] = mt_rand(3, 10);
             }
@@ -167,12 +167,18 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             $fields = $fields['sub_fields'];
             $metas[$base_prefix] = $nb_repeats;
         }
+        if ($layout_type == 'group') {
+            $fields = $fields['sub_fields'];
+        }
 
         for ($i = 0; $i < $nb_repeats; $i++) {
             foreach ($fields as $field_key => $field) {
                 $base_field_key = $prefix . '_' . $field_key;
-                if ($is_repeater) {
+                if ($layout_type == 'repeater') {
                     $base_field_key = $prefix . '_' . $i . '_' . $field_key;
+                }
+                if ($layout_type == 'group') {
+                    $base_field_key = $prefix . '_' . $field_key;
                 }
                 $metas = $this->get_field_value($metas, $field, $prefix, $base_field_key);
             }
@@ -228,8 +234,11 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             }
 
             break;
+        case 'group':
+            $metas = $this->get_layout_value($metas, $field, $base_field_key, 'group');
+            break;
         case 'repeater':
-            $metas = $this->get_layout_value($metas, $field, $base_field_key, 1);
+            $metas = $this->get_layout_value($metas, $field, $base_field_key, 'repeater');
             break;
         case 'oembed':
             $metas[$base_field_key] = $this->get_random_value($this->random_datas['videos']);
@@ -267,7 +276,6 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             );
             break;
         case 'tab':
-        case 'group':
         case 'acfe_column':
             break;
         case 'true_false':
