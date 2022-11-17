@@ -40,10 +40,17 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
     }
     $group_item = $groups[$group];
 
+    $i_row = 0;
     while (have_rows($group, $opt_group)):
         the_row();
         $layout = get_row_layout();
+        $current_i = $i_row;
+        $i_row++;
         if (!isset($group_item['layouts'][$layout])) {
+            continue;
+        }
+        $has_toggle = get_post_meta(get_the_ID(), $group . '_' . $current_i . '_acfe_flexible_toggle', 1);
+        if ($has_toggle == '1') {
             continue;
         }
 
