@@ -110,18 +110,25 @@ function get_wpu_acf_video_embed_image($args = array()) {
         return false;
     }
 
+    /* Video shortcode detected */
+    if(strpos($_video, '[video') !== false){
+        $_video = str_replace('[video', '<video controls autoplay', $_video);
+        $_video = str_replace('/]', '></video>', $_video);
+    }
+
     global $content_width;
     $iframe_width = 560;
     if (isset($content_width) && is_numeric($content_width)) {
         $iframe_width = $content_width;
     }
     $iframe_height = floor($iframe_width * 0.5625);
+    /* Detect a video URL */
     if (filter_var($_video, FILTER_VALIDATE_URL) !== false) {
         $_video = '<iframe allowfullscreen allow="autoplay" width="' . $iframe_width . '" height="' . $iframe_height . '" src="' . strip_tags($_video) . '"></iframe>';
     }
 
-    /* Do not embed if not an iframe */
-    if (strpos($_video, '<iframe') === false) {
+    /* Do not embed if not an iframe or a video tag */
+    if (strpos($_video, '<iframe') === false && strpos($_video, '<video') === false) {
         return false;
     }
 
@@ -143,6 +150,7 @@ function get_wpu_acf_video_embed_image($args = array()) {
             $_image = $_video;
         }
     } else {
+        $_video = str_replace('controls autoplay', 'controls', $_video);
         $_video = str_replace('autoplay=1', '', $_video);
         $_image = $_video;
     }

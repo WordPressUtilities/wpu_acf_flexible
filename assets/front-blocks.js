@@ -14,7 +14,10 @@ window.addEventListener("DOMContentLoaded", function(e) {
         });
 
         function set_play_event($video) {
-            var $iframe = $video.querySelector('iframe[data-src]');
+            if ($video.getAttribute('data-is-loading') == '1') {
+                return;
+            }
+            var $iframe = $video.querySelector('iframe[data-src], video[data-src]');
             $iframe.setAttribute('src', $iframe.getAttribute('data-src'));
             $video.setAttribute('data-is-loading', 1);
             setTimeout(function() {
