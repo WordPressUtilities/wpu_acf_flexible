@@ -213,6 +213,7 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
     $has_srcset = apply_filters('get_wpu_acf_image__has_srcset', false);
     if (isset($attr['has_srcset'])) {
         $has_srcset = $attr['has_srcset'];
+        unset($attr['has_srcset']);
     }
 
     /* Retrieve image HTML without srcset */
