@@ -104,8 +104,15 @@ function get_wpu_acf_video_embed_image($args = array()) {
     if (!isset($args['image_field_id'])) {
         $args['image_field_id'] = 'image';
     }
-
-    $_video = get_sub_field($args['video_field_id']);
+    if (!isset($args['noimg_force_autoplay'])) {
+        $args['noimg_force_autoplay'] = false;
+    }
+    if(isset($args['video_field'])){
+        $_video = $args['video_field'];
+    }
+    else {
+        $_video = get_sub_field($args['video_field_id']);
+    }
     if (!$_video) {
         return false;
     }
@@ -138,13 +145,15 @@ function get_wpu_acf_video_embed_image($args = array()) {
     }
 
     $_image_size = apply_filters('wpu_acf_flexible__content__video__image_size', 'large');
-    $_image_id = get_sub_field($args['image_field_id']);
+    $_image_id = $args['image_field_id'] ? get_sub_field($args['image_field_id']) : '';
     $_image = '';
     if (!is_admin()) {
-        if ($_image_id) {
-            $_video = str_replace('src=', 'data-src=', $_video);
+        if($_image_id || $args['noimg_force_autoplay']){
             $_video = str_replace('app_id=', 'autoplay=1&app_id=', $_video);
             $_video = str_replace('feature=oembed', 'feature=oembed&autoplay=1', $_video);
+        }
+        if ($_image_id) {
+            $_video = str_replace('src=', 'data-src=', $_video);
             $_image = '<div class="wpuacf-video"><div class="cursor"></div><div class="cover-image">' . get_wpu_acf_image($_image_id, $_image_size) . '</div>' . $_video . '</div>';
         } else {
             $_image = $_video;
