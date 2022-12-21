@@ -1,6 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
     'use strict';
 
+    /* Toggle visibility on layouts */
+    (function(){
+        jQuery('body').on('click', '.acf-icon[data-name="wpu-acf-flex-toggle"]', function(e){
+            e.preventDefault();
+            var $icn = jQuery(this);
+            $icn.closest('.layout[data-layout]').toggleClass('wpuacf-hidden-preview');
+            $icn.toggleClass('-down').toggleClass('-up');
+        });
+    }());
+
     /* Force correct lang tab selection */
     (function() {
         var current_lang = window.wpuacfflex_current_admin_language;

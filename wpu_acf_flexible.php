@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.33.3
+Version: 2.34.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -13,7 +13,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.33.3';
+    private $plugin_version = '2.34.0';
     private $field_types = array();
 
     /* Base */
@@ -185,8 +185,11 @@ EOT;
             'admin_set_editor_height'
         ));
         add_action('admin_head', array(&$this,
-            'admin_set_hidden_fields'
+            'admin_set_styles'
         ));
+        add_filter('acfe/flexible/layouts/icons', array(&$this,
+            'set_acfe_flexible_layouts_icons'
+        ), 999, 1);
     }
 
     public function load_translation() {
@@ -1088,8 +1091,18 @@ EOT;
         }
     }
 
-    function admin_set_hidden_fields() {
-        echo '<style>.wpu-acf-flex-hidden-field{z-index:1!important;position:absolute!important;top:0!important;left:-999em!important;height:1px!important;width:1px!important;overflow:hidden!important;}</style>';
+    function set_acfe_flexible_layouts_icons($icons) {
+        $toggle_title = __('Click to reduce/enlarge the layout', 'wpu_acf_flexible');
+        $icons['wpu-acf-flex-toggle'] = '<a class="acf-icon -down small" href="#" data-name="wpu-acf-flex-toggle" title="'.esc_attr($toggle_title).'"></a>';
+        return $icons;
+    }
+
+    function admin_set_styles() {
+        echo '<style>';
+        echo '.layout.wpuacf-hidden-preview .acf-fields,';
+        echo '.layout.wpuacf-hidden-preview .acfe-fc-placeholder ,';
+        echo '.wpu-acf-flex-hidden-field{z-index:1!important;position:absolute!important;top:0!important;left:-999em!important;height:1px!important;width:1px!important;overflow:hidden!important;}';
+        echo '</style>';
     }
 }
 
