@@ -44,11 +44,16 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
         /* If only_layout mode is enabled : load 10 random versions of the same block */
         $number_of_iterations = 1;
-        if ($this->only_layout && isset($layouts_details_list[$this->only_layout . '_layout'])) {
-            $layouts_details_list = array(
-                $this->only_layout . '_layout' => $layouts_details_list[$this->only_layout . '_layout']
-            );
-            $number_of_iterations = 10;
+        if ($this->only_layout) {
+            if (isset($layouts_details_list[$this->only_layout . '_layout'])) {
+                $layouts_details_list = array(
+                    $this->only_layout . '_layout' => $layouts_details_list[$this->only_layout . '_layout']
+                );
+                $number_of_iterations = 10;
+            } else {
+                echo '- The layout "' . strip_tags($this->only_layout) . '" does not exists.' . "\n";
+                echo '- Did you mean "' . $this->find_closest_layout_by_name($this->only_layout, $layouts_details_list) . '" ?' . "\n";
+            }
         }
 
         /* Shuffle layouts order */
@@ -91,6 +96,21 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         }
 
         do_action('wpu_acf_flexible__master_generator__after_insert_post', $post_id);
+    }
+
+    function find_closest_layout_by_name($layout_name, $layouts) {
+        $layouts = array_keys($layouts);
+        $closest = '';
+        $shortest = -1;
+        foreach ($layouts as $word) {
+            $word = str_replace('_layout', '', $word);
+            $lev = levenshtein($layout_name, $word);
+            if ($lev <= $shortest || $shortest < 0) {
+                $closest = $word;
+                $shortest = $lev;
+            }
+        }
+        return $closest;
     }
 
     public function generate_random_datas() {
