@@ -3,6 +3,7 @@
 class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
     private $is_debug = false;
+    private $number_of_iterations = false;
     private $random_datas = array();
     private $only_layout = false;
     private $is_dry_run = false;
@@ -23,6 +24,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         }
         if (isset($assoc_args['only_layout'])) {
             $this->only_layout = $assoc_args['only_layout'];
+        }
+        if (isset($assoc_args['nb_iterations']) && is_numeric($assoc_args['nb_iterations'])) {
+            $this->number_of_iterations = intval($assoc_args['nb_iterations'], 10);
         }
         parent::init();
 
@@ -45,15 +49,21 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         /* If only_layout mode is enabled : load 10 random versions of the same block */
         $number_of_iterations = 1;
         if ($this->only_layout) {
-            if (isset($layouts_details_list[$this->only_layout . '_layout'])) {
-                $layouts_details_list = array(
-                    $this->only_layout . '_layout' => $layouts_details_list[$this->only_layout . '_layout']
-                );
-                $number_of_iterations = 10;
-            } else {
-                echo '- The layout "' . strip_tags($this->only_layout) . '" does not exists.' . "\n";
-                echo '- Did you mean "' . $this->find_closest_layout_by_name($this->only_layout, $layouts_details_list) . '" ?' . "\n";
+            if (!isset($layouts_details_list[$this->only_layout . '_layout'])) {
+                $closest = $this->find_closest_layout_by_name($this->only_layout, $layouts_details_list);
+                WP_CLI::line('- The layout "' . strip_tags($this->only_layout) . '" does not exist.');
+                WP_CLI::confirm('- Do you mean "' . $closest . '" ?');
+                $this->only_layout = $closest;
             }
+
+            $layouts_details_list = array(
+                $this->only_layout . '_layout' => $layouts_details_list[$this->only_layout . '_layout']
+            );
+            $number_of_iterations = 10;
+        }
+
+        if ($this->number_of_iterations) {
+            $number_of_iterations = $this->number_of_iterations;
         }
 
         /* Shuffle layouts order */
@@ -331,5 +341,7 @@ if (defined('WP_CLI')) {
         $wpu_acf_flexible__master_generator = new wpu_acf_flexible__master_generator($args, $assoc_args);
         $wpu_acf_flexible__master_generator->_plugins_loaded();
         WP_CLI::success('Page Master');
-    });
+    }, array(
+        'shortdesc' => 'Generate a page with all blocks, filled with random data.'
+    ));
 }
