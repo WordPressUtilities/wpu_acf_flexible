@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2022-12-21 16:45+0100\n"
+"POT-Creation-Date: 2023-01-02 16:48+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -36,21 +36,22 @@ msgstr "[WPUACF] Contenu"
 
 #: .././blocks/content-classic/model.php:9 .././blocks/downloads/model.php:7
 #: .././blocks/faq/model.php:6 .././blocks/features/model.php:7
-#: .././blocks/features/model.php:26 .././blocks/hero/model.php:7
-#: .././blocks/image-content/model.php:22 .././blocks/image/model.php:7
-#: .././blocks/logos/model.php:7 .././blocks/posts/model.php:8
-#: .././blocks/quote/model.php:7 .././blocks/rich-table/model.php:7
-#: .././blocks/team-quote/model.php:7 .././blocks/video/model.php:6
-#: .././wpu_acf_flexible.php:293
+#: .././blocks/features/model.php:26 .././blocks/gallery/model.php:7
+#: .././blocks/hero/model.php:7 .././blocks/image-content/model.php:22
+#: .././blocks/image/model.php:7 .././blocks/logos/model.php:7
+#: .././blocks/posts/model.php:8 .././blocks/quote/model.php:7
+#: .././blocks/rich-table/model.php:7 .././blocks/team-quote/model.php:7
+#: .././blocks/video/model.php:6 .././wpu_acf_flexible.php:293
 msgid "Title"
 msgstr "Titre"
 
 #: .././blocks/content-classic/model.php:13 .././blocks/downloads/model.php:10
 #: .././blocks/features/model.php:10 .././blocks/features/model.php:29
-#: .././blocks/image-content/model.php:25 .././blocks/image/model.php:10
-#: .././blocks/logos/model.php:10 .././blocks/posts/model.php:11
-#: .././blocks/rich-table/model.php:10 .././blocks/rich-table/model.php:39
-#: .././blocks/rich-table/model.php:87 .././blocks/video/model.php:9
+#: .././blocks/gallery/model.php:10 .././blocks/image-content/model.php:25
+#: .././blocks/image/model.php:10 .././blocks/logos/model.php:10
+#: .././blocks/posts/model.php:11 .././blocks/rich-table/model.php:10
+#: .././blocks/rich-table/model.php:39 .././blocks/rich-table/model.php:87
+#: .././blocks/video/model.php:9
 msgid "Content"
 msgstr "Contenu"
 
@@ -125,6 +126,14 @@ msgstr "Image"
 #: .././blocks/form/model.php:4
 msgid "[WPUACF] Form"
 msgstr "[WPUACF] Formulaire"
+
+#: .././blocks/gallery/model.php:4
+msgid "[WPUACF] Gallery"
+msgstr "[WPUACF] Galerie"
+
+#: .././blocks/gallery/model.php:16
+msgid "Images"
+msgstr "Images"
 
 #: .././blocks/hero/model.php:4
 msgid "[WPUACF] Hero"
@@ -287,19 +296,29 @@ msgstr "Gauche"
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:436
+#: .././wpu_acf_flexible.php:420
+#, php-format
+msgid "Dimensions: min %s"
+msgstr "Dimensions: min %s"
+
+#: .././wpu_acf_flexible.php:427
+#, php-format
+msgid "Format: %s"
+msgstr "Format : %s"
+
+#: .././wpu_acf_flexible.php:452
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:436
+#: .././wpu_acf_flexible.php:452
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:766 .././wpu_acf_flexible.php:775
+#: .././wpu_acf_flexible.php:782 .././wpu_acf_flexible.php:791
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1095
+#: .././wpu_acf_flexible.php:1111
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 

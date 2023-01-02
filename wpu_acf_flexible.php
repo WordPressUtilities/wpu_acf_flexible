@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.35.3
+Version: 2.36.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -13,7 +13,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.35.3';
+    private $plugin_version = '2.36.0';
     private $field_types = array();
 
     /* Base */
@@ -412,6 +412,22 @@ EOT;
 
         if ($field['type'] == 'true_false' && !isset($field['ui'])) {
             $field['ui'] = 1;
+        }
+
+        /* Instructions */
+        $instructions_part = array();
+        if (isset($field['min_width'], $field['min_height'])) {
+            $instructions_part[] = sprintf(__('Dimensions: min %s', 'wpu_acf_flexible'), $field['min_width'] . '&times;' . $field['min_height'] . 'px');
+        }
+        if (isset($field['mime_types'])) {
+            $format = $field['mime_types'];
+            if (!is_array($format)) {
+                $format = explode(',', $field['mime_types']);
+            }
+            $instructions_part[] = sprintf(__('Format: %s','wpu_acf_flexible'), strtoupper(implode('/', $format)));
+        }
+        if ($instructions_part && (!isset($field['instructions']) || !$field['instructions'])) {
+            $field['instructions'] = implode('. ', $instructions_part) . '.';
         }
 
         /* Required */
@@ -1093,7 +1109,7 @@ EOT;
 
     function set_acfe_flexible_layouts_icons($icons) {
         $toggle_title = __('Click to reduce/enlarge the layout', 'wpu_acf_flexible');
-        $icons['wpu-acf-flex-toggle'] = '<a class="acf-icon -down small" href="#" data-name="wpu-acf-flex-toggle" title="'.esc_attr($toggle_title).'"></a>';
+        $icons['wpu-acf-flex-toggle'] = '<a class="acf-icon -down small" href="#" data-name="wpu-acf-flex-toggle" title="' . esc_attr($toggle_title) . '"></a>';
         return $icons;
     }
 
