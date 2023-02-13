@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.36.1
+Version: 2.36.2
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -13,8 +13,11 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.36.1';
+    private $plugin_version = '2.36.2';
     private $field_types = array();
+
+    private $plugin_dir_path;
+    public $contents;
 
     /* Base */
     private $base_field = array(
@@ -424,7 +427,7 @@ EOT;
             if (!is_array($format)) {
                 $format = explode(',', $field['mime_types']);
             }
-            $instructions_part[] = sprintf(__('Format: %s','wpu_acf_flexible'), strtoupper(implode('/', $format)));
+            $instructions_part[] = sprintf(__('Format: %s', 'wpu_acf_flexible'), strtoupper(implode('/', $format)));
         }
         if ($instructions_part && (!isset($field['instructions']) || !$field['instructions'])) {
             $field['instructions'] = implode('. ', $instructions_part) . '.';
