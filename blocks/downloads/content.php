@@ -4,11 +4,21 @@ if (empty($_files)) {
     return;
 }
 
+/* ----------------------------------------------------------
+  Settings
+---------------------------------------------------------- */
+
+$_display_filesize = apply_filters('wpu_acf_flexible__content__downloads__display_filesize', false);
+$_content_before = apply_filters('wpu_acf_flexible__content__downloads__before', '');
+$_content_after = apply_filters('wpu_acf_flexible__content__downloads__after', '');
+$_button_classname = apply_filters('wpu_acf_flexible__content__downloads__button_classname', '');
+
 $files = array();
 foreach ($_files as $_file) {
     $_url = false;
     $_label = 'link';
     $_target = '';
+    $_size = '';
     $_download = false;
     $_extension = false;
 
@@ -22,6 +32,10 @@ foreach ($_files as $_file) {
         $_url = wp_get_attachment_url($_file['file']);
         $_label = pathinfo($_url, PATHINFO_BASENAME);
         $_extension = strtolower(pathinfo($_url, PATHINFO_EXTENSION));
+        $file_obj = get_attached_file($_file['file']);
+        if (file_exists($file_obj)) {
+            $_size = wpuacfflex_human_filesize(filesize($file_obj), 1);
+        }
     }
     if (!$_url) {
         return false;
@@ -34,28 +48,31 @@ foreach ($_files as $_file) {
 
     $files[] = array(
         'url' => $_url,
+        'size' => $_size,
         'target' => '',
         'title' => $_label,
         'download' => $_download,
         'extension' => $_extension
     );
 }
-$_content_before = apply_filters('wpu_acf_flexible__content__downloads__before', '');
-$_content_after = apply_filters('wpu_acf_flexible__content__downloads__after', '');
-$_button_classname = apply_filters('wpu_acf_flexible__content__downloads__button_classname', '');
-?><div class="<?php echo get_wpu_acf_wrapper_classname('downloads'); ?>">
-    <?php echo $_content_before; ?>
-    <div class="block-downloads">
-        <?php
-        echo get_wpu_acf_title_content();
-        echo '<ul class="files-list">';
-        foreach ($files as $file):
-        echo '<li>';
-        echo get_wpu_acf_link($file, $_button_classname, ($file['download'] ? 'data-ext="' . $file['extension'] . '" download=""' : ''));
-        echo '</li>';
-        endforeach;
-        echo '</ul>';
-        ?>
-    </div>
-    <?php echo $_content_after; ?>
-</div>
+
+/* ----------------------------------------------------------
+  Content
+---------------------------------------------------------- */
+
+echo '<div class="' . get_wpu_acf_wrapper_classname('downloads') . '">';
+echo $_content_before;
+echo '<div class="block-downloads">' . get_wpu_acf_title_content();
+echo '<ul class="files-list">';
+foreach ($files as $file):
+    echo '<li><div class="files-list__item">';
+    echo get_wpu_acf_link($file, $_button_classname, ($file['download'] ? 'data-ext="' . $file['extension'] . '" download=""' : ''));
+    if ($_display_filesize && $file['size']) {
+        echo '<div class="file-size">' . $file['size'] . '</div>';
+    }
+    echo '</div></li>';
+endforeach;
+echo '</ul>';
+echo '</div>';
+echo $_content_after;
+echo '</div>';

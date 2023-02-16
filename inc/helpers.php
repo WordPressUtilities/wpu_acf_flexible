@@ -99,10 +99,9 @@ function get_wpu_acf_video_embed_image($args = array()) {
     if (!isset($args['noimg_force_autoplay'])) {
         $args['noimg_force_autoplay'] = false;
     }
-    if(isset($args['video_field'])){
+    if (isset($args['video_field'])) {
         $_video = $args['video_field'];
-    }
-    else {
+    } else {
         $_video = get_sub_field($args['video_field_id']);
     }
     if (!$_video) {
@@ -110,7 +109,7 @@ function get_wpu_acf_video_embed_image($args = array()) {
     }
 
     /* Video shortcode detected */
-    if(strpos($_video, '[video') !== false){
+    if (strpos($_video, '[video') !== false) {
         $_video = str_replace('[video', '<video controls autoplay', $_video);
         $_video = str_replace('/]', '></video>', $_video);
     }
@@ -140,7 +139,7 @@ function get_wpu_acf_video_embed_image($args = array()) {
     $_image_id = $args['image_field_id'] ? get_sub_field($args['image_field_id']) : '';
     $_image = '';
     if (!is_admin()) {
-        if($_image_id || $args['noimg_force_autoplay']){
+        if ($_image_id || $args['noimg_force_autoplay']) {
             $_video = str_replace('app_id=', 'autoplay=1&app_id=', $_video);
             $_video = str_replace('feature=oembed', 'feature=oembed&autoplay=1', $_video);
         }
@@ -489,4 +488,15 @@ function wpuacfflex_template_get_layout_css($layout_id, $layout, $css_rule_prefi
         $css .= " {\n\n}\n";
     }
     return $css;
+}
+
+/* ----------------------------------------------------------
+  File size
+---------------------------------------------------------- */
+
+/* Thanks to https://www.php.net/manual/en/function.filesize.php#106569 */
+function wpuacfflex_human_filesize($bytes, $decimals = 2) {
+    $sz = 'bkmgtp';
+    $factor = floor((strlen($bytes) - 1) / 3);
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
