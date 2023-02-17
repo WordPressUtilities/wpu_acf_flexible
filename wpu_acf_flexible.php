@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.37.0
+Version: 2.38.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -13,7 +13,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.37.0';
+    private $plugin_version = '2.38.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -147,7 +147,9 @@ EOT;
 <ul class="##ID##-list">
 <?php while (have_rows('##ID##')): the_row(); ?>
     <li>
+    <div class="##ID##-list__item">
 ##REPEAT##
+    </div>
     </li>
 <?php endwhile;?>
 </ul>
@@ -389,6 +391,13 @@ EOT;
                 $field = array();
             }
         }
+        /* Sub fields */
+        if(!isset($field['sub_fields'])){
+            $field['sub_fields'] = array();
+        }
+        if(isset($field['wpuacf_extra_sub_fields']) && is_array($field['wpuacf_extra_sub_fields'])){
+            $field['sub_fields'] = array_merge($field['sub_fields'], $field['wpuacf_extra_sub_fields']);
+        }
 
         /* Allow common fields with overrides */
         if (isset($field['type']) && array_key_exists($field['type'], $this->field_types)) {
@@ -409,6 +418,7 @@ EOT;
         if (!isset($field['type'])) {
             $field['type'] = 'text';
         }
+
         if (!isset($field['original_field_type'])) {
             $field['original_field_type'] = $field['type'];
         }
@@ -416,6 +426,7 @@ EOT;
         if ($field['type'] == 'true_false' && !isset($field['ui'])) {
             $field['ui'] = 1;
         }
+
 
         /* Instructions */
         $instructions_part = array();
