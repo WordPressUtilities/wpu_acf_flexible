@@ -1,6 +1,8 @@
 <?php
 
 $_numbers_list_classname = trim(apply_filters('wpu_acf_flexible__content__numbers__numberslist__classname', 'numbers-list'));
+$_numbers_list_number_tags = trim(apply_filters('wpu_acf_flexible__content__numbers__number_tags', '<strong>'));
+$_numbers_list_label_tags = trim(apply_filters('wpu_acf_flexible__content__numbers__label_tags', '<small>'));
 
 $_numbers = get_sub_field('numbers');
 if (empty($_numbers)) {
@@ -10,10 +12,10 @@ if (empty($_numbers)) {
 $_numbers_html = '';
 while (has_sub_field('numbers')) {
     $_number_html = '';
-    $_number_html .= '<div class="number">' . strip_tags(get_sub_field('number')) . '</div>';
+    $_number_html .= '<div class="number">' . strip_tags(get_sub_field('number'), $_numbers_list_number_tags) . '</div>';
     $label = get_sub_field('label');
     if ($label) {
-        $_number_html .= '<div class="label">' . strip_tags($label) . '</div>';
+        $_number_html .= '<div class="label">' . strip_tags($label, $_numbers_list_label_tags) . '</div>';
     }
     $_numbers_html .= '<li><div class="' . $_numbers_list_classname . '__item">' . $_number_html . '</div></li>';
 }
