@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2023-01-02 16:48+0100\n"
+"POT-Creation-Date: 2023-03-29 11:37+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -41,7 +41,7 @@ msgstr "[WPUACF] Contenu"
 #: .././blocks/image/model.php:7 .././blocks/logos/model.php:7
 #: .././blocks/posts/model.php:8 .././blocks/quote/model.php:7
 #: .././blocks/rich-table/model.php:7 .././blocks/team-quote/model.php:7
-#: .././blocks/video/model.php:6 .././wpu_acf_flexible.php:293
+#: .././blocks/video/model.php:6 .././wpu_acf_flexible.php:298
 msgid "Title"
 msgstr "Titre"
 
@@ -119,7 +119,7 @@ msgid "Features"
 msgstr "Caractéristiques"
 
 #: .././blocks/features/model.php:22 .././blocks/logos/model.php:19
-#: .././blocks/rich-table/model.php:58 .././wpu_acf_flexible.php:278
+#: .././blocks/rich-table/model.php:58 .././wpu_acf_flexible.php:283
 msgid "Image"
 msgstr "Image"
 
@@ -159,9 +159,25 @@ msgstr "[WPUACF] Logos"
 msgid "Logos"
 msgstr "Logos"
 
-#: .././blocks/logos/model.php:23 .././wpu_acf_flexible.php:289
+#: .././blocks/logos/model.php:23 .././wpu_acf_flexible.php:294
 msgid "Link"
 msgstr "Lien"
+
+#: .././blocks/numbers/model.php:4
+msgid "[WPUACF] Numbers"
+msgstr "[WPUACF] Nombres"
+
+#: .././blocks/numbers/model.php:10
+msgid "Numbers"
+msgstr "Nombres"
+
+#: .././blocks/numbers/model.php:14
+msgid "Number"
+msgstr "Nombre"
+
+#: .././blocks/numbers/model.php:20
+msgid "Label"
+msgstr "Label"
 
 #: .././blocks/posts/model.php:5
 msgid "[WPUACF] Posts"
@@ -223,7 +239,7 @@ msgstr "Colonnes"
 msgid "Add a column"
 msgstr "Ajouter une colonne"
 
-#: .././blocks/rich-table/model.php:49 .././wpu_acf_flexible.php:306
+#: .././blocks/rich-table/model.php:49 .././wpu_acf_flexible.php:311
 msgid "Text"
 msgstr "Texte"
 
@@ -267,58 +283,58 @@ msgstr "[WPUACF] Vidéo"
 msgid "Cover image"
 msgstr "Image de couverture"
 
-#: .././blocks/video/model.php:18 .././wpu_acf_flexible.php:283
+#: .././blocks/video/model.php:18 .././wpu_acf_flexible.php:288
 msgid "Video"
 msgstr "Vidéo"
 
-#: .././wpu_acf_flexible.php:284
+#: .././wpu_acf_flexible.php:289
 #, php-format
 msgid "MP4 format. Max %sMB. Rec: 1.5MB."
 msgstr "Format MP4. Max %sMo. Rec: 1.5Mo."
 
-#: .././wpu_acf_flexible.php:297
+#: .././wpu_acf_flexible.php:302
 msgid "Unique ID"
 msgstr "ID unique"
 
-#: .././wpu_acf_flexible.php:311
+#: .././wpu_acf_flexible.php:316
 msgid "Editor"
 msgstr "Éditeur"
 
-#: .././wpu_acf_flexible.php:317
+#: .././wpu_acf_flexible.php:322
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:320
+#: .././wpu_acf_flexible.php:325
 msgid "Left"
 msgstr "Gauche"
 
-#: .././wpu_acf_flexible.php:321
+#: .././wpu_acf_flexible.php:326
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:420
+#: .././wpu_acf_flexible.php:434
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:427
+#: .././wpu_acf_flexible.php:441
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:452
+#: .././wpu_acf_flexible.php:466
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:452
+#: .././wpu_acf_flexible.php:466
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:782 .././wpu_acf_flexible.php:791
+#: .././wpu_acf_flexible.php:796 .././wpu_acf_flexible.php:805
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1111
+#: .././wpu_acf_flexible.php:1125
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
