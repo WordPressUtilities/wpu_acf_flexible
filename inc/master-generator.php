@@ -51,8 +51,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         if ($this->only_layout) {
             if (!isset($layouts_details_list[$this->only_layout . '_layout'])) {
                 $closest = $this->find_closest_layout_by_name($this->only_layout, $layouts_details_list);
-                WP_CLI::line('- The layout "' . strip_tags($this->only_layout) . '" does not exist.');
-                WP_CLI::confirm('- Do you mean "' . $closest . '" ?');
+                WP_CLI::confirm('- The layout "' . strip_tags($this->only_layout) . '" does not exist.' . "\n" . '- Do you mean "' . $closest . '" ?');
                 $this->only_layout = $closest;
             }
 
