@@ -104,6 +104,11 @@ function get_wpu_acf_video_embed_image($args = array()) {
     } else {
         $_video = get_sub_field($args['video_field_id']);
     }
+    if (isset($args['image_field'])) {
+        $_image_id = $args['image_field'];
+    } else {
+        $_image_id = get_sub_field($args['image_field_id']);
+    }
     if (!$_video) {
         return false;
     }
@@ -136,7 +141,6 @@ function get_wpu_acf_video_embed_image($args = array()) {
     }
 
     $_image_size = apply_filters('wpu_acf_flexible__content__video__image_size', 'large');
-    $_image_id = $args['image_field_id'] ? get_sub_field($args['image_field_id']) : '';
     $_image = '';
     if (!is_admin()) {
         if ($_image_id || $args['noimg_force_autoplay']) {

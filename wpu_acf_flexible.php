@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.39.2
+Version: 2.39.3
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -13,7 +13,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.39.2';
+    private $plugin_version = '2.39.3';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -207,6 +207,7 @@ EOT;
         if (!function_exists('acf_add_local_field_group')) {
             return;
         }
+        $this->base_field = apply_filters('wpu_acf_flexible__base_field', $this->base_field);
         $this->field_types = $this->get_custom_field_types();
         $this->contents = apply_filters('wpu_acf_flexible_content', array());
         foreach ($this->contents as $id => $content) {
@@ -392,10 +393,10 @@ EOT;
             }
         }
         /* Sub fields */
-        if(!isset($field['sub_fields'])){
+        if (!isset($field['sub_fields'])) {
             $field['sub_fields'] = array();
         }
-        if(isset($field['wpuacf_extra_sub_fields']) && is_array($field['wpuacf_extra_sub_fields'])){
+        if (isset($field['wpuacf_extra_sub_fields']) && is_array($field['wpuacf_extra_sub_fields'])) {
             $field['sub_fields'] = array_merge($field['sub_fields'], $field['wpuacf_extra_sub_fields']);
         }
 
@@ -426,7 +427,6 @@ EOT;
         if ($field['type'] == 'true_false' && !isset($field['ui'])) {
             $field['ui'] = 1;
         }
-
 
         /* Instructions */
         $instructions_part = array();
