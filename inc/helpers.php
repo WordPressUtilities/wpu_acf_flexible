@@ -248,7 +248,7 @@ function get_wpu_acf_figure($image, $size = 'thumbnail', $attr = array()) {
         $attr['img_wrapper'] = false;
     }
 
-    $html = get_wpu_acf_image($image, $size);
+    $html = get_wpu_acf_image($image, $size, $attr);
     if ($attr['img_wrapper']) {
         $html = '<div class="figure-img-wrapper">' . $html . '</div>';
     }
