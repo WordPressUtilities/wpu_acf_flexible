@@ -41,6 +41,14 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
     $group_item = $groups[$group];
     while (have_rows($group, $opt_group)):
         the_row();
+
+        if (is_singular() && post_password_required()) {
+            echo apply_filters('get_wpu_acf_flexible_content__before_password_form', '<section class="centered-container cc-wpuacfflex-password-form section"><div class="wpuacfflex-password-form">');
+            echo apply_filters('get_wpu_acf_flexible_content__password_form', get_the_password_form());
+            echo apply_filters('get_wpu_acf_flexible_content__after_password_form', '</div></section>');
+            break;
+        }
+
         $layout = get_row_layout();
         if (!isset($group_item['layouts'][$layout])) {
             continue;
