@@ -28,7 +28,13 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
     }
 
     if (!have_rows($group, $opt_group)) {
-        return '';
+        $default_html = '';
+        if (is_singular() && apply_filters('get_wpu_acf_flexible_content__display__default_content', false)) {
+            $default_html .= apply_filters('get_wpu_acf_flexible_content__before_default_content', '<section class="centered-container cc-wpuacfflex-default-content section"><div class="wpuacfflex-default-content cssc-content">');
+            $default_html .= apply_filters('get_wpu_acf_flexible_content__default_content', get_the_content());
+            $default_html .= apply_filters('get_wpu_acf_flexible_content__after_default_content', '</div></section>');
+        }
+        return $default_html;
     }
 
     ob_start();
