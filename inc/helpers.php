@@ -27,24 +27,42 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         $opt_group = $wpuacfflex_args['opt_group'];
     }
 
-    if (!have_rows($group, $opt_group)) {
-        $default_html = '';
-        if (is_singular() && apply_filters('get_wpu_acf_flexible_content__display__default_content', false)) {
-            $default_html .= apply_filters('get_wpu_acf_flexible_content__before_default_content', '<section class="centered-container cc-wpuacfflex-default-content section"><div class="wpuacfflex-default-content cssc-content">');
-            $default_html .= apply_filters('get_wpu_acf_flexible_content__default_content', get_the_content());
-            $default_html .= apply_filters('get_wpu_acf_flexible_content__after_default_content', '</div></section>');
-        }
-        return $default_html;
-    }
-
-    ob_start();
-
     $group_item = $group;
     $groups = apply_filters('wpu_acf_flexible_content', array());
     if (!isset($groups[$group])) {
         return '';
     }
     $group_item = $groups[$group];
+
+    if (!have_rows($group, $opt_group)) {
+        $default_html = '';
+
+        /* Display default content */
+        if (is_singular() && apply_filters('get_wpu_acf_flexible_content__display__default_content', false)) {
+            $default_html .= apply_filters('get_wpu_acf_flexible_content__before_default_content', '<section class="centered-container cc-wpuacfflex-default-content section"><div class="wpuacfflex-default-content cssc-content">');
+            $default_html .= apply_filters('get_wpu_acf_flexible_content__default_content', get_the_content());
+            $default_html .= apply_filters('get_wpu_acf_flexible_content__after_default_content', '</div></section>');
+        }
+
+        /* Migrate default content */
+        if (is_singular() && apply_filters('get_wpu_acf_flexible_content__migrate_default_content', false)) {
+            foreach ($group_item['layouts'] as $layout_id => $layout) {
+                /* If the default model is found */
+                if (isset($layout['wpuacf_model']) && $layout['wpuacf_model'] == 'content-classic') {
+                    /* Create native ACF field */
+                    update_field($group, '');
+                    /* Load one content field and one meta value */
+                    update_post_meta(get_the_ID(), $group . '_0_content', get_the_content());
+                    update_post_meta(get_the_ID(), $group, array('content'));
+                    break;
+                }
+            }
+        } else {
+            return $default_html;
+        }
+    }
+
+    ob_start();
     while (have_rows($group, $opt_group)):
         the_row();
 
