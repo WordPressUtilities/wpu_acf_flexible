@@ -289,20 +289,31 @@ function get_wpu_acf_figure($image, $size = 'thumbnail', $attr = array()) {
     if (!is_numeric($image)) {
         return '';
     }
+
+    /* Load default attributes */
     if (!is_array($attr)) {
         $attr = array();
     }
-    if (!isset($attr['figcaption'])) {
-        $attr['figcaption'] = true;
-    }
-    if (!isset($attr['figcaption_content'])) {
-        $attr['figcaption_content'] = '';
-    }
-    if (!isset($attr['img_wrapper'])) {
-        $attr['img_wrapper'] = false;
+    $default_attr = array(
+        'figcaption' => true,
+        'figcaption_content' => '',
+        'img_wrapper' => false
+    );
+    foreach ($default_attr as $k => $v) {
+        if (!isset($attr[$k])) {
+            $attr[$k] = $v;
+        }
     }
 
-    $html = get_wpu_acf_image($image, $size, $attr);
+    /* Keep only valid attributes in image */
+    $image_attr = $attr;
+    foreach ($default_attr as $k => $v) {
+        if (isset($image_attr[$k])) {
+            unset($image_attr[$k]);
+        }
+    }
+
+    $html = get_wpu_acf_image($image, $size, $image_attr);
     if ($attr['img_wrapper']) {
         $html = '<div class="figure-img-wrapper">' . $html . '</div>';
     }
