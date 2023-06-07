@@ -49,6 +49,10 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         /* If only_layout mode is enabled : load 10 random versions of the same block */
         $number_of_iterations = 1;
         if ($this->only_layout) {
+            if (!isset($layouts_details_list[$this->only_layout . '_layout']) && isset($layouts_details_list[$this->only_layout])) {
+                $layouts_details_list[$this->only_layout . '_layout'] = $layouts_details_list[$this->only_layout];
+            }
+
             if (!isset($layouts_details_list[$this->only_layout . '_layout'])) {
                 $closest = $this->find_closest_layout_by_name($this->only_layout, $layouts_details_list);
                 WP_CLI::confirm('- The layout "' . strip_tags($this->only_layout) . '" does not exist.' . "\n" . '- Do you mean "' . $closest . '" ?');
