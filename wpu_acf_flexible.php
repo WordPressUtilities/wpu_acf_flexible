@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.42.5
+Version: 2.42.6
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -17,7 +17,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.42.5';
+    private $plugin_version = '2.42.6';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -737,7 +737,7 @@ EOT;
                 $tag = 'h' . $level;
                 $classname = str_replace('class="', 'class="h' . $level . ' ', $classname);
             }
-            $values = '<' . $tag . ' ' . $classname . '><?php echo ' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\') ?></' . $tag . '>' . "\n";
+            $values = '<' . $tag . ' ' . $classname . '><?php echo strip_tags(' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\')) ?></' . $tag . '>' . "\n";
         }
 
         if (isset($sub_field['field_html_callback'])) {
