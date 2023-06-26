@@ -7,4 +7,4 @@ if (is_admin()) {
     echo '<p style="padding:1em">#' . $_anchor . '</p>';
     return;
 }
-?><div id="<?php echo esc_attr($_anchor); ?>" class="<?php echo get_wpu_acf_wrapper_classname('anchor'); ?>"></div>
+echo '<div id="' . esc_attr($_anchor) . '" class="' . get_wpu_acf_wrapper_classname('anchor') . '"></div>';
