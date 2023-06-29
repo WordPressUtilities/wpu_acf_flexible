@@ -456,6 +456,37 @@ function get_wpu_acf_minieditor($field, $args = array()) {
 }
 
 /* ----------------------------------------------------------
+  Gallery
+---------------------------------------------------------- */
+
+function get_wpu_acf_gallery($gallery, $args = array()) {
+    if (!is_array($gallery) || empty($gallery)) {
+        return '';
+    }
+    $args = !is_array($args) ? array() : $args;
+    $default_args = array(
+        'format' => 'medium',
+        'wrapper_classname' => '',
+        'list_classname' => ''
+    );
+    $args = array_merge($default_args, $args);
+    $args['wrapper_classname'] .= ' wpuacf-gallery__wrapper';
+    $args['list_classname'] .= ' wpuacf-gallery';
+
+    $html = '<div class="' . trim(esc_attr($args['wrapper_classname'])) . '">';
+    $html .= '<ul class="' . trim(esc_attr($args['list_classname'])) . '">';
+    foreach ($gallery as $image) {
+        $html .= '<li>';
+        $html .= wp_get_attachment_image($image['ID'], $args['format']);
+        $html .= '</li>';
+    }
+    $html .= '</ul>';
+    $html .= '</div>';
+
+    return $html;
+}
+
+/* ----------------------------------------------------------
   Loop
 ---------------------------------------------------------- */
 
