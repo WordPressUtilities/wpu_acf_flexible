@@ -466,18 +466,29 @@ function get_wpu_acf_gallery($gallery, $args = array()) {
     $args = !is_array($args) ? array() : $args;
     $default_args = array(
         'format' => 'medium',
+        'bigimage_format' => 'large',
         'wrapper_classname' => '',
-        'list_classname' => ''
+        'link_classname' => '',
+        'list_classname' => '',
+        'item_classname' => '',
+        'link_bigimage' => true
     );
     $args = array_merge($default_args, $args);
     $args['wrapper_classname'] .= ' wpuacf-gallery__wrapper';
     $args['list_classname'] .= ' wpuacf-gallery';
+    $args['item_classname'] .= ' wpuacf-gallery__item';
+    $args['link_classname'] .= ' wpuacf-gallery__item-link';
 
     $html = '<div class="' . trim(esc_attr($args['wrapper_classname'])) . '">';
     $html .= '<ul class="' . trim(esc_attr($args['list_classname'])) . '">';
     foreach ($gallery as $image) {
+        $bigimage = $args['link_bigimage'] ? wp_get_attachment_image_url($image['ID'], $args['bigimage_format']) : false;
         $html .= '<li>';
+        $html .= '<div class="' . trim(esc_attr($args['item_classname'])) . '">';
+        $html .= $bigimage ? '<a class="' . trim(esc_attr($args['link_classname'])) . '" href="' . $bigimage . '">' : '';
         $html .= wp_get_attachment_image($image['ID'], $args['format']);
+        $html .= $bigimage ? '</a>' : '';
+        $html .= '</div>';
         $html .= '</li>';
     }
     $html .= '</ul>';
