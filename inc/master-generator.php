@@ -59,6 +59,11 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
                 $this->only_layout = $closest;
             }
 
+            /* Default layouts */
+            if (!isset($layouts_details_list[$this->only_layout . '_layout']) && isset($layouts_details_list[$this->only_layout])) {
+                $layouts_details_list[$this->only_layout . '_layout'] = $layouts_details_list[$this->only_layout];
+            }
+
             $layouts_details_list = array(
                 $this->only_layout . '_layout' => $layouts_details_list[$this->only_layout . '_layout']
             );
