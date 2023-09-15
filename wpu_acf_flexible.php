@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.44.0
+Version: 2.45.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -17,7 +17,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.44.0';
+    private $plugin_version = '2.45.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -172,6 +172,9 @@ EOT;
         add_action('acf/save_post', array(&$this,
             'save_post'
         ), 99);
+        add_action('acf/input/admin_footer', array(&$this,
+            'add_draft_validation'
+        ), 10);
         add_action('admin_enqueue_scripts', array(&$this,
             'admin_assets'
         ));
@@ -1114,6 +1117,18 @@ EOT;
 
             wp_update_post($post_infos);
         }
+    }
+
+    /* Add draft validation */
+    /* Thanks to https://support.advancedcustomfields.com/forums/topic/is-it-possible-to-apply-validation-to-draft-post/#post-154429 */
+    function add_draft_validation() {
+        echo '<script>';
+        echo "acf.addAction('prepare', function(){";
+        echo "acf.validation.removeEvents({";
+        echo "'click #save-post': 'onClickSave',";
+        echo "});";
+        echo "});";
+        echo '</script>';
     }
 
     /* Set editor height */
