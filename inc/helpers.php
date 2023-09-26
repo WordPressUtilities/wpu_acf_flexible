@@ -361,7 +361,7 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         return '';
     }
     $link = apply_filters('get_wpu_acf_link__link', $link);
-    $link['title_visible'] = strip_tags($link['title_visible'], '<u><i><strong><em><span>');
+    $link['title_visible'] = strip_tags($link['title_visible'], '<u><i><strong><em><span><img>');
     $classname = apply_filters('get_wpu_acf_link_classname', $classname);
     return '<a title="' . esc_attr(strip_tags($link['title'])) . '"' .
     ' class="acfflex-link ' . esc_attr($classname) . '"' .
@@ -371,6 +371,19 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         ' href="' . $link['url'] . '">' .
         '<span>' . $link['title_visible'] . '</span>' .
         '</a>';
+}
+
+function get_wpu_acf_imagecta($field, $classname = '', $attributes = '', $args = array()) {
+    if (!is_array($field) || !isset($field['image'], $field['cta'])) {
+        return '';
+    }
+    $image_size = is_array($args) && isset($args['image_size']) ? $args['image_size'] : 'thumbnail';
+    $html = get_wpu_acf_image($field['image'], $image_size);
+    if ($field['cta'] && $html) {
+        $field['cta']['title_visible'] = $html;
+        $html = get_wpu_acf_link($field['cta'], $classname, $attributes);
+    }
+    return $html;
 }
 
 function get_wpu_acf_responsive_image($field_value, $classname = '') {
