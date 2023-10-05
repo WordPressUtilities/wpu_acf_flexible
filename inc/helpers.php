@@ -71,7 +71,7 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         $_layout_settings = $group_item['layouts'][$layout];
 
         /* Do not save if this layout is not allowed */
-        if ($mode == 'admin' && isset($_layout_settings['no_save_post'])) {
+        if ($mode == 'admin' && (isset($_layout_settings['no_save_post']) || get_sub_field('acfe_flexible_toggle'))) {
             continue;
         }
 
