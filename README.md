@@ -1,5 +1,7 @@
 # WPU ACF Flexible
 
+[![JS workflow](https://github.com/WordPressUtilities/wpu_acf_flexible/actions/workflows/js.yml/badge.svg 'JS workflow')](https://github.com/WordPressUtilities/wpu_acf_flexible/actions) [![PHP workflow](https://github.com/WordPressUtilities/wpu_acf_flexible/actions/workflows/php.yml/badge.svg 'PHP workflow')](https://github.com/WordPressUtilities/wpu_acf_flexible/actions)
+
 Quickly generate flexible content in ACF
 
 ## Add Flexible Content

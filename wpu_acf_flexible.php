@@ -3,21 +3,21 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.47.1
+Version: 2.48.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
 Author URI: https://darklg.me/
 Text Domain: wpu_acf_flexible
 Domain Path: /lang
-Requires at least: 6.0
+Requires at least: 6.2
 Requires PHP: 8.0
 License: MIT License
 License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.47.1';
+    private $plugin_version = '2.48.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1107,7 +1107,7 @@ EOT;
             if (!isset($blocks['save_post']) || !$blocks['save_post']) {
                 continue;
             }
-            $content_html .= $this->secure_post_content(get_wpu_acf_flexible_content($group, 'admin'));
+            $content_html .= $this->secure_post_content(get_wpu_acf_flexible_content($group, 'admin', array('save_post_mode' => true)));
         }
 
         $content_html .= $this->secure_post_content(apply_filters('wpu_acf_flexible__save_post_default_content_html__after', '', $post_ID));
@@ -1172,5 +1172,5 @@ EOT;
 
 $wpu_acf_flexible = new wpu_acf_flexible();
 
-include dirname(__FILE__) . '/inc/master-generator.php';
-include dirname(__FILE__) . '/inc/helpers.php';
+require_once dirname(__FILE__) . '/inc/master-generator.php';
+require_once dirname(__FILE__) . '/inc/helpers.php';

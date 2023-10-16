@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", function(e) {
+window.addEventListener("DOMContentLoaded", function() {
 
     /* Video blocks */
     (function() {
@@ -78,7 +78,7 @@ window.addEventListener("DOMContentLoaded", function(e) {
         /* Intersect only */
         if ("IntersectionObserver" in window) {
             var lazyVideos = [].slice.call(document.querySelectorAll('[data-wpu-acf-video="1"][data-intersect-only]'));
-            var lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
+            var lazyVideoObserver = new IntersectionObserver(function(entries) {
                 entries.forEach(function(video) {
                     if (video.isIntersecting) {
                         set_query_source(video.target, true);

@@ -15,6 +15,8 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         $wpuacfflex_args = array();
     }
 
+    $wpuacfflex_args['save_post_mode'] = isset($wpuacfflex_args['save_post_mode']) ? $wpuacfflex_args['save_post_mode'] : false;
+
     /* Init context */
     $wpuacfflex_args['init_context'] = isset($wpuacfflex_args['init_context']) ? $wpuacfflex_args['init_context'] : false;
 

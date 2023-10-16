@@ -1,6 +1,7 @@
 <?php
 $model = array(
     'label' => __('[WPUACF] Anchor', 'wpu_acf_flexible'),
+    'save_post' => false,
     'sub_fields' => array(
         'slug' => array(
             'label' => __('Slug', 'wpu_acf_flexible'),
