@@ -34,8 +34,8 @@ window.addEventListener("DOMContentLoaded", function() {
                 if (target.matches('.wpuacfflexfaq-list__item .field-question[itemprop="name"] button')) {
                     $wrapper = target.closest('.wpuacfflexfaq-list__item');
                     wasExpanded = (target.getAttribute('aria-expanded') == 'true');
-                    target.setAttribute('aria-expanded', wasExpanded ? 'false' : 'true');
-                    $wrapper.setAttribute('data-is-open', wasExpanded ? 'false' : 'true');
+                    target.setAttribute('aria-expanded', !wasExpanded ? 'false' : 'true');
+                    $wrapper.setAttribute('data-is-open', !wasExpanded ? 'false' : 'true');
                     break;
                 }
             }
