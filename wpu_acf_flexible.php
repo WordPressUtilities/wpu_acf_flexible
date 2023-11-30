@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.48.5
+Version: 2.49.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -17,7 +17,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.48.5';
+    private $plugin_version = '2.49.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -198,6 +198,10 @@ EOT;
         add_filter('acfe/flexible/layouts/icons', array(&$this,
             'set_acfe_flexible_layouts_icons'
         ), 999, 1);
+        add_filter('acf/validate_value', array(&$this,
+            'validate_value'
+        ), 10, 4);
+
     }
 
     public function load_translation() {
@@ -1135,6 +1139,24 @@ EOT;
 
             wp_update_post($post_infos);
         }
+    }
+
+    /* Custom validation */
+    function validate_value($valid, $value, $field, $input_name) {
+
+        // Bail early if value is already invalid.
+        if ($valid !== true) {
+            return $valid;
+        }
+
+        /* Validate HTML */
+        if (isset($field['wpuacf_validate_html']) && $field['wpuacf_validate_html']) {
+            if ($value && is_string($value) && !wpuacfflex_is_html_valid($value)) {
+                return __('HTML is invalid', 'wpu_acf_flexible');
+            }
+        }
+
+        return $valid;
     }
 
     /* Add draft validation */

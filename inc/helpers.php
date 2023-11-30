@@ -626,3 +626,34 @@ function wpuacfflex_human_filesize($bytes, $decimals = 2) {
     $factor = floor((strlen($bytes) - 1) / 3);
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
+
+/* ----------------------------------------------------------
+  Validate HTML
+---------------------------------------------------------- */
+
+/**
+ * Check if a HTML string is valid
+ * Thanks to https://stackoverflow.com/a/3167315/975337
+ * @param  string     $string    HTML to test
+ * @return boolean
+ */
+function wpuacfflex_is_html_valid($string) {
+
+    /* Remove line breaks */
+    $string = str_replace(array("\n", "\r"), " ", $string);
+
+    /* Clean HTML */
+    $string = str_replace(array('\"'), '"', $string);
+    $string = str_replace(array('<br>'), '<br/>', $string);
+
+    /* Force one root */
+    $string = "<div>$string</div>";
+
+    /* Load XML & check errors */
+    libxml_use_internal_errors(true);
+    libxml_clear_errors();
+    simplexml_load_string($string);
+
+    /* Return error count */
+    return count(libxml_get_errors()) == 0;
+}
