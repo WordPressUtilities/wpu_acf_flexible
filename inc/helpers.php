@@ -643,6 +643,7 @@ function wpuacfflex_is_html_valid($string) {
     $string = str_replace(array("\n", "\r"), " ", $string);
 
     /* Clean HTML */
+    $string = str_replace(array('& ', ' &'), '&amp;', $string);
     $string = str_replace(array('\"'), '"', $string);
     $string = str_replace(array('<br>'), '<br/>', $string);
 
@@ -654,6 +655,8 @@ function wpuacfflex_is_html_valid($string) {
     libxml_clear_errors();
     simplexml_load_string($string);
 
+    $count_error = count(libxml_get_errors());
+
     /* Return error count */
-    return count(libxml_get_errors()) == 0;
+    return $count_error == 0;
 }
