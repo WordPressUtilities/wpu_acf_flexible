@@ -10,6 +10,10 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         return '';
     }
 
+    $query_monitor_block_id = 'get_wpu_acf_flexible_content-' . $group . '-' . $mode;
+
+    do_action('qm/start', $query_monitor_block_id);
+
     /* Test args */
     if (!is_array($wpuacfflex_args)) {
         $wpuacfflex_args = array();
@@ -56,8 +60,8 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
 
     ob_start();
     while (have_rows($group, $opt_group)):
+        do_action('qm/lap', $query_monitor_block_id);
         the_row();
-
         if (is_singular() && post_password_required()) {
             echo apply_filters('get_wpu_acf_flexible_content__before_password_form', '<section class="centered-container cc-wpuacfflex-password-form section"><div class="wpuacfflex-password-form">');
             echo apply_filters('get_wpu_acf_flexible_content__password_form', get_the_password_form());
@@ -103,7 +107,9 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         }
 
     endwhile;
-    return '<div data-group="' . esc_attr($group) . '">' . ob_get_clean() . '</div>';
+    $html = '<div data-group="' . esc_attr($group) . '">' . ob_get_clean() . '</div>';
+    do_action('qm/stop', $query_monitor_block_id);
+    return $html;
 }
 
 /* ----------------------------------------------------------
