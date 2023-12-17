@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.49.2
+Version: 2.50.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -17,7 +17,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.49.2';
+    private $plugin_version = '2.50.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -195,6 +195,9 @@ EOT;
         add_action('admin_head', array(&$this,
             'admin_set_styles'
         ));
+        add_action('admin_bar_menu', array(&$this,
+            'admin_bar_menu'
+        ),99);
         add_filter('acfe/flexible/layouts/icons', array(&$this,
             'set_acfe_flexible_layouts_icons'
         ), 999, 1);
@@ -1199,6 +1202,47 @@ EOT;
         echo '.layout.wpuacf-hidden-preview .acfe-fc-placeholder ,';
         echo '.wpu-acf-flex-hidden-field{z-index:1!important;position:absolute!important;top:0!important;left:-999em!important;height:1px!important;width:1px!important;overflow:hidden!important;}';
         echo '</style>';
+    }
+
+    /* Admin bar */
+    function admin_bar_menu($wp_admin_bar) {
+        if (!is_singular()) {
+            return;
+        }
+        $p = get_the_ID();
+        if (!current_user_can('edit_post', $p)) {
+            return;
+        }
+
+        $groups = apply_filters('wpu_acf_flexible_content', array());
+        foreach ($groups as $group_id => $group) {
+            if (!have_rows($group_id)) {
+                continue;
+            }
+            $menu_id = 'wpu-acf-flex-menu-' . $group_id;
+            $wp_admin_bar->add_menu(
+                array(
+                    'id' => $menu_id,
+                    'parent' => null,
+                    'href' => get_edit_post_link($p),
+                    'title' => $group['name']
+                )
+            );
+            $values = get_field_object($group_id);
+            if (isset($values['value'])) {
+                foreach ($values['value'] as $i => $val) {
+                    $wp_admin_bar->add_menu(
+                        array(
+                            'parent' => $menu_id,
+                            'title' => $val['acf_fc_layout'],
+                            'id' => $menu_id . '-' . $i,
+                            'href' => get_edit_post_link($p)
+                        )
+                    );
+                }
+            }
+        }
+
     }
 }
 
