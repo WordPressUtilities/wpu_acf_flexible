@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.50.0
+Version: 2.51.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -17,7 +17,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.50.0';
+    private $plugin_version = '2.51.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -197,7 +197,7 @@ EOT;
         ));
         add_action('admin_bar_menu', array(&$this,
             'admin_bar_menu'
-        ),99);
+        ), 99);
         add_filter('acfe/flexible/layouts/icons', array(&$this,
             'set_acfe_flexible_layouts_icons'
         ), 999, 1);
@@ -1231,12 +1231,16 @@ EOT;
             $values = get_field_object($group_id);
             if (isset($values['value'])) {
                 foreach ($values['value'] as $i => $val) {
+                    $label = $val['acf_fc_layout'];
+                    if (isset($val['acfe_flexible_layout_title']) && $val['acfe_flexible_layout_title']) {
+                        $label = $val['acfe_flexible_layout_title'];
+                    }
                     $wp_admin_bar->add_menu(
                         array(
                             'parent' => $menu_id,
-                            'title' => $val['acf_fc_layout'],
+                            'title' => $label,
                             'id' => $menu_id . '-' . $i,
-                            'href' => get_edit_post_link($p)
+                            'href' => get_edit_post_link($p) . '#wpu-acf-row' . $i
                         )
                     );
                 }

@@ -2,13 +2,28 @@ document.addEventListener("DOMContentLoaded", function() {
     'use strict';
 
     /* Toggle visibility on layouts */
-    (function(){
-        jQuery('body').on('click', '.acf-icon[data-name="wpu-acf-flex-toggle"]', function(e){
+    (function() {
+        jQuery('body').on('click', '.acf-icon[data-name="wpu-acf-flex-toggle"]', function(e) {
             e.preventDefault();
             var $icn = jQuery(this);
             $icn.closest('.layout[data-layout]').toggleClass('wpuacf-hidden-preview');
             $icn.toggleClass('-down').toggleClass('-up');
         });
+    }());
+
+    /* Scroll to */
+    (function() {
+        if (window.location.hash.substring(0, 12) != '#wpu-acf-row') {
+            return;
+        }
+        setTimeout(function() {
+            var _id = window.location.hash.substring(12);
+            var $layout = document.querySelector('.layout[data-id="row-' + _id + '"]');
+            if (!$layout) {
+                return;
+            }
+            $layout.scrollIntoView();
+        }, 1000);
     }());
 
     /* Force correct lang tab selection */
