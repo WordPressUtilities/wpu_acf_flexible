@@ -3,8 +3,8 @@ $_image_id = get_sub_field('image');
 if (!$_image_id) {
     return;
 }
-$_image_size = apply_filters('wpu_acf_flexible__content__image_content__image_size', 'medium');
-$_image_type = apply_filters('wpu_acf_flexible__content__image_content__image_type', 'figure');
+$_image_size = apply_filters('wpu_acf_flexible__content__image_content__image_size', 'medium', $_image_id);
+$_image_type = apply_filters('wpu_acf_flexible__content__image_content__image_type', 'figure', $_image_id);
 $_image = $_image_type == 'figure' ? get_wpu_acf_figure($_image_id, $_image_size) : get_wpu_acf_image($_image_id, $_image_size);
 $_image_position = get_sub_field('image_position');
 if (!$_image_position) {
