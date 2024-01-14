@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.51.2
+Version: 2.52.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -17,7 +17,7 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.51.2';
+    private $plugin_version = '2.52.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -542,6 +542,20 @@ EOT;
             }
         }
 
+        /* Conditional logic */
+        if (isset($extras['wpuacf_parent_id']) && isset($field['wpuacf_condition']) && is_array($field['wpuacf_condition'])) {
+            if (!isset($field['conditional_logic'])) {
+                $field['conditional_logic'] = array();
+            }
+            foreach ($field['wpuacf_condition'] as $condition_id => $condition_value) {
+                $field['conditional_logic'][] = array(
+                    'field' => $extras['wpuacf_parent_id'] . $condition_id,
+                    'operator' => '==',
+                    'value' => $condition_value
+                );
+            }
+        }
+
         /* Return */
         if (isset($field['type'])) {
             if ($field['type'] == 'select' && !isset($field['return_format'])) {
@@ -606,7 +620,9 @@ EOT;
         if (isset($acf_field['sub_fields']) && is_array($acf_field['sub_fields'])) {
             $sub_fields = array();
             foreach ($acf_field['sub_fields'] as $sub_field_id => $sub_field) {
-                $sub_fields[$sub_field_id] = $this->set_field($id . $sub_field_id, $sub_field, $sub_field_id);
+                $sub_fields[$sub_field_id] = $this->set_field($id . $sub_field_id, $sub_field, $sub_field_id, array(
+                    'wpuacf_parent_id' => $id
+                ));
             }
             $acf_field['sub_fields'] = $sub_fields;
         }
