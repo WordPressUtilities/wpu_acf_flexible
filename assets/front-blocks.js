@@ -26,6 +26,40 @@ window.addEventListener("DOMContentLoaded", function() {
         }
     }());
 
+    /* GALLERY */
+    (function() {
+        Array.prototype.forEach.call(document.querySelectorAll('[data-acf-dialog-target]'), function($btn) {
+            var $dialog = document.getElementById($btn.getAttribute('data-acf-dialog-target')),
+                $close = $dialog.querySelector('[data-acf-dialog-close]');
+
+            /* Open on btn */
+            $btn.addEventListener("click", function(e) {
+                e.preventDefault();
+                $dialog.showModal();
+            });
+
+            /* Open on close */
+            $close.addEventListener("click", function(e) {
+                e.preventDefault();
+                $dialog.close();
+            });
+
+            /* Click on backdrop */
+            $dialog.addEventListener('click', function(e) {
+                if (e.target === e.currentTarget) {
+                    $dialog.close();
+                }
+            });
+
+            /* Click on echap */
+            document.addEventListener('keydown', function(e) {
+                if (e.keyCode == 27) {
+                    $dialog.close();
+                }
+            });
+        });
+    }());
+
     /* FAQ */
     (function() {
         document.body.addEventListener('click', function(e) {

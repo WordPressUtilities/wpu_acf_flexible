@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2023-11-30 23:16+0100\n"
+"POT-Creation-Date: 2024-01-15 15:10+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -41,7 +41,7 @@ msgstr "[WPUACF] Contenu"
 #: .././blocks/image/model.php:7 .././blocks/logos/model.php:7
 #: .././blocks/posts/model.php:8 .././blocks/quote/model.php:7
 #: .././blocks/rich-table/model.php:7 .././blocks/team-quote/model.php:7
-#: .././blocks/video/model.php:6 .././wpu_acf_flexible.php:319
+#: .././blocks/video/model.php:6 .././wpu_acf_flexible.php:322
 msgid "Title"
 msgstr "Titre"
 
@@ -119,13 +119,17 @@ msgid "Features"
 msgstr "Caractéristiques"
 
 #: .././blocks/features/model.php:22 .././blocks/logos/model.php:19
-#: .././blocks/rich-table/model.php:58 .././wpu_acf_flexible.php:291
+#: .././blocks/rich-table/model.php:58 .././wpu_acf_flexible.php:294
 msgid "Image"
 msgstr "Image"
 
 #: .././blocks/form/model.php:4
 msgid "[WPUACF] Form"
 msgstr "[WPUACF] Formulaire"
+
+#: .././blocks/gallery/content.php:27
+msgid "Close"
+msgstr "Fermer"
 
 #: .././blocks/gallery/model.php:4
 msgid "[WPUACF] Gallery"
@@ -171,7 +175,7 @@ msgstr "[WPUACF] Logos"
 msgid "Logos"
 msgstr "Logos"
 
-#: .././blocks/logos/model.php:23 .././wpu_acf_flexible.php:302
+#: .././blocks/logos/model.php:23 .././wpu_acf_flexible.php:305
 msgid "Link"
 msgstr "Lien"
 
@@ -251,7 +255,7 @@ msgstr "Colonnes"
 msgid "Add a column"
 msgstr "Ajouter une colonne"
 
-#: .././blocks/rich-table/model.php:49 .././wpu_acf_flexible.php:332
+#: .././blocks/rich-table/model.php:49 .././wpu_acf_flexible.php:335
 msgid "Text"
 msgstr "Texte"
 
@@ -295,66 +299,66 @@ msgstr "[WPUACF] Vidéo"
 msgid "Cover image"
 msgstr "Image de couverture"
 
-#: .././blocks/video/model.php:18 .././wpu_acf_flexible.php:296
+#: .././blocks/video/model.php:18 .././wpu_acf_flexible.php:299
 msgid "Video"
 msgstr "Vidéo"
 
-#: .././wpu_acf_flexible.php:297
+#: .././wpu_acf_flexible.php:300
 #, php-format
 msgid "MP4 format. Max %sMB. Rec: 1.5MB."
 msgstr "Format MP4. Max %sMo. Rec: 1.5Mo."
 
-#: .././wpu_acf_flexible.php:306
+#: .././wpu_acf_flexible.php:309
 msgid "Clickable image"
 msgstr "Image cliquable"
 
-#: .././wpu_acf_flexible.php:323
+#: .././wpu_acf_flexible.php:326
 msgid "Unique ID"
 msgstr "ID unique"
 
-#: .././wpu_acf_flexible.php:337
+#: .././wpu_acf_flexible.php:340
 msgid "Editor"
 msgstr "Éditeur"
 
-#: .././wpu_acf_flexible.php:349
+#: .././wpu_acf_flexible.php:352
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:352
+#: .././wpu_acf_flexible.php:355
 msgid "Left"
 msgstr "Gauche"
 
-#: .././wpu_acf_flexible.php:353
+#: .././wpu_acf_flexible.php:356
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:462
+#: .././wpu_acf_flexible.php:467
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:469
+#: .././wpu_acf_flexible.php:474
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:494
+#: .././wpu_acf_flexible.php:499
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:494
+#: .././wpu_acf_flexible.php:499
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:824 .././wpu_acf_flexible.php:833
+#: .././wpu_acf_flexible.php:830 .././wpu_acf_flexible.php:839
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1157
+#: .././wpu_acf_flexible.php:1163
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1193
+#: .././wpu_acf_flexible.php:1199
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
