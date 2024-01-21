@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $questions = get_sub_field('questions');
 if (!$questions) {
     return;

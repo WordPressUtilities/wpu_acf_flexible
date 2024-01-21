@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_files = get_sub_field('files');
 if (empty($_files)) {
     return;

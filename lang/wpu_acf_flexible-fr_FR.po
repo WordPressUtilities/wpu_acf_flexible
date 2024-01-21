@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2024-01-15 15:10+0100\n"
+"POT-Creation-Date: 2024-01-21 19:39+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -15,350 +15,354 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ../.\n"
 
-#: .././blocks/anchor/model.php:3
+#: .././blocks/anchor/model.php:4
 msgid "[WPUACF] Anchor"
 msgstr "[WPUACF] Ancre"
 
-#: .././blocks/anchor/model.php:7
+#: .././blocks/anchor/model.php:8
 msgid "Slug"
 msgstr "Identifiant"
 
-#: .././blocks/anchor/model.php:8
+#: .././blocks/anchor/model.php:9
 msgid ""
 "Please insert only lowercase letters without accents, numbers, and hyphens."
 msgstr ""
 "Merci d’insérer uniquement des lettres minuscules sans accents, des "
 "chiffres, et des traits d’union."
 
-#: .././blocks/content-classic/model.php:6
+#: .././blocks/content-classic/model.php:7
 msgid "[WPUACF] Content"
 msgstr "[WPUACF] Contenu"
 
-#: .././blocks/content-classic/model.php:9 .././blocks/downloads/model.php:7
-#: .././blocks/faq/model.php:6 .././blocks/features/model.php:7
-#: .././blocks/features/model.php:26 .././blocks/gallery/model.php:7
-#: .././blocks/hero/model.php:7 .././blocks/image-content/model.php:22
-#: .././blocks/image/model.php:7 .././blocks/logos/model.php:7
-#: .././blocks/posts/model.php:8 .././blocks/quote/model.php:7
-#: .././blocks/rich-table/model.php:7 .././blocks/team-quote/model.php:7
-#: .././blocks/video/model.php:6 .././wpu_acf_flexible.php:322
+#: .././blocks/content-classic/model.php:10 .././blocks/downloads/model.php:8
+#: .././blocks/faq/model.php:7 .././blocks/features/model.php:8
+#: .././blocks/features/model.php:27 .././blocks/gallery/model.php:8
+#: .././blocks/hero/model.php:8 .././blocks/image-content/model.php:23
+#: .././blocks/image/model.php:8 .././blocks/logos/model.php:8
+#: .././blocks/posts/model.php:9 .././blocks/quote/model.php:8
+#: .././blocks/rich-table/model.php:8 .././blocks/team-quote/model.php:8
+#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:323
 msgid "Title"
 msgstr "Titre"
 
-#: .././blocks/content-classic/model.php:13 .././blocks/downloads/model.php:10
-#: .././blocks/features/model.php:10 .././blocks/features/model.php:29
-#: .././blocks/gallery/model.php:10 .././blocks/image-content/model.php:25
-#: .././blocks/image/model.php:10 .././blocks/logos/model.php:10
-#: .././blocks/posts/model.php:11 .././blocks/rich-table/model.php:10
-#: .././blocks/rich-table/model.php:39 .././blocks/rich-table/model.php:87
-#: .././blocks/video/model.php:9
+#: .././blocks/content-classic/model.php:14 .././blocks/downloads/model.php:11
+#: .././blocks/features/model.php:11 .././blocks/features/model.php:30
+#: .././blocks/gallery/model.php:11 .././blocks/image-content/model.php:26
+#: .././blocks/image/model.php:11 .././blocks/logos/model.php:11
+#: .././blocks/posts/model.php:12 .././blocks/rich-table/model.php:11
+#: .././blocks/rich-table/model.php:40 .././blocks/rich-table/model.php:88
+#: .././blocks/video/model.php:10
 msgid "Content"
 msgstr "Contenu"
 
-#: .././blocks/content-classic/model.php:18 .././blocks/features/model.php:34
-#: .././blocks/hero/model.php:15 .././blocks/image-content/model.php:30
+#: .././blocks/content-classic/model.php:19 .././blocks/features/model.php:35
+#: .././blocks/hero/model.php:16 .././blocks/image-content/model.php:31
 msgid "Button"
 msgstr "Bouton"
 
-#: .././blocks/content-classic/model.php:18
-#: .././blocks/content-classic/model.php:26
+#: .././blocks/content-classic/model.php:19
+#: .././blocks/content-classic/model.php:27
 #, php-format
 msgid "Button %s"
 msgstr "Bouton %s"
 
-#: .././blocks/downloads/model.php:4
+#: .././blocks/downloads/model.php:5
 msgid "[WPUACF] Downloads"
 msgstr "[WPUACF] Téléchargements"
 
-#: .././blocks/downloads/model.php:15
+#: .././blocks/downloads/model.php:16
 msgid "Files"
 msgstr "Fichiers"
 
-#: .././blocks/downloads/model.php:19
+#: .././blocks/downloads/model.php:20
 msgid "File"
 msgstr "Fichier"
 
-#: .././blocks/downloads/model.php:23
+#: .././blocks/downloads/model.php:24
 msgid "File name"
 msgstr "Nom du fichier"
 
-#: .././blocks/downloads/model.php:24
+#: .././blocks/downloads/model.php:25
 msgid "Uses file name by default"
 msgstr "Utilise le nom du fichier par défaut"
 
-#: .././blocks/downloads/model.php:27
+#: .././blocks/downloads/model.php:28
 msgid "External file link"
 msgstr "Lien du fichier externe"
 
-#: .././blocks/downloads/model.php:28
+#: .././blocks/downloads/model.php:29
 msgid "Not used if a file exists"
 msgstr "Ignoré si un fichier est défini"
 
-#: .././blocks/faq/model.php:3
+#: .././blocks/faq/model.php:4
 msgid "[WPUACF] FAQ"
 msgstr "[WPUACF] FAQ"
 
-#: .././blocks/faq/model.php:11
+#: .././blocks/faq/model.php:12
 msgid "Questions"
 msgstr "Questions"
 
-#: .././blocks/faq/model.php:15
+#: .././blocks/faq/model.php:16
 msgid "Question"
 msgstr "Question"
 
-#: .././blocks/faq/model.php:20
+#: .././blocks/faq/model.php:21
 msgid "Answer"
 msgstr "Réponse"
 
-#: .././blocks/features/model.php:4
+#: .././blocks/features/model.php:5
 msgid "[WPUACF] Features"
 msgstr "[WPUACF] Fonctionnalités"
 
-#: .././blocks/features/model.php:15
+#: .././blocks/features/model.php:16
 msgid "Features"
 msgstr "Caractéristiques"
 
-#: .././blocks/features/model.php:22 .././blocks/logos/model.php:19
-#: .././blocks/rich-table/model.php:58 .././wpu_acf_flexible.php:294
+#: .././blocks/features/model.php:23 .././blocks/logos/model.php:20
+#: .././blocks/rich-table/model.php:59 .././wpu_acf_flexible.php:295
 msgid "Image"
 msgstr "Image"
 
-#: .././blocks/form/model.php:4
+#: .././blocks/form/model.php:5
 msgid "[WPUACF] Form"
 msgstr "[WPUACF] Formulaire"
 
-#: .././blocks/gallery/content.php:27
+#: .././blocks/gallery/content.php:28
 msgid "Close"
 msgstr "Fermer"
 
-#: .././blocks/gallery/model.php:4
+#: .././blocks/gallery/model.php:5
 msgid "[WPUACF] Gallery"
 msgstr "[WPUACF] Galerie"
 
-#: .././blocks/gallery/model.php:16
+#: .././blocks/gallery/model.php:17 .././blocks/images/model.php:12
 msgid "Images"
 msgstr "Images"
 
-#: .././blocks/hero/model.php:4
+#: .././blocks/hero/model.php:5
 msgid "[WPUACF] Hero"
 msgstr "[WPUACF] Hero"
 
-#: .././blocks/hero/model.php:11
+#: .././blocks/hero/model.php:12
 msgid "Subtitle"
 msgstr "Sous-titre"
 
-#: .././blocks/iframe/model.php:4
+#: .././blocks/iframe/model.php:5
 msgid "[WPUACF] Iframe"
 msgstr "[WPUACF] Iframe"
 
-#: .././blocks/iframe/model.php:7
+#: .././blocks/iframe/model.php:8
 msgid "URL"
 msgstr "URL"
 
-#: .././blocks/iframe/model.php:12
+#: .././blocks/iframe/model.php:13
 msgid "Iframe Height"
 msgstr "Hauteur de l’iFrame"
 
-#: .././blocks/image-content/model.php:4
+#: .././blocks/image-content/model.php:5
 msgid "[WPUACF] Image - Content"
 msgstr "[WPUACF] Image - Contenu"
 
-#: .././blocks/image/model.php:4
+#: .././blocks/image/model.php:5
 msgid "[WPUACF] Image"
 msgstr "[WPUACF] Image"
 
-#: .././blocks/logos/model.php:4
+#: .././blocks/images/model.php:5
+msgid "[WPUACF] Images"
+msgstr "[WPUACF] Images"
+
+#: .././blocks/logos/model.php:5
 msgid "[WPUACF] Logos"
 msgstr "[WPUACF] Logos"
 
-#: .././blocks/logos/model.php:15
+#: .././blocks/logos/model.php:16
 msgid "Logos"
 msgstr "Logos"
 
-#: .././blocks/logos/model.php:23 .././wpu_acf_flexible.php:305
+#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:306
 msgid "Link"
 msgstr "Lien"
 
-#: .././blocks/numbers/model.php:4
+#: .././blocks/numbers/model.php:5
 msgid "[WPUACF] Numbers"
 msgstr "[WPUACF] Nombres"
 
-#: .././blocks/numbers/model.php:10
+#: .././blocks/numbers/model.php:11
 msgid "Numbers"
 msgstr "Nombres"
 
-#: .././blocks/numbers/model.php:14
+#: .././blocks/numbers/model.php:15
 msgid "Number"
 msgstr "Nombre"
 
-#: .././blocks/numbers/model.php:20
+#: .././blocks/numbers/model.php:21
 msgid "Label"
 msgstr "Label"
 
-#: .././blocks/posts/model.php:5
+#: .././blocks/posts/model.php:6
 msgid "[WPUACF] Posts"
 msgstr "[WPUACF] Articles"
 
-#: .././blocks/posts/model.php:16
+#: .././blocks/posts/model.php:17
 msgid "Type"
 msgstr "Type"
 
-#: .././blocks/posts/model.php:19
+#: .././blocks/posts/model.php:20
 msgid "Last posts"
 msgstr "Dernières publications"
 
-#: .././blocks/posts/model.php:20
+#: .././blocks/posts/model.php:21
 msgid "Child posts"
 msgstr "Publications enfants"
 
-#: .././blocks/posts/model.php:21
+#: .././blocks/posts/model.php:22
 msgid "Manual posts"
 msgstr "Publications manuelles"
 
-#: .././blocks/posts/model.php:25
+#: .././blocks/posts/model.php:26
 msgid "Posts"
 msgstr "Publications"
 
-#: .././blocks/quote/model.php:4
+#: .././blocks/quote/model.php:5
 msgid "[WPUACF] Quote"
 msgstr "[WPUACF] Citation"
 
-#: .././blocks/quote/model.php:15 .././blocks/team-quote/model.php:23
+#: .././blocks/quote/model.php:16 .././blocks/team-quote/model.php:24
 msgid "Author"
 msgstr "Auteur"
 
-#: .././blocks/quote/model.php:22 .././blocks/team-quote/model.php:31
+#: .././blocks/quote/model.php:23 .././blocks/team-quote/model.php:32
 msgid "Author details"
 msgstr "Détails de l'auteur"
 
-#: .././blocks/quote/model.php:30 .././blocks/team-quote/model.php:39
+#: .././blocks/quote/model.php:31 .././blocks/team-quote/model.php:40
 msgid "Quote"
 msgstr "Citation"
 
-#: .././blocks/rich-table/model.php:4
+#: .././blocks/rich-table/model.php:5
 msgid "[WPUACF] Table"
 msgstr "[WPUACF] Tableau"
 
-#: .././blocks/rich-table/model.php:15
+#: .././blocks/rich-table/model.php:16
 msgid "Table lines"
 msgstr "Lignes de table"
 
-#: .././blocks/rich-table/model.php:24
+#: .././blocks/rich-table/model.php:25
 msgid "Add a line"
 msgstr "Ajouter une ligne"
 
-#: .././blocks/rich-table/model.php:27
+#: .././blocks/rich-table/model.php:28
 msgid "Columns"
 msgstr "Colonnes"
 
-#: .././blocks/rich-table/model.php:36
+#: .././blocks/rich-table/model.php:37
 msgid "Add a column"
 msgstr "Ajouter une colonne"
 
-#: .././blocks/rich-table/model.php:49 .././wpu_acf_flexible.php:335
+#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:336
 msgid "Text"
 msgstr "Texte"
 
-#: .././blocks/rich-table/model.php:72
+#: .././blocks/rich-table/model.php:73
 msgid "Layout"
 msgstr "Mise en page"
 
-#: .././blocks/rich-table/model.php:82
+#: .././blocks/rich-table/model.php:83
 msgid "Cell type"
 msgstr "Type de cellule"
 
-#: .././blocks/rich-table/model.php:85
+#: .././blocks/rich-table/model.php:86
 msgid "Empty"
 msgstr "Vide"
 
-#: .././blocks/rich-table/model.php:86
+#: .././blocks/rich-table/model.php:87
 msgid "Heading"
 msgstr "En-tête"
 
-#: .././blocks/rich-table/model.php:98
+#: .././blocks/rich-table/model.php:99
 msgid "Number of columns"
 msgstr "Nombre de colonnes"
 
-#: .././blocks/rich-table/model.php:107
+#: .././blocks/rich-table/model.php:108
 msgid "Number of rows"
 msgstr "Nombre de lignes"
 
-#: .././blocks/team-quote/model.php:4
+#: .././blocks/team-quote/model.php:5
 msgid "[WPUACF] Team Quote"
 msgstr "[WPUACF] Citation de l’équipe"
 
-#: .././blocks/team-quote/model.php:14
+#: .././blocks/team-quote/model.php:15
 msgid "Author image"
 msgstr "Image de l'auteur"
 
-#: .././blocks/video/model.php:3
+#: .././blocks/video/model.php:4
 msgid "[WPUACF] Video"
 msgstr "[WPUACF] Vidéo"
 
-#: .././blocks/video/model.php:14
+#: .././blocks/video/model.php:15
 msgid "Cover image"
 msgstr "Image de couverture"
 
-#: .././blocks/video/model.php:18 .././wpu_acf_flexible.php:299
+#: .././blocks/video/model.php:19 .././wpu_acf_flexible.php:300
 msgid "Video"
 msgstr "Vidéo"
 
-#: .././wpu_acf_flexible.php:300
+#: .././wpu_acf_flexible.php:301
 #, php-format
 msgid "MP4 format. Max %sMB. Rec: 1.5MB."
 msgstr "Format MP4. Max %sMo. Rec: 1.5Mo."
 
-#: .././wpu_acf_flexible.php:309
+#: .././wpu_acf_flexible.php:310
 msgid "Clickable image"
 msgstr "Image cliquable"
 
-#: .././wpu_acf_flexible.php:326
+#: .././wpu_acf_flexible.php:327
 msgid "Unique ID"
 msgstr "ID unique"
 
-#: .././wpu_acf_flexible.php:340
+#: .././wpu_acf_flexible.php:341
 msgid "Editor"
 msgstr "Éditeur"
 
-#: .././wpu_acf_flexible.php:352
+#: .././wpu_acf_flexible.php:353
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:355
+#: .././wpu_acf_flexible.php:356
 msgid "Left"
 msgstr "Gauche"
 
-#: .././wpu_acf_flexible.php:356
+#: .././wpu_acf_flexible.php:357
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:467
+#: .././wpu_acf_flexible.php:468
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:474
+#: .././wpu_acf_flexible.php:475
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:499
+#: .././wpu_acf_flexible.php:500
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:499
+#: .././wpu_acf_flexible.php:500
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:830 .././wpu_acf_flexible.php:839
+#: .././wpu_acf_flexible.php:847 .././wpu_acf_flexible.php:856
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1163
+#: .././wpu_acf_flexible.php:1180
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1199
+#: .././wpu_acf_flexible.php:1216
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 

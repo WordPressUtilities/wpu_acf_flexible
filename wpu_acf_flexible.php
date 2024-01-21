@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.53.0
+Version: 2.54.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -16,8 +16,10 @@ License: MIT License
 License URI: https://opensource.org/licenses/MIT
 */
 
+defined('ABSPATH') || die;
+
 class wpu_acf_flexible {
-    private $plugin_version = '2.53.0';
+    private $plugin_version = '2.54.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -161,7 +163,7 @@ EOT;
 EOT;
 
     public function __construct() {
-        $this->plugin_dir_path = dirname(__FILE__) . '/';
+        $this->plugin_dir_path = __DIR__ . '/';
         add_action('init', array(&$this,
             'init'
         ));
@@ -1273,5 +1275,5 @@ EOT;
 
 $wpu_acf_flexible = new wpu_acf_flexible();
 
-require_once dirname(__FILE__) . '/inc/master-generator.php';
-require_once dirname(__FILE__) . '/inc/helpers.php';
+require_once __DIR__ . '/inc/master-generator.php';
+require_once __DIR__ . '/inc/helpers.php';

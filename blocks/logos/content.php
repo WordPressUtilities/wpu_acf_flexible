@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 
 $_logos = get_sub_field('logos');
 if (empty($_logos)) {

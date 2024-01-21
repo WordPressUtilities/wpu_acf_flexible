@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 
 class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 

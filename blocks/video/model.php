@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $model = array(
     'label' => __('[WPUACF] Video', 'wpu_acf_flexible'),
     'sub_fields' => array(

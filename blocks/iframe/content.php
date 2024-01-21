@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_url = get_sub_field('url');
 if (!$_url) {
     return;

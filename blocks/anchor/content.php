@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 if(isset($wpuacfflex_args) && $wpuacfflex_args['save_post_mode']){
     return;
 }

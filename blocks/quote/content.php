@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_author = get_sub_field('author');
 $_author_details = get_sub_field('author_details');
 $_quote = apply_filters('the_content', get_sub_field('quote'));

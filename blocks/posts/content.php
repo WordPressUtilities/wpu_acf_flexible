@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 global $_post;
 
 /* Obtain post ID */

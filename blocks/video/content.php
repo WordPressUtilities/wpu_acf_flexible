@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_image = get_wpu_acf_video_embed_image();
 if (!$_image) {
     return;

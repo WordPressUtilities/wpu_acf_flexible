@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_image = get_wpu_acf_image_src(get_sub_field('image'), 'thumbnail');
 if (!$_image) {
     return;

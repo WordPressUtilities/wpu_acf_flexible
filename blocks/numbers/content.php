@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 
 $_numbers_list_classname = trim(apply_filters('wpu_acf_flexible__content__numbers__numberslist__classname', 'numbers-list'));
 $_numbers_list_number_tags = trim(apply_filters('wpu_acf_flexible__content__numbers__number_tags', '<strong>'));

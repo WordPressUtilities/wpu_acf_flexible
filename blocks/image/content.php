@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_image_size = apply_filters('wpu_acf_flexible__content__image__image_size', 'medium');
 $_image = get_wpu_acf_figure(get_sub_field('image'), $_image_size);
 if (!$_image) {

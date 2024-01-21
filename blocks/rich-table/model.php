@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 
 $model = array(
     'label' => __('[WPUACF] Table', 'wpu_acf_flexible'),

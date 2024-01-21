@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 if (!get_sub_field('lines')) {
     return;
 }

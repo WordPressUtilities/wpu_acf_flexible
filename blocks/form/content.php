@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_content_before = apply_filters('wpu_acf_flexible__content__form__before', '');
 $_content_after = apply_filters('wpu_acf_flexible__content__form__after', '');
 $_form_type = apply_filters('wpu_acf_flexible__content__form__type', 'default');

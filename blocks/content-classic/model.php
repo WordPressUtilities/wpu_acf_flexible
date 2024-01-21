@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 
 $nb_buttons = apply_filters('wpu_acf_flexible__content__content_classic__buttons_number', 3);
 

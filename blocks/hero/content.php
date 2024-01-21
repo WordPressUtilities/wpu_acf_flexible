@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_image = get_wpu_acf_image_src(get_sub_field('image'), apply_filters('wpu_acf_flexible__content__hero__image_size', 'large'));
 $_content = get_wpu_acf_title_content();
 $_cta_link = get_wpu_acf_cta();

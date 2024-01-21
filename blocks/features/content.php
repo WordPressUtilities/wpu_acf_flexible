@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_features = get_sub_field('features');
 if (empty($_features)) {
     return;

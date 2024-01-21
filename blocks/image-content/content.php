@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || die;
 $_image_id = get_sub_field('image');
 if (!$_image_id) {
     return;
