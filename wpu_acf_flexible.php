@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.54.1
+Version: 2.55.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -19,7 +19,7 @@ License URI: https://opensource.org/licenses/MIT
 defined('ABSPATH') || die;
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.54.1';
+    private $plugin_version = '2.55.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -239,6 +239,7 @@ EOT;
             'post-new.php',
             'edit.php'
         );
+        $hooks_ok = apply_filters('wpu_acf_flexible__admin_js__hooks_ok', $hooks_ok, $hook_details);
         if (!in_array($hook_details, $hooks_ok)) {
             return;
         }
@@ -251,6 +252,9 @@ EOT;
         }
         /* Extra JS */
         wp_enqueue_script('wpu_acf_flexible-script-wpuacfadmin', plugins_url('assets/admin-scripts.js', __FILE__), array(), $this->plugin_version);
+        wp_localize_script('wpu_acf_flexible-script-wpuacfadmin', 'wpu_acf_flexible_script_wpuacfadmin', apply_filters('wpu_acf_flexible_script_wpuacfadmin_settings', array(
+            'color_picker_palettes' => array(),
+        )));
     }
 
     public function front_assets($hook_details) {

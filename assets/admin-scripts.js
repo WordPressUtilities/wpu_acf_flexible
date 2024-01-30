@@ -79,4 +79,16 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }());
 
+    /* Colors */
+    (function() {
+        if (typeof acf == "undefined") {
+            return;
+        }
+        acf.add_filter('color_picker_args', function(args, field) {
+            if (wpu_acf_flexible_script_wpuacfadmin.color_picker_palettes.length) {
+                args.palettes = wpu_acf_flexible_script_wpuacfadmin.color_picker_palettes;
+            }
+            return args;
+        });
+    }());
 });
