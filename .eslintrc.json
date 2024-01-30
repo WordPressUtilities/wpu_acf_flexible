@@ -11,6 +11,7 @@
         "no-prototype-builtins": 0
     },
     "globals": {
+        "wpu_acf_flexible_script_wpuacfadmin": true,
         "wp": true,
         "acf": true,
         "jQuery": true
