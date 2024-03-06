@@ -667,3 +667,39 @@ function wpuacfflex_is_html_valid($string) {
     /* Return error count */
     return $count_error == 0;
 }
+
+/* ----------------------------------------------------------
+  Multilingual fields
+---------------------------------------------------------- */
+
+/* Handle multiple lang for each field
+-------------------------- */
+
+function wpuacfflex_i18n_get_field_group($fields) {
+    if (!function_exists('pll_languages_list')) {
+        return $fields;
+    }
+    $poly_langs = pll_languages_list();
+    $new_fields = array();
+    foreach ($poly_langs as $code) {
+        $new_fields['wpuacfflex_i18n_tab___' . $code] = array(
+            'label' => strtoupper($code),
+            'type' => 'tab'
+        );
+        foreach ($fields as $field_id => $field) {
+            $new_fields[$field_id . '___' . $code] = $field;
+        }
+    }
+    return $new_fields;
+}
+
+/* Return current value  for a field
+-------------------------- */
+
+function wpuacfflex_i18n_get_field($selector, $post_id = false, $format_value = true, $escape_html = false) {
+    $lang_id = '';
+    if (function_exists('pll_current_language')) {
+        $selector .= '___' . pll_current_language('slug');
+    }
+    return get_field($selector, $post_id, $format_value, $escape_html);
+}
