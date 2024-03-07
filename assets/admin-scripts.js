@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
         setTimeout(function() {
-            var _id = window.location.hash.substring(12);
             var $layout = document.querySelector('.acf-actions [data-name="add-layout"]');
             if (!$layout) {
                 return;
