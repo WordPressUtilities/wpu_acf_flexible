@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.56.0
+Version: 2.56.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -19,7 +19,7 @@ License URI: https://opensource.org/licenses/MIT
 defined('ABSPATH') || die;
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.56.0';
+    private $plugin_version = '2.56.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1271,6 +1271,14 @@ EOT;
                         )
                     );
                 }
+                $wp_admin_bar->add_menu(
+                    array(
+                        'parent' => $menu_id,
+                        'title' => '&rarr; '.__('Add a block', 'wpu_acf_flexible'),
+                        'id' => $menu_id . '-add',
+                        'href' => get_edit_post_link($p) . '#wpu-acf-add'
+                    )
+                );
             }
         }
 

@@ -26,6 +26,22 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 1000);
     }());
 
+    /* Scroll to */
+    (function() {
+        if (window.location.hash.substring(0, 12) != '#wpu-acf-add') {
+            return;
+        }
+        setTimeout(function() {
+            var _id = window.location.hash.substring(12);
+            var $layout = document.querySelector('.acf-actions [data-name="add-layout"]');
+            if (!$layout) {
+                return;
+            }
+            $layout.scrollIntoView();
+            jQuery('.acf-actions [data-name="add-layout"]').click();
+        }, 500);
+    }());
+
     /* Force correct lang tab selection */
     (function() {
         var current_lang = window.wpuacfflex_current_admin_language;
