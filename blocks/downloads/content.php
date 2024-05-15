@@ -63,7 +63,7 @@ foreach ($_files as $_file) {
 
 echo '<div class="' . get_wpu_acf_wrapper_classname('downloads') . '">';
 echo $_content_before;
-echo '<div class="block-downloads">' . get_wpu_acf_title_content();
+echo '<div class="block-downloads block--downloads">' . get_wpu_acf_title_content();
 echo '<ul class="files-list">';
 foreach ($files as $file):
     echo '<li><div class="files-list__item">';

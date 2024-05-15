@@ -19,6 +19,10 @@ $model = array(
             'label' => __('Video', 'wpu_acf_flexible'),
             'type' => 'oembed',
             'required' => 1,
+        ),
+        'use_thumb' => array(
+            'label' => __('Use embed thumbnail if available', 'wpu_acf_flexible'),
+            'type' => 'true_false'
         )
     )
 );

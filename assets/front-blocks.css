@@ -245,6 +245,7 @@
     z-index: 1;
     position: relative;
     height: 0;
+    background-color: #000;
     padding-top: 56.25%;
 }
 
@@ -278,19 +279,26 @@
     text-align: center;
     line-height: 3;
     background-color: #fff;
-    transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%, -50%, 0);
     cursor: pointer;
 }
 
 .wpuacf-video .cursor:before {
     content: '►';
+    padding-top: 0.1em;
+    padding-left: 0.1em;
 }
 
 /* Cover
 -------------------------- */
 
 .wpuacf-video .cover-image {
+    cursor: pointer;
     z-index: 2;
+}
+
+.wpuacf-video:hover .cover-image {
+    opacity: 0.5;
 }
 
 .wpuacf-video .cover-image img {

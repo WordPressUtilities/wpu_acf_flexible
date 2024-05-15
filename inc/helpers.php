@@ -172,8 +172,16 @@ function get_wpu_acf_video_embed_image($args = array()) {
     } else {
         $_image_id = get_sub_field($args['image_field_id']);
     }
+    $_image_use_embed = get_sub_field('use_thumb');
+
     if (!$_video) {
         return false;
+    }
+
+    /* Thumb */
+    $_image_embed = '';
+    if ($_image_use_embed) {
+        $_image_embed = get_wpu_acf_embed_image($_video);
     }
 
     /* Video shortcode detected */
@@ -206,13 +214,21 @@ function get_wpu_acf_video_embed_image($args = array()) {
     $_image_size = apply_filters('wpu_acf_flexible__content__video__image_size', 'large');
     $_image = '';
     if (!is_admin()) {
-        if ($_image_id || $args['noimg_force_autoplay']) {
+        if ($_image_id || $_image_embed || $args['noimg_force_autoplay']) {
             $_video = str_replace('app_id=', 'autoplay=1&app_id=', $_video);
             $_video = str_replace('feature=oembed', 'feature=oembed&autoplay=1', $_video);
         }
-        if ($_image_id) {
+        if ($_image_id || $_image_embed) {
             $_video = str_replace('src=', 'data-src=', $_video);
-            $_image = '<div class="wpuacf-video"><div class="cursor"></div><div class="cover-image">' . get_wpu_acf_image($_image_id, $_image_size) . '</div>' . $_video . '</div>';
+            $_image_item = '';
+            if ($_image_id) {
+                $_image_item = get_wpu_acf_image($_image_id, $_image_size);
+            }
+            if ($_image_embed) {
+                $_image_item = '<img src="' . $_image_embed . '" alt="" loading="lazy" />';
+            }
+
+            $_image = '<div class="wpuacf-video"><div class="cursor"></div><div class="cover-image">' . $_image_item . '</div>' . $_video . '</div>';
         } else {
             $_image = $_video;
         }
@@ -222,6 +238,30 @@ function get_wpu_acf_video_embed_image($args = array()) {
         $_image = $_video;
     }
     return $_image;
+}
+
+function get_wpu_acf_embed_image($embed_url) {
+
+    if (strpos($embed_url, '<iframe') !== false) {
+        preg_match('/src="([^"]+)"/', $embed_url, $matches);
+        if (isset($matches[1]) && $matches[1]) {
+            $embed_url = $matches[1];
+        } else {
+            return '';
+        }
+    }
+
+    $embed_url = apply_filters('get_wpu_acf_embed_image__embed_url', $embed_url);
+
+    /* Extract youtube : thx https://stackoverflow.com/a/64320469 */
+    if (strpos($embed_url, 'youtu') !== false) {
+        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $embed_url, $match);
+        if (isset($match[1]) && $match[1]) {
+            return 'https://img.youtube.com/vi/' . $match[1] . '/maxresdefault.jpg';
+        }
+    }
+    return '';
+
 }
 
 function get_wpu_acf_video($video_id, $args = array()) {
@@ -629,9 +669,9 @@ function wpuacfflex_template_get_layout_css($layout_id, $layout, $css_rule_prefi
 
 /* Thanks to https://www.php.net/manual/en/function.filesize.php#106569 */
 function wpuacfflex_human_filesize($bytes, $decimals = 2) {
-    $sz = 'bkmgtp';
+    $sz = str_split('bkmgtp');
     $factor = floor((strlen($bytes) - 1) / 3);
-    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . $sz[$factor];
 }
 
 /* ----------------------------------------------------------
