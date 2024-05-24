@@ -61,7 +61,7 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
 
     ob_start();
     while (have_rows($group, $opt_group)):
-        do_action('qm/lap', $query_monitor_block_id);
+
         the_row();
         if (is_singular() && post_password_required()) {
             echo apply_filters('get_wpu_acf_flexible_content__before_password_form', '<section class="centered-container cc-wpuacfflex-password-form section"><div class="wpuacfflex-password-form">');
@@ -101,8 +101,9 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
             }
         }
 
-        $is_last_block = apply_filters('get_wpu_acf_flexible_content__is_last_block', $is_last_block, $layout, $_layout_settings);
+        do_action('qm/lap', $query_monitor_block_id, get_row_layout());
 
+        $is_last_block = apply_filters('get_wpu_acf_flexible_content__is_last_block', $is_last_block, $layout, $_layout_settings);
         if ($is_last_block) {
             break;
         }
@@ -257,7 +258,7 @@ function get_wpu_acf_embed_image($embed_url) {
     if (strpos($embed_url, 'youtu') !== false) {
         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $embed_url, $match);
         if (isset($match[1]) && $match[1]) {
-            return 'https://img.youtube.com/vi/' . $match[1] . '/maxresdefault.jpg';
+            return 'https://img.youtube.com/vi/' . $match[1] . '/hqdefault.jpg';
         }
     }
     return '';

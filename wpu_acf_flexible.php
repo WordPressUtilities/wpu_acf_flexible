@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.57.0
+Version: 2.57.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -20,7 +20,7 @@ License URI: https://opensource.org/licenses/MIT
 defined('ABSPATH') || die;
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.57.0';
+    private $plugin_version = '2.57.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -254,7 +254,7 @@ EOT;
         /* Extra JS */
         wp_enqueue_script('wpu_acf_flexible-script-wpuacfadmin', plugins_url('assets/admin-scripts.js', __FILE__), array(), $this->plugin_version);
         wp_localize_script('wpu_acf_flexible-script-wpuacfadmin', 'wpu_acf_flexible_script_wpuacfadmin', apply_filters('wpu_acf_flexible_script_wpuacfadmin_settings', array(
-            'color_picker_palettes' => array(),
+            'color_picker_palettes' => array()
         )));
     }
 
@@ -647,6 +647,10 @@ EOT;
 
     }
 
+    function get_protected_dollar_var_name($var_name) {
+        return str_replace('-', '_', $var_name);
+    }
+
     public function get_var_content_field($id, $sub_field, $level = 2, $nb_subfields = 0) {
         $sub_field = $this->get_default_field($sub_field, $id);
 
@@ -666,7 +670,7 @@ EOT;
         case 'url':
         case 'true_false':
         case 'file':
-            $vars = '$' . $id . ' = get_sub_field(\'' . $id . '\');' . "\n";
+            $vars = '$' . $this->get_protected_dollar_var_name($id) . ' = get_sub_field(\'' . $id . '\');' . "\n";
             break;
         default:
 
@@ -690,7 +694,7 @@ EOT;
     public function get_value_content_field($id, $sub_field, $level = 2, $nb_subfields = 0) {
         $sub_field = $this->get_default_field($sub_field, $id);
 
-        $c__start = '<?php if($' . $id . '): ?>';
+        $c__start = '<?php if($' . $this->get_protected_dollar_var_name($id) . '): ?>';
         $c__end = '<?php endif; ?>';
 
         $values = '';
@@ -698,46 +702,46 @@ EOT;
         $classname = 'class="' . $class_id . '"';
         switch ($sub_field['type']) {
         case 'image':
-            $values = '<?php echo $' . $id . ' ? get_wpu_acf_image($' . $id . ',\'medium\') : \'\'; ?>' . "\n";
+            $values = '<?php echo $' . $this->get_protected_dollar_var_name($id) . ' ? get_wpu_acf_image($' . $this->get_protected_dollar_var_name($id) . ',\'medium\') : \'\'; ?>' . "\n";
             break;
         case 'file':
-            $attachment_url = '<?php echo wp_get_attachment_url($' . $id . '); ?>';
+            $attachment_url = '<?php echo wp_get_attachment_url($' . $this->get_protected_dollar_var_name($id) . '); ?>';
             if (isset($sub_field['mime_types']) && $sub_field['mime_types'] == 'mp4') {
-                $values = $c__start . '<?php echo get_wpu_acf_video($' . $id . '); ?>' . $c__end . "\n";
+                $values = $c__start . '<?php echo get_wpu_acf_video($' . $this->get_protected_dollar_var_name($id) . '); ?>' . $c__end . "\n";
             } else {
                 $values = $c__start . $attachment_url . '' . $c__end . "\n";
             }
             break;
         case 'editor':
-            $value_content = 'wpautop($' . $id . ')';
+            $value_content = 'wpautop($' . $this->get_protected_dollar_var_name($id) . ')';
             if (isset($sub_field['toolbar']) && $sub_field['toolbar'] == 'wpuacf_mini') {
-                $value_content = 'get_wpu_acf_minieditor($' . $id . ')';
+                $value_content = 'get_wpu_acf_minieditor($' . $this->get_protected_dollar_var_name($id) . ')';
             }
             $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo ' . $value_content . '; ?></div>' . $c__end . "\n";
             break;
         case 'textarea':
-            $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop(strip_tags($' . $id . ')); ?></div>' . $c__end . "\n";
+            $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop(strip_tags($' . $this->get_protected_dollar_var_name($id) . ')); ?></div>' . $c__end . "\n";
             break;
         case 'true_false':
             $values = $c__start . $c__end . "\n";
             break;
         case 'taxonomy':
-            $values = '<?php if($' . $id . '_tax):?><a href="<?php echo get_term_link($' . $id . '_tax); ?>"><?php echo $' . $id . '_tax->name; ?></a>' . $c__end . "\n";
+            $values = '<?php if($' . $this->get_protected_dollar_var_name($id) . '_tax):?><a href="<?php echo get_term_link($' . $this->get_protected_dollar_var_name($id) . '_tax); ?>"><?php echo $' . $this->get_protected_dollar_var_name($id) . '_tax->name; ?></a>' . $c__end . "\n";
             break;
         case 'gallery':
-            $values = '<div ' . $classname . '><?php foreach($' . $id . '_gallery as $img): ?><?php echo get_wpu_acf_image($img[\'ID\'], \'large\');?><?php endforeach; ?></div>' . "\n";
+            $values = '<div ' . $classname . '><?php foreach($' . $this->get_protected_dollar_var_name($id) . '_gallery as $img): ?><?php echo get_wpu_acf_image($img[\'ID\'], \'large\');?><?php endforeach; ?></div>' . "\n";
             break;
         case 'link':
             $values = '<?php echo get_wpu_acf_link(get_sub_field(\'' . $id . '\')); ?>' . "\n";
             break;
         case 'url':
             $values =
-                $c__start . '<a ' . $classname . ' href="<?php echo esc_url($' . $id . '); ?>">' . $c__end . "\n" .
+            $c__start . '<a ' . $classname . ' href="<?php echo esc_url($' . $this->get_protected_dollar_var_name($id) . '); ?>">' . $c__end . "\n" .
                 $c__start . '</a>' . $c__end . "\n";
             break;
         case 'color':
         case 'color_picker':
-            $values = $c__start . '<div ' . $classname . ' style="background-color:<?php echo $' . $id . ' ?>;"><?php echo $' . $id . '; ?></div>' . $c__end . "\n";
+            $values = $c__start . '<div ' . $classname . ' style="background-color:<?php echo $' . $this->get_protected_dollar_var_name($id) . ' ?>;"><?php echo $' . $this->get_protected_dollar_var_name($id) . '; ?></div>' . $c__end . "\n";
             break;
         case 'relationship':
             $tmp_val = (($nb_subfields == 1 && $level == 2) || $sub_field['required']) ? $this->default_value_relationship_nocond : $this->default_value_relationship;
@@ -1275,7 +1279,7 @@ EOT;
                 $wp_admin_bar->add_menu(
                     array(
                         'parent' => $menu_id,
-                        'title' => '&rarr; '.__('Add a block', 'wpu_acf_flexible'),
+                        'title' => '&rarr; ' . __('Add a block', 'wpu_acf_flexible'),
                         'id' => $menu_id . '-add',
                         'href' => get_edit_post_link($p) . '#wpu-acf-add'
                     )
