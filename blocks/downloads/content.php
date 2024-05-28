@@ -39,7 +39,7 @@ foreach ($_files as $_file) {
         }
     }
     if (!$_url) {
-        return false;
+        continue;
     }
 
     /* Get label */
