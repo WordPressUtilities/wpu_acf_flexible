@@ -50,7 +50,7 @@ foreach ($_files as $_file) {
     $files[] = array(
         'url' => $_url,
         'size' => $_size,
-        'target' => '',
+        'target' => $_target,
         'title' => $_label,
         'download' => $_download,
         'extension' => $_extension
@@ -66,8 +66,15 @@ echo $_content_before;
 echo '<div class="block-downloads block--downloads">' . get_wpu_acf_title_content();
 echo '<ul class="files-list">';
 foreach ($files as $file):
+    $link_attr = '';
+    if ($file['download']) {
+        $link_attr .= ' data-ext="' . $file['extension'] . '" download=""';
+    }
+    if ($file['target']) {
+        $link_attr .= ' target="' . $file['target'] . '"';
+    }
     echo '<li><div class="files-list__item">';
-    echo get_wpu_acf_link($file, $_button_classname, ($file['download'] ? 'data-ext="' . $file['extension'] . '" download=""' : ''));
+    echo get_wpu_acf_link($file, $_button_classname, $link_attr);
     if ($_display_filesize && $file['size']) {
         echo '<div class="file-size">' . $file['size'] . '</div>';
     }
