@@ -28,34 +28,92 @@ window.addEventListener("DOMContentLoaded", function() {
 
     /* GALLERY */
     (function() {
-        Array.prototype.forEach.call(document.querySelectorAll('[data-acf-dialog-target]'), function($btn) {
-            var $dialog = document.getElementById($btn.getAttribute('data-acf-dialog-target')),
-                $close = $dialog.querySelector('[data-acf-dialog-close]');
+        var $groups = document.querySelectorAll('[data-acf-dialog-group]');
+        Array.prototype.forEach.call($groups, function($group) {
+            var $gallery = $group.querySelectorAll('[data-acf-dialog-target]'),
+                _max_i = $gallery.length - 1,
+                _timeout;
 
-            /* Open on btn */
-            $btn.addEventListener("click", function(e) {
-                e.preventDefault();
-                $dialog.showModal();
-            });
+            Array.prototype.forEach.call($gallery, function($btn, i) {
+                var $dialog = document.getElementById($btn.getAttribute('data-acf-dialog-target')),
+                    $close = $dialog.querySelector('[data-acf-dialog-close]'),
+                    $prev = $dialog.querySelector('[data-acf-dialog-prev]'),
+                    $next = $dialog.querySelector('[data-acf-dialog-next]');
 
-            /* Open on close */
-            $close.addEventListener("click", function(e) {
-                e.preventDefault();
-                $dialog.close();
-            });
+                /* Open on btn */
+                $btn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    $dialog.showModal();
+                });
 
-            /* Click on backdrop */
-            $dialog.addEventListener('click', function(e) {
-                if (e.target === e.currentTarget) {
+                /* Open on btn */
+                $btn.addEventListener("wpu-acf-flexible-modal-open", function() {
+                    $dialog.showModal();
+                });
+
+                /* Close on close btn */
+                $close.addEventListener("click", function(e) {
+                    e.preventDefault();
                     $dialog.close();
-                }
-            });
+                });
 
-            /* Click on echap */
-            document.addEventListener('keydown', function(e) {
-                if (e.keyCode == 27) {
-                    $dialog.close();
+                if ($prev) {
+                    $prev.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        gotomodal('prev');
+                    });
                 }
+
+                if ($next) {
+                    console.log('az');
+                    $next.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        gotomodal('next');
+                    });
+                }
+
+                /* Click on backdrop */
+                $dialog.addEventListener('click', function(e) {
+                    if ($dialog.hasAttribute('open') && e.target === e.currentTarget) {
+                        $dialog.close();
+                    }
+                });
+
+                function gotomodal(_nb) {
+                    clearTimeout(_timeout);
+                    _timeout = setTimeout(function() {
+                        if (_nb == 'prev') {
+                            _nb = i - 1;
+                        }
+                        if (_nb == 'next') {
+                            _nb = i + 1;
+                        }
+                        if (_nb > _max_i) {
+                            _nb = 0;
+                        }
+                        if (_nb < 0) {
+                            _nb = _max_i;
+                        }
+                        $dialog.close();
+                        $gallery[_nb].dispatchEvent(new Event('wpu-acf-flexible-modal-open'));
+                    }, 50);
+                }
+
+                document.addEventListener('keydown', function(e) {
+                    if (!$dialog.hasAttribute('open')) {
+                        return;
+                    }
+                    /* Close on echap */
+                    if (e.key === "Escape") {
+                        $dialog.close();
+                    }
+                    if (e.key === "ArrowLeft") {
+                        gotomodal('prev');
+                    }
+                    if (e.key === "ArrowRight") {
+                        gotomodal('next');
+                    }
+                });
             });
         });
     }());

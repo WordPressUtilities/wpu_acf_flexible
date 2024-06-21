@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2024-05-15 18:11+0200\n"
+"POT-Creation-Date: 2024-06-21 15:07+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -41,7 +41,7 @@ msgstr "[WPUACF] Contenu"
 #: .././blocks/image/model.php:8 .././blocks/logos/model.php:8
 #: .././blocks/posts/model.php:9 .././blocks/quote/model.php:8
 #: .././blocks/rich-table/model.php:8 .././blocks/team-quote/model.php:8
-#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:328
+#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:329
 msgid "Title"
 msgstr "Titre"
 
@@ -119,7 +119,7 @@ msgid "Features"
 msgstr "Caractéristiques"
 
 #: .././blocks/features/model.php:23 .././blocks/logos/model.php:20
-#: .././blocks/rich-table/model.php:59 .././wpu_acf_flexible.php:300
+#: .././blocks/rich-table/model.php:59 .././wpu_acf_flexible.php:301
 msgid "Image"
 msgstr "Image"
 
@@ -127,9 +127,17 @@ msgstr "Image"
 msgid "[WPUACF] Form"
 msgstr "[WPUACF] Formulaire"
 
-#: .././blocks/gallery/content.php:28
+#: .././blocks/gallery/content.php:29
 msgid "Close"
 msgstr "Fermer"
+
+#: .././blocks/gallery/content.php:31
+msgid "Previous"
+msgstr "Précédent"
+
+#: .././blocks/gallery/content.php:32
+msgid "Next"
+msgstr "Suivant"
 
 #: .././blocks/gallery/model.php:5
 msgid "[WPUACF] Gallery"
@@ -179,7 +187,7 @@ msgstr "[WPUACF] Logos"
 msgid "Logos"
 msgstr "Logos"
 
-#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:311
+#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:312
 msgid "Link"
 msgstr "Lien"
 
@@ -259,7 +267,7 @@ msgstr "Colonnes"
 msgid "Add a column"
 msgstr "Ajouter une colonne"
 
-#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:341
+#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:342
 msgid "Text"
 msgstr "Texte"
 
@@ -303,7 +311,7 @@ msgstr "[WPUACF] Vidéo"
 msgid "Cover image"
 msgstr "Image de couverture"
 
-#: .././blocks/video/model.php:19 .././wpu_acf_flexible.php:305
+#: .././blocks/video/model.php:19 .././wpu_acf_flexible.php:306
 msgid "Video"
 msgstr "Vidéo"
 
@@ -311,66 +319,66 @@ msgstr "Vidéo"
 msgid "Use embed thumbnail if available"
 msgstr "Utiliser la vignette de l’embed si disponible"
 
-#: .././wpu_acf_flexible.php:306
+#: .././wpu_acf_flexible.php:307
 #, php-format
 msgid "MP4 format. Max %sMB. Rec: 1.5MB."
 msgstr "Format MP4. Max %sMo. Rec: 1.5Mo."
 
-#: .././wpu_acf_flexible.php:315
+#: .././wpu_acf_flexible.php:316
 msgid "Clickable image"
 msgstr "Image cliquable"
 
-#: .././wpu_acf_flexible.php:332
+#: .././wpu_acf_flexible.php:333
 msgid "Unique ID"
 msgstr "ID unique"
 
-#: .././wpu_acf_flexible.php:346
+#: .././wpu_acf_flexible.php:347
 msgid "Editor"
 msgstr "Éditeur"
 
-#: .././wpu_acf_flexible.php:358
+#: .././wpu_acf_flexible.php:359
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:361
+#: .././wpu_acf_flexible.php:362
 msgid "Left"
 msgstr "Gauche"
 
-#: .././wpu_acf_flexible.php:362
+#: .././wpu_acf_flexible.php:363
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:473
+#: .././wpu_acf_flexible.php:474
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:480
+#: .././wpu_acf_flexible.php:481
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:505
+#: .././wpu_acf_flexible.php:506
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:505
+#: .././wpu_acf_flexible.php:506
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:852 .././wpu_acf_flexible.php:861
+#: .././wpu_acf_flexible.php:857 .././wpu_acf_flexible.php:866
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1185
+#: .././wpu_acf_flexible.php:1190
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1221
+#: .././wpu_acf_flexible.php:1226
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1277
+#: .././wpu_acf_flexible.php:1282
 msgid "Add a block"
 msgstr "Ajouter un bloc"
 

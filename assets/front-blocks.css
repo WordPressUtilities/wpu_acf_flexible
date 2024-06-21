@@ -245,8 +245,8 @@
     z-index: 1;
     position: relative;
     height: 0;
-    background-color: #000;
     padding-top: 56.25%;
+    background-color: #000;
 }
 
 /* Common
@@ -279,7 +279,7 @@
     text-align: center;
     line-height: 3;
     background-color: #fff;
-    transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%,-50%,0);
     cursor: pointer;
 }
 
@@ -293,8 +293,8 @@
 -------------------------- */
 
 .wpuacf-video .cover-image {
-    cursor: pointer;
     z-index: 2;
+    cursor: pointer;
 }
 
 .wpuacf-video:hover .cover-image {
@@ -362,4 +362,24 @@
 
 .wpuacfflexfaq-list__item:not([data-is-open="true"]) .block-answer {
     display: none;
+}
+
+/* ----------------------------------------------------------
+  Modal
+---------------------------------------------------------- */
+
+[data-acf-dialog-next],
+[data-acf-dialog-prev] {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+dialog [data-acf-dialog-prev] {
+    left: 0;
+}
+
+dialog [data-acf-dialog-next] {
+    right: 0;
 }
