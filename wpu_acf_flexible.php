@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.59.0
+Version: 2.60.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -20,7 +20,7 @@ License URI: https://opensource.org/licenses/MIT
 defined('ABSPATH') || die;
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.59.0';
+    private $plugin_version = '2.60.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -275,7 +275,7 @@ EOT;
         }
     }
 
-    function admin_head() {
+    public function admin_head() {
         $current_admin_language = wpuacfflex_get_current_admin_language();
         if ($current_admin_language) {
             echo '<script>window.wpuacfflex_current_admin_language="' . esc_attr($current_admin_language) . '";</script>';
@@ -647,7 +647,7 @@ EOT;
 
     }
 
-    function get_protected_dollar_var_name($var_name) {
+    public function get_protected_dollar_var_name($var_name) {
         return str_replace('-', '_', $var_name);
     }
 
@@ -786,6 +786,7 @@ EOT;
 
             break;
         case 'tab':
+        case 'message':
         case 'acfe_column':
             break;
         default:
@@ -1113,7 +1114,7 @@ EOT;
         return $field;
     }
 
-    function secure_post_content($content) {
+    public function secure_post_content($content) {
         $allowed_tags = apply_filters('wpu_acf_flexible__save_post_allowed_tags', '<p><a><strong><em><h1><h2><h3><h4><h5><ol><ul><li><img>');
 
         /* Disable form content */
@@ -1177,7 +1178,7 @@ EOT;
     }
 
     /* Custom validation */
-    function validate_value($valid, $value, $field, $input_name) {
+    public function validate_value($valid, $value, $field, $input_name) {
 
         // Bail early if value is already invalid.
         if ($valid !== true) {
@@ -1196,7 +1197,7 @@ EOT;
 
     /* Add draft validation */
     /* Thanks to https://support.advancedcustomfields.com/forums/topic/is-it-possible-to-apply-validation-to-draft-post/#post-154429 */
-    function add_draft_validation() {
+    public function add_draft_validation() {
         echo '<script>';
         echo "acf.addAction('prepare', function(){";
         echo "acf.validation.removeEvents({";
@@ -1207,7 +1208,7 @@ EOT;
     }
 
     /* Set editor height */
-    function admin_set_editor_height() {
+    public function admin_set_editor_height() {
         $css = '';
         foreach ($this->editor_heights as $editor) {
             $css .= '[data-key="' . $editor['field_id'] . '"] iframe,';
@@ -1222,13 +1223,13 @@ EOT;
         }
     }
 
-    function set_acfe_flexible_layouts_icons($icons) {
+    public function set_acfe_flexible_layouts_icons($icons) {
         $toggle_title = __('Click to reduce/enlarge the layout', 'wpu_acf_flexible');
         $icons['wpu-acf-flex-toggle'] = '<a class="acf-icon -down small" href="#" data-name="wpu-acf-flex-toggle" title="' . esc_attr($toggle_title) . '"></a>';
         return $icons;
     }
 
-    function admin_set_styles() {
+    public function admin_set_styles() {
         echo '<style>';
         echo '.layout.wpuacf-hidden-preview .acf-fields,';
         echo '.layout.wpuacf-hidden-preview .acfe-fc-placeholder ,';
@@ -1237,7 +1238,7 @@ EOT;
     }
 
     /* Admin bar */
-    function admin_bar_menu($wp_admin_bar) {
+    public function admin_bar_menu($wp_admin_bar) {
         if (!is_singular()) {
             return;
         }

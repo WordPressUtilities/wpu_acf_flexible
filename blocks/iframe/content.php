@@ -4,6 +4,10 @@ $_url = get_sub_field('url');
 if (!$_url) {
     return;
 }
+
+# Force https if needed
+$_url = is_ssl() ? str_replace('http://', 'https://', $_url) : $_url;
+
 $_height = get_sub_field('height');
 if (!is_numeric($_height)) {
     $_height = 500;

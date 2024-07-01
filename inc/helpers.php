@@ -655,8 +655,17 @@ function wpuacfflex_template_get_layout_css($layout_id, $layout, $css_rule_prefi
         $css_rule_prefix = trim($css_rule_prefix) . ' ';
     }
 
+    $excluded_field_types = apply_filters('wpuacfflex_template_get_layout_css__excluded_field_types', array(
+        'tab',
+        'acfe_column',
+        'message'
+    ));
+
     /* Add a rule for each field */
     foreach ($fields as $field_id => $field) {
+        if (isset($field['type']) && in_array($field['type'], $excluded_field_types)) {
+            continue;
+        }
         $css .= "\n" . $css_rule_prefix;
         $css .= ".field-" . $field_id;
         $css .= " {\n\n}\n";
