@@ -65,7 +65,6 @@ window.addEventListener("DOMContentLoaded", function() {
                 }
 
                 if ($next) {
-                    console.log('az');
                     $next.addEventListener("click", function(e) {
                         e.preventDefault();
                         gotomodal('next');
