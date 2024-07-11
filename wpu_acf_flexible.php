@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.60.1
+Version: 2.61.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -20,7 +20,8 @@ License URI: https://opensource.org/licenses/MIT
 defined('ABSPATH') || die;
 
 class wpu_acf_flexible {
-    private $plugin_version = '2.60.1';
+    public $plugin_description;
+    private $plugin_version = '2.61.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -207,6 +208,9 @@ EOT;
         add_filter('acf/validate_value', array(&$this,
             'validate_value'
         ), 10, 4);
+        add_filter('acfe/flexible/secondary_actions', array($this,
+            'secondary_actions'
+        ), 20, 2);
 
     }
 
@@ -214,6 +218,7 @@ EOT;
         if (!load_plugin_textdomain('wpu_acf_flexible', false, dirname(plugin_basename(__FILE__)) . '/lang/')) {
             load_muplugin_textdomain('wpu_acf_flexible', dirname(plugin_basename(__FILE__)) . '/lang/');
         }
+        $this->plugin_description = __('Quickly generate flexible content in ACF', 'wpu_acf_flexible');
     }
 
     public function init() {
@@ -1193,6 +1198,12 @@ EOT;
         }
 
         return $valid;
+    }
+
+    public function secondary_actions($actions) {
+        $actions['wpu-acf-flex-reduce'] = '<a href="#" data-acfe-flexible-control-action="wpu-acf-flex-reduce">' . __('Reduce all layouts', 'wpu_acf_flexible') . '</a>';
+        $actions['wpu-acf-flex-expand'] = '<a href="#" data-acfe-flexible-control-action="wpu-acf-flex-expand">' . __('Expand all layouts', 'wpu_acf_flexible') . '</a>';
+        return $actions;
     }
 
     /* Add draft validation */

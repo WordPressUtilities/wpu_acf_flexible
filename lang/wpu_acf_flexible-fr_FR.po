@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2024-06-21 15:07+0200\n"
+"POT-Creation-Date: 2024-07-11 21:34+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -41,7 +41,7 @@ msgstr "[WPUACF] Contenu"
 #: .././blocks/image/model.php:8 .././blocks/logos/model.php:8
 #: .././blocks/posts/model.php:9 .././blocks/quote/model.php:8
 #: .././blocks/rich-table/model.php:8 .././blocks/team-quote/model.php:8
-#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:329
+#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:333
 msgid "Title"
 msgstr "Titre"
 
@@ -119,7 +119,7 @@ msgid "Features"
 msgstr "Caractéristiques"
 
 #: .././blocks/features/model.php:23 .././blocks/logos/model.php:20
-#: .././blocks/rich-table/model.php:59 .././wpu_acf_flexible.php:301
+#: .././blocks/rich-table/model.php:59 .././wpu_acf_flexible.php:305
 msgid "Image"
 msgstr "Image"
 
@@ -187,7 +187,7 @@ msgstr "[WPUACF] Logos"
 msgid "Logos"
 msgstr "Logos"
 
-#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:312
+#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:316
 msgid "Link"
 msgstr "Lien"
 
@@ -267,7 +267,7 @@ msgstr "Colonnes"
 msgid "Add a column"
 msgstr "Ajouter une colonne"
 
-#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:342
+#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:346
 msgid "Text"
 msgstr "Texte"
 
@@ -311,7 +311,7 @@ msgstr "[WPUACF] Vidéo"
 msgid "Cover image"
 msgstr "Image de couverture"
 
-#: .././blocks/video/model.php:19 .././wpu_acf_flexible.php:306
+#: .././blocks/video/model.php:19 .././wpu_acf_flexible.php:310
 msgid "Video"
 msgstr "Vidéo"
 
@@ -319,66 +319,78 @@ msgstr "Vidéo"
 msgid "Use embed thumbnail if available"
 msgstr "Utiliser la vignette de l’embed si disponible"
 
-#: .././wpu_acf_flexible.php:307
+#: .././wpu_acf_flexible.php:220
+msgid "Quickly generate flexible content in ACF"
+msgstr "Générez rapidement du contenu flexible dans ACF"
+
+#: .././wpu_acf_flexible.php:311
 #, php-format
 msgid "MP4 format. Max %sMB. Rec: 1.5MB."
 msgstr "Format MP4. Max %sMo. Rec: 1.5Mo."
 
-#: .././wpu_acf_flexible.php:316
+#: .././wpu_acf_flexible.php:320
 msgid "Clickable image"
 msgstr "Image cliquable"
 
-#: .././wpu_acf_flexible.php:333
+#: .././wpu_acf_flexible.php:337
 msgid "Unique ID"
 msgstr "ID unique"
 
-#: .././wpu_acf_flexible.php:347
+#: .././wpu_acf_flexible.php:351
 msgid "Editor"
 msgstr "Éditeur"
 
-#: .././wpu_acf_flexible.php:359
+#: .././wpu_acf_flexible.php:363
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:362
+#: .././wpu_acf_flexible.php:366
 msgid "Left"
 msgstr "Gauche"
 
-#: .././wpu_acf_flexible.php:363
+#: .././wpu_acf_flexible.php:367
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:474
+#: .././wpu_acf_flexible.php:478
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:481
+#: .././wpu_acf_flexible.php:485
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:506
+#: .././wpu_acf_flexible.php:510
 msgid "No"
 msgstr "Non"
 
-#: .././wpu_acf_flexible.php:506
+#: .././wpu_acf_flexible.php:510
 msgid "Yes"
 msgstr "Oui"
 
-#: .././wpu_acf_flexible.php:857 .././wpu_acf_flexible.php:866
+#: .././wpu_acf_flexible.php:862 .././wpu_acf_flexible.php:871
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1190
+#: .././wpu_acf_flexible.php:1195
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1226
+#: .././wpu_acf_flexible.php:1203
+msgid "Reduce all layouts"
+msgstr "Réduire toutes les mises en page"
+
+#: .././wpu_acf_flexible.php:1204
+msgid "Expand all layouts"
+msgstr "Développer toutes les mises en page"
+
+#: .././wpu_acf_flexible.php:1237
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1282
+#: .././wpu_acf_flexible.php:1293
 msgid "Add a block"
 msgstr "Ajouter un bloc"
 

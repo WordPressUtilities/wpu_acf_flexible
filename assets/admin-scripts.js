@@ -11,6 +11,19 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }());
 
+    (function() {
+        /* Reduce all layouts */
+        jQuery('body').on('mousedown touchstart', '[data-acfe-flexible-control-action="wpu-acf-flex-reduce"]', function(e) {
+            e.preventDefault();
+            jQuery('.acf-icon[data-name="wpu-acf-flex-toggle"].-down').click();
+        });
+        /* Expand all layouts */
+        jQuery('body').on('mousedown touchstart', '[data-acfe-flexible-control-action="wpu-acf-flex-expand"]', function(e) {
+            e.preventDefault();
+            jQuery('.acf-icon[data-name="wpu-acf-flex-toggle"].-up').click();
+        });
+    }());
+
     /* Scroll to */
     (function() {
         if (window.location.hash.substring(0, 12) != '#wpu-acf-row') {
