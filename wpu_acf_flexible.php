@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.61.1
+Version: 2.62.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -20,8 +20,9 @@ License URI: https://opensource.org/licenses/MIT
 defined('ABSPATH') || die;
 
 class wpu_acf_flexible {
+    public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.61.1';
+    private $plugin_version = '2.62.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -212,6 +213,23 @@ EOT;
             'secondary_actions'
         ), 20, 2);
 
+        require_once __DIR__ . '/inc/WPUBaseToolbox/WPUBaseToolbox.php';
+        $this->basetoolbox = new \wpu_acf_flexible\WPUBaseToolbox(array(
+            'need_form_js' => false,
+            'plugin_name' => 'WPU ACF Flexible'
+        ));
+        $this->basetoolbox->check_plugins_dependencies(array(
+            'acfpro' => array(
+                'path' => 'advanced-custom-fields-pro/acf.php',
+                'url' => 'https://www.advancedcustomfields.com/',
+                'name' => 'Advanced Custom Fields PRO'
+            ),
+            'acfext' => array(
+                'path' => 'acf-extended/acf-extended.php',
+                'url' => 'https://wordpress.org/plugins/acf-extended/',
+                'name' => 'ACF Extended'
+            )
+        ));
     }
 
     public function load_translation() {
@@ -275,6 +293,7 @@ EOT;
         $custom_js = apply_filters('wpu_acf_flexible__front_js', array(
             'front-blocks' => plugins_url('assets/front-blocks.js', __FILE__)
         ));
+
         foreach ($custom_js as $id => $file) {
             wp_enqueue_script('wpu_acf_flexible-script-front-' . $id, $file, array(), $this->plugin_version);
         }

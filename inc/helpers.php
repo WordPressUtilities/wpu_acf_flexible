@@ -154,26 +154,41 @@ function get_wpu_acf_video_embed_image($args = array()) {
     if (!is_array($args)) {
         $args = array();
     }
+
+    /* Video */
     if (!isset($args['video_field_id'])) {
         $args['video_field_id'] = 'video';
-    }
-    if (!isset($args['image_field_id'])) {
-        $args['image_field_id'] = 'image';
-    }
-    if (!isset($args['noimg_force_autoplay'])) {
-        $args['noimg_force_autoplay'] = false;
     }
     if (isset($args['video_field'])) {
         $_video = $args['video_field'];
     } else {
         $_video = get_sub_field($args['video_field_id']);
     }
-    if (isset($args['image_field'])) {
+
+    /* Image */
+    if (!isset($args['image_field_id'])) {
+        $args['image_field_id'] = 'image';
+    }
+    if (isset($args['image_field']) && $args['image_field']) {
         $_image_id = $args['image_field'];
     } else {
         $_image_id = get_sub_field($args['image_field_id']);
     }
-    $_image_use_embed = get_sub_field('use_thumb');
+
+    /* Autoplay */
+    if (!isset($args['noimg_force_autoplay'])) {
+        $args['noimg_force_autoplay'] = false;
+    }
+
+    /* Thumb */
+    if (!isset($args['use_thumb_id'])) {
+        $args['use_thumb_id'] = 'use_thumb';
+    }
+    if (isset($args['use_thumb'])) {
+        $_image_use_embed = $args['use_thumb'];
+    } else {
+        $_image_use_embed = get_sub_field($args['use_thumb_id']);
+    }
 
     if (!$_video) {
         return false;
