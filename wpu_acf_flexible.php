@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.62.0
+Version: 2.63.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.62.0';
+    private $plugin_version = '2.63.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -414,6 +414,57 @@ EOT;
                     'label' => 'Image mobile',
                     'required' => false,
                     'type' => 'wpuacf_image'
+                )
+            )
+        );
+
+        /* Advanced groups : embed */
+        $field_types['wpuacf_embed'] = array(
+            'label' => __('Video', 'wpu_acf_flexible'),
+            'type' => 'group',
+            'sub_fields' => array(
+                'cola' => 'wpuacf_50p',
+                'embed' => array(
+                    'label' => __('Source', 'wpu_acf_flexible'),
+                    'type' => 'oembed'
+                ),
+                'colb' => 'wpuacf_50p',
+                'use_thumb' => array(
+                    'label' => __('Use embed thumbnail if available', 'wpu_acf_flexible'),
+                    'type' => 'true_false'
+                ),
+                'cover_image' => array(
+                    'label' => __('Default cover image', 'wpu_acf_flexible'),
+                    'type' => 'image'
+                )
+            )
+        );
+
+        /* Advanced groups : slider */
+        $field_types['wpuacf_slider'] = array(
+            'label' => __('Slider', 'wpu_acf_flexible'),
+            'type' => 'group',
+            'sub_fields' => array(
+                'cola' => 'wpuacf_50p',
+                'gallery' => array(
+                    'label' => __('Images', 'wpu_acf_flexible'),
+                    'type' => 'gallery'
+                ),
+                'colb' => 'wpuacf_50p',
+                'slider_options' => array(
+                    'label' => __('Options', 'wpu_acf_flexible'),
+                    'type' => 'group',
+                    'sub_fields' => array(
+                        'autoplay' => array(
+                            'label' => __('Autoplay', 'wpu_acf_flexible'),
+                            'type' => 'true_false'
+                        ),
+                        'autoplay_speed' => array(
+                            'label' => __('Autoplay speed (ms)', 'wpu_acf_flexible'),
+                            'type' => 'number',
+                            'default_value' => 5000
+                        )
+                    )
                 )
             )
         );
@@ -1028,6 +1079,7 @@ EOT;
         if (isset($model) && !empty($model)) {
             $model['wpuacf_model'] = $id;
             $model = apply_filters('wpu_acf_flexible__override_model', $model, $layout_id);
+            $model = apply_filters('wpu_acf_flexible__override_model__' . $layout_id, $model);
             return $model;
         }
         return false;

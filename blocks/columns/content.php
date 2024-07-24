@@ -23,7 +23,7 @@ while (have_rows('columns')): the_row();
         'title' => '',
         'content' => '',
         'image' => '',
-        'gallery' => '',
+        'slider' => '',
         'embed' => '',
         'cta' => ''
     );
@@ -44,16 +44,26 @@ while (have_rows('columns')): the_row();
 
     /* Image */
     $image = get_sub_field('image');
-    $gallery = get_sub_field('gallery');
     if ($image) {
         $column['image'] = '<div class="columns-list__item__image">' . get_wpu_acf_image($image, $image_size) . '</div>';
     }
-    if ($gallery) {
-        $column['gallery'] .= '<div class="columns-list__item__gallery">';
-        foreach ($gallery as $img):
-            $column['gallery'] .= '<div class="img">' . get_wpu_acf_image($img['ID'], $image_size) . '</div>';
+
+    /* Slider */
+    $slider = get_sub_field('slider');
+
+    if ($slider && $slider['gallery']) {
+        $slider_attributes = '';
+        if ($slider['slider_options']['autoplay']) {
+            $slider_attributes .= ' data-slider-autoplay="' . $slider['slider_options']['autoplay'] . '"';
+        }
+        if ($slider['slider_options']['autoplay_speed']) {
+            $slider_attributes .= ' data-slider-autoplay-speed="' . $slider['slider_options']['autoplay_speed'] . '"';
+        }
+        $column['slider'] .= '<div class="columns-list__item__gallery" ' . $slider_attributes . '>';
+        foreach ($slider['gallery'] as $img):
+            $column['slider'] .= '<div><div class="img">' . get_wpu_acf_image($img['ID'], $image_size) . '</div></div>';
         endforeach;
-        $column['gallery'] .= '</div>';
+        $column['slider'] .= '</div>';
     }
 
     /* Embed */

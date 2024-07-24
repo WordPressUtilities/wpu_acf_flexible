@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2024-07-23 16:52+0200\n"
+"POT-Creation-Date: 2024-07-24 14:39+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -71,36 +71,24 @@ msgstr "Titre"
 msgid "Image"
 msgstr "Image"
 
-#: .././blocks/columns/model.php:44
+#: .././blocks/columns/model.php:45 .././wpu_acf_flexible.php:445
 msgid "Slider"
 msgstr "Slider"
 
-#: .././blocks/columns/model.php:49 .././blocks/columns/model.php:53
-#: .././blocks/video/model.php:19 .././wpu_acf_flexible.php:330
+#: .././blocks/columns/model.php:51 .././blocks/video/model.php:19
+#: .././wpu_acf_flexible.php:330 .././wpu_acf_flexible.php:423
 msgid "Video"
 msgstr "Vidéo"
 
-#: .././blocks/columns/model.php:58
-msgid "Source"
-msgstr "Source"
-
-#: .././blocks/columns/model.php:63 .././blocks/video/model.php:24
-msgid "Use embed thumbnail if available"
-msgstr "Utiliser la vignette de l’embed si disponible"
-
-#: .././blocks/columns/model.php:67
-msgid "Default cover image"
-msgstr "Image de couverture par défaut"
-
-#: .././blocks/columns/model.php:74
+#: .././blocks/columns/model.php:57
 msgid "Call to action"
 msgstr "Call to action"
 
-#: .././blocks/columns/model.php:78
+#: .././blocks/columns/model.php:62
 msgid "Main action"
 msgstr "Action principale"
 
-#: .././blocks/columns/model.php:82
+#: .././blocks/columns/model.php:67
 msgid "Secondary action"
 msgstr "Action secondaire"
 
@@ -194,6 +182,7 @@ msgid "[WPUACF] Gallery"
 msgstr "[WPUACF] Galerie"
 
 #: .././blocks/gallery/model.php:17 .././blocks/images/model.php:12
+#: .././wpu_acf_flexible.php:450
 msgid "Images"
 msgstr "Images"
 
@@ -357,15 +346,19 @@ msgstr "[WPUACF] Vidéo"
 msgid "Cover image"
 msgstr "Image de couverture"
 
+#: .././blocks/video/model.php:24 .././wpu_acf_flexible.php:433
+msgid "Use embed thumbnail if available"
+msgstr "Utiliser la vignette de l’embed si disponible"
+
 #: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:169
 msgid "Submit"
 msgstr "Envoyer"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:244 .././wpu_acf_flexible.php:530
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:244 .././wpu_acf_flexible.php:581
 msgid "No"
 msgstr "Non"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:245 .././wpu_acf_flexible.php:530
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:245 .././wpu_acf_flexible.php:581
 msgid "Yes"
 msgstr "Oui"
 
@@ -430,37 +423,57 @@ msgstr "Gauche"
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:498
+#: .././wpu_acf_flexible.php:428
+msgid "Source"
+msgstr "Source"
+
+#: .././wpu_acf_flexible.php:437
+msgid "Default cover image"
+msgstr "Image de couverture par défaut"
+
+#: .././wpu_acf_flexible.php:455
+msgid "Options"
+msgstr "Options"
+
+#: .././wpu_acf_flexible.php:459
+msgid "Autoplay"
+msgstr "Lecture automatique"
+
+#: .././wpu_acf_flexible.php:463
+msgid "Autoplay speed (ms)"
+msgstr "Vitesse de la lecture auto (ms)"
+
+#: .././wpu_acf_flexible.php:549
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:505
+#: .././wpu_acf_flexible.php:556
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:882 .././wpu_acf_flexible.php:891
+#: .././wpu_acf_flexible.php:933 .././wpu_acf_flexible.php:942
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1215
+#: .././wpu_acf_flexible.php:1267
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1223
+#: .././wpu_acf_flexible.php:1275
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1224
+#: .././wpu_acf_flexible.php:1276
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1257
+#: .././wpu_acf_flexible.php:1309
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1313
+#: .././wpu_acf_flexible.php:1365
 msgid "Add a block"
 msgstr "Ajouter un bloc"
 
