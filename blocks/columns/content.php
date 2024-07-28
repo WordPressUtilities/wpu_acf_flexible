@@ -50,21 +50,7 @@ while (have_rows('columns')): the_row();
 
     /* Slider */
     $slider = get_sub_field('slider');
-
-    if ($slider && $slider['gallery']) {
-        $slider_attributes = '';
-        if ($slider['slider_options']['autoplay']) {
-            $slider_attributes .= ' data-slider-autoplay="' . $slider['slider_options']['autoplay'] . '"';
-        }
-        if ($slider['slider_options']['autoplay_speed']) {
-            $slider_attributes .= ' data-slider-autoplay-speed="' . $slider['slider_options']['autoplay_speed'] . '"';
-        }
-        $column['slider'] .= '<div class="columns-list__item__gallery" ' . $slider_attributes . '>';
-        foreach ($slider['gallery'] as $img):
-            $column['slider'] .= '<div><div class="img">' . get_wpu_acf_image($img['ID'], $image_size) . '</div></div>';
-        endforeach;
-        $column['slider'] .= '</div>';
-    }
+    $column['slider'] .= get_wpu_acf_slider($slider, $image_size);
 
     /* Embed */
     $embed = get_sub_field('embed');
@@ -92,7 +78,7 @@ endwhile;
   Content
 ---------------------------------------------------------- */
 
-echo '<section class="centered-container cc-block--columns ' . envoidunet_theme(get_sub_field('envoidunet_theme')) . '"><div class="block--columns">';
+echo '<section class="centered-container cc-block--columns ' . get_wpu_acf_wrapper_classname('columns') . '"><div class="block--columns">';
 echo '<ul class="columns-list__list ' . $columns_list_classname . '">';
 foreach ($columns as $column_parts) {
     echo '<li>';

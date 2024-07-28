@@ -463,6 +463,26 @@ function get_wpu_acf_responsive_image($field_value, $classname = '') {
     return $html;
 }
 
+function get_wpu_acf_slider($slider, $image_size = 'large') {
+    if (!$slider || !$slider['gallery']) {
+        return '';
+    }
+    $slider_html = '';
+    $slider_attributes = '';
+    if ($slider['slider_options']['autoplay']) {
+        $slider_attributes .= ' data-slider-autoplay="' . $slider['slider_options']['autoplay'] . '"';
+    }
+    if ($slider['slider_options']['autoplay_speed']) {
+        $slider_attributes .= ' data-slider-autoplay-speed="' . $slider['slider_options']['autoplay_speed'] . '"';
+    }
+    $slider_html .= '<div class="wpuacf-slider " ' . $slider_attributes . '>';
+    foreach ($slider['gallery'] as $img):
+        $slider_html .= '<div><div class="img">' . get_wpu_acf_image($img['ID'], $image_size) . '</div></div>';
+    endforeach;
+    $slider_html .= '</div>';
+    return $slider_html;
+}
+
 /* ----------------------------------------------------------
   Internal helpers
 ---------------------------------------------------------- */

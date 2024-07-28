@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2024-07-24 14:39+0200\n"
+"POT-Creation-Date: 2024-07-28 23:45+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -43,9 +43,9 @@ msgstr "Colonnes"
 #: .././blocks/features/model.php:11 .././blocks/features/model.php:30
 #: .././blocks/gallery/model.php:11 .././blocks/image-content/model.php:26
 #: .././blocks/image/model.php:11 .././blocks/logos/model.php:11
-#: .././blocks/posts/model.php:12 .././blocks/rich-table/model.php:11
-#: .././blocks/rich-table/model.php:40 .././blocks/rich-table/model.php:88
-#: .././blocks/video/model.php:10
+#: .././blocks/media/model.php:11 .././blocks/posts/model.php:12
+#: .././blocks/rich-table/model.php:11 .././blocks/rich-table/model.php:40
+#: .././blocks/rich-table/model.php:88 .././blocks/video/model.php:10
 msgid "Content"
 msgstr "Contenu"
 
@@ -58,20 +58,22 @@ msgstr "Surtitre"
 #: .././blocks/features/model.php:8 .././blocks/features/model.php:27
 #: .././blocks/gallery/model.php:8 .././blocks/hero/model.php:8
 #: .././blocks/image-content/model.php:23 .././blocks/image/model.php:8
-#: .././blocks/logos/model.php:8 .././blocks/posts/model.php:9
-#: .././blocks/quote/model.php:8 .././blocks/rich-table/model.php:8
-#: .././blocks/team-quote/model.php:8 .././blocks/video/model.php:7
-#: .././wpu_acf_flexible.php:353
+#: .././blocks/logos/model.php:8 .././blocks/media/model.php:8
+#: .././blocks/posts/model.php:9 .././blocks/quote/model.php:8
+#: .././blocks/rich-table/model.php:8 .././blocks/team-quote/model.php:8
+#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:353
 msgid "Title"
 msgstr "Titre"
 
 #: .././blocks/columns/model.php:35 .././blocks/columns/model.php:39
 #: .././blocks/features/model.php:23 .././blocks/logos/model.php:20
+#: .././blocks/media/model.php:19 .././blocks/media/model.php:25
 #: .././blocks/rich-table/model.php:59 .././wpu_acf_flexible.php:325
 msgid "Image"
 msgstr "Image"
 
-#: .././blocks/columns/model.php:45 .././wpu_acf_flexible.php:445
+#: .././blocks/columns/model.php:45 .././blocks/media/model.php:21
+#: .././blocks/media/model.php:40 .././wpu_acf_flexible.php:445
 msgid "Slider"
 msgstr "Slider"
 
@@ -210,7 +212,7 @@ msgstr "Hauteur de l’iFrame"
 msgid "[WPUACF] Image - Content"
 msgstr "[WPUACF] Image - Contenu"
 
-#: .././blocks/image/model.php:5
+#: .././blocks/image/model.php:5 .././blocks/media/model.php:5
 msgid "[WPUACF] Image"
 msgstr "[WPUACF] Image"
 
@@ -229,6 +231,14 @@ msgstr "Logos"
 #: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:336
 msgid "Link"
 msgstr "Lien"
+
+#: .././blocks/media/model.php:17
+msgid "Media type"
+msgstr "Type de Média"
+
+#: .././blocks/media/model.php:20 .././blocks/media/model.php:33
+msgid "Embed"
+msgstr "Embed"
 
 #: .././blocks/numbers/model.php:5
 msgid "[WPUACF] Numbers"
