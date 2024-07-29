@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.64.0
+Version: 2.64.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.64.0';
+    private $plugin_version = '2.64.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -170,6 +170,9 @@ EOT;
         add_action('init', array(&$this,
             'init'
         ));
+        add_action('plugins_loaded', array(&$this,
+            'plugins_loaded'
+        ));
         add_action('acf/save_post', array(&$this,
             'save_post'
         ), 99);
@@ -182,9 +185,7 @@ EOT;
         add_action('wp_enqueue_scripts', array(&$this,
             'front_assets'
         ));
-        add_action('plugins_loaded', array(&$this,
-            'load_translation'
-        ));
+
         add_action('admin_head', array(&$this,
             'admin_head'
         ));
@@ -213,6 +214,16 @@ EOT;
             'secondary_actions'
         ), 20, 2);
 
+    }
+
+    public function plugins_loaded() {
+        # Translations
+        if (!load_plugin_textdomain('wpu_acf_flexible', false, dirname(plugin_basename(__FILE__)) . '/lang/')) {
+            load_muplugin_textdomain('wpu_acf_flexible', dirname(plugin_basename(__FILE__)) . '/lang/');
+        }
+        $this->plugin_description = __('Quickly generate flexible content in ACF', 'wpu_acf_flexible');
+
+        # TOOLBOX
         require_once __DIR__ . '/inc/WPUBaseToolbox/WPUBaseToolbox.php';
         $this->basetoolbox = new \wpu_acf_flexible\WPUBaseToolbox(array(
             'need_form_js' => false,
@@ -230,16 +241,11 @@ EOT;
                 'name' => 'ACF Extended'
             )
         ));
-    }
 
-    public function load_translation() {
-        if (!load_plugin_textdomain('wpu_acf_flexible', false, dirname(plugin_basename(__FILE__)) . '/lang/')) {
-            load_muplugin_textdomain('wpu_acf_flexible', dirname(plugin_basename(__FILE__)) . '/lang/');
-        }
-        $this->plugin_description = __('Quickly generate flexible content in ACF', 'wpu_acf_flexible');
     }
 
     public function init() {
+
         if (!function_exists('acf_add_local_field_group')) {
             return;
         }

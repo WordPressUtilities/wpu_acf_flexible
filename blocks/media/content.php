@@ -13,7 +13,7 @@ switch ($media_type) {
 case 'image':
     $image = get_sub_field('image');
     if ($image) {
-        $block_content .= '<div class="block-media__image">' . get_wpu_acf_image($image, 'large') . '</div>';
+        $block_content .= '<div class="block-media__image"><div class="img">' . get_wpu_acf_image($image, 'large') . '</div></div>';
     }
     break;
 case 'embed':

@@ -22,9 +22,7 @@ $model = array(
             )
         ),
         'image' => array(
-            'label' => __('Image', 'wpu_acf_flexible'),
-            'type' => 'image',
-            'preview_size' => 'thumbnail',
+            'type' => 'wpuacf_image',
             'wpuacf_condition' => array(
                 'media_type' => 'image'
             )

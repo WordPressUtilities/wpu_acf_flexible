@@ -9,6 +9,7 @@ $columns_list_classname = apply_filters('wpu_acf_flexible__content__columns__cla
 $image_size = apply_filters('wpu_acf_flexible__content__columns__image_size', 'large');
 $cta_classname_main = apply_filters('wpu_acf_flexible__content__columns__cta_main_classname', 'cta-main');
 $cta_classname_secondary = apply_filters('wpu_acf_flexible__content__columns__cta_secondary_classname', 'cta-secondary');
+$content_classname = apply_filters('wpu_acf_flexible__content__columns__content_classname', 'columns-list__item__content');
 
 /* ----------------------------------------------------------
   Columns content
@@ -39,7 +40,7 @@ while (have_rows('columns')): the_row();
         $column['title'] = '<h2 class="columns-list__item__title">' . strip_tags($title) . '</h2>';
     }
     if ($content) {
-        $column['content'] = '<div class="columns-list__item__content">' . get_wpu_acf_minieditor($content) . '</div>';
+        $column['content'] = '<div class="' . esc_attr($content_classname) . '">' . get_wpu_acf_minieditor($content) . '</div>';
     }
 
     /* Image */
