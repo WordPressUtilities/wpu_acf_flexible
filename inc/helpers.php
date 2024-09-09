@@ -92,6 +92,8 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         $is_last_block = false;
 
         /* Include theme layout file */
+        do_action('get_wpu_acf_flexible_content__before_layout', '', $layout);
+        do_action('get_wpu_acf_flexible_content__before_layout__' . $layout, '');
         if (file_exists($layout_file)) {
             include $layout_file;
         } else {
@@ -100,6 +102,8 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
                 include $wpu_acf_flexible->plugin_dir_path . 'blocks/' . $_layout_settings['wpuacf_model'] . '/content.php';
             }
         }
+        do_action('get_wpu_acf_flexible_content__after_layout__' . $layout, '');
+        do_action('get_wpu_acf_flexible_content__after_layout', '', $layout);
 
         do_action('qm/lap', $query_monitor_block_id, get_row_layout());
 
