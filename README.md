@@ -28,7 +28,8 @@ function example_wpu_acf_flexible_content($contents) {
             ),
             'content' => array(
                 'label' => 'Contenu',
-                'type' => 'textarea'
+                'type' => 'textarea',
+                'wpuacf_hidden_on' => array('post') // Hide this field on post type post
             ),
             'link' => array(
                 'label' => 'URL Bouton',
