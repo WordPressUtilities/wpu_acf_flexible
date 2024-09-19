@@ -792,3 +792,41 @@ function wpuacfflex_i18n_get_field($selector, $post_id = false, $format_value = 
     }
     return get_field($selector, $post_id, $format_value, $escape_html);
 }
+
+/* ----------------------------------------------------------
+  Conditional values
+---------------------------------------------------------- */
+
+/**
+ * Get current post type on early calls in admin
+ *
+ * @return string
+ */
+function wpuacfflex_get_current_post_type() {
+    $post_type = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
+    if ((strpos($_SERVER['REQUEST_URI'], 'post.php') !== false || strpos($_SERVER['REQUEST_URI'], 'post-new.php') !== false) && isset($_GET['post']) && is_numeric($_GET['post'])) {
+        return get_post_type($_GET['post']);
+    }
+    return $post_type;
+}
+
+/**
+ * Conditional values based on post types
+ *
+ * @param array $values
+ * @return mixed
+ */
+function wpuacfflex_get_value_based_on_post_type($values = array()) {
+    if (!is_array($values)) {
+        return $values;
+    }
+    $post_type = wpuacfflex_get_current_post_type();
+    if (isset($values[$post_type])) {
+        return $values[$post_type];
+    }
+
+    if (isset($values['default'])) {
+        return $values['default'];
+    }
+    return false;
+}
