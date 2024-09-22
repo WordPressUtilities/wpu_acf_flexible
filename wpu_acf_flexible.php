@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.66.0
+Version: 2.67.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.66.0';
+    private $plugin_version = '2.67.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -179,6 +179,9 @@ EOT;
         add_action('acf/input/admin_footer', array(&$this,
             'add_draft_validation'
         ), 10);
+        add_action('acf/input/admin_footer', array(&$this,
+            'add_icon_modal'
+        ), 10);
         add_action('admin_enqueue_scripts', array(&$this,
             'admin_assets'
         ));
@@ -277,6 +280,7 @@ EOT;
             'admin-blocks' => plugins_url('assets/admin-blocks.css', __FILE__),
             'front-blocks' => plugins_url('assets/front-blocks.css', __FILE__)
         ));
+        $custom_css['admin-interface'] = plugins_url('assets/admin-interface.css', __FILE__);
         foreach ($custom_css as $id => $file) {
             wp_enqueue_style('wpu_acf_flexible-style-admin-' . $id, $file, array(), $this->plugin_version);
         }
@@ -392,6 +396,15 @@ EOT;
                     'left' => __('Left', 'wpu_acf_flexible'),
                     'right' => __('Right', 'wpu_acf_flexible')
                 )
+            ),
+            'wpuacf_icon' => array(
+                'label' => __('Icon', 'wpu_acf_flexible'),
+                'type' => 'select',
+                'instructions' => '<a title="' . esc_attr(__('Icon list', 'wpu_acf_flexible')) . '" href="#TB_inline?height=500&width=780&inlineId=wpu_acf_flex_icon_list" class="thickbox">' . esc_html(__('View the list', 'wpu_acf_flexible')) . '</a>',
+                'choices' => wpuacfflex__get_icons(),
+                'field_html_callback' => function ($id, $sub_field, $level) {
+                    return '<?php echo get_wpu_acf_icon(get_sub_field(\'' . $id . '\')); ?>' . "\n";
+                }
             )
         );
         $columns = array(
@@ -1297,6 +1310,25 @@ EOT;
         echo "});";
         echo "});";
         echo '</script>';
+    }
+
+    /* Add modal for icon */
+    public function add_icon_modal() {
+        $icons = wpuacfflex__get_icons();
+        if (!$icons) {
+            return;
+        }
+        add_thickbox();
+        echo '<div id="wpu_acf_flex_icon_list" style="display: none;"><div>';
+        echo '<ul class="wpuacf-icons-list">';
+        foreach ($icons as $icon_id => $icon_name) {
+            if (!$icon_id) {
+                continue;
+            }
+            echo '<li>' . get_wpu_acf_icon($icon_id) . ' : ' . $icon_id . ' </li>';
+        }
+        echo '</ul>';
+        echo '</div></div>';
     }
 
     /* Set editor height */
