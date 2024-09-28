@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.67.0
+Version: 2.67.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.67.0';
+    private $plugin_version = '2.67.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -289,6 +289,9 @@ EOT;
         wp_localize_script('wpu_acf_flexible-script-wpuacfadmin', 'wpu_acf_flexible_script_wpuacfadmin', apply_filters('wpu_acf_flexible_script_wpuacfadmin_settings', array(
             'color_picker_palettes' => array()
         )));
+        if (wpuacfflex__get_icons()) {
+            add_thickbox();
+        }
     }
 
     public function front_assets($hook_details) {
@@ -400,6 +403,7 @@ EOT;
             'wpuacf_icon' => array(
                 'label' => __('Icon', 'wpu_acf_flexible'),
                 'type' => 'select',
+                'ui' => 1,
                 'instructions' => '<a title="' . esc_attr(__('Icon list', 'wpu_acf_flexible')) . '" href="#TB_inline?height=500&width=780&inlineId=wpu_acf_flex_icon_list" class="thickbox">' . esc_html(__('View the list', 'wpu_acf_flexible')) . '</a>',
                 'choices' => wpuacfflex__get_icons(),
                 'field_html_callback' => function ($id, $sub_field, $level) {
@@ -1318,7 +1322,6 @@ EOT;
         if (!$icons) {
             return;
         }
-        add_thickbox();
         echo '<div id="wpu_acf_flex_icon_list" style="display: none;"><div>';
         echo '<ul class="wpuacf-icons-list">';
         foreach ($icons as $icon_id => $icon_name) {

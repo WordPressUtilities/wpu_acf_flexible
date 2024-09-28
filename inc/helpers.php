@@ -842,9 +842,14 @@ function wpuacfflex__get_icons() {
     $cache_id = 'wpuacfflex__get_icons';
     $cache_duration = 60;
 
+    $icon_dir = get_stylesheet_directory() . '/src/icons/';
+    if(!is_dir($icon_dir)) {
+        return array();
+    }
+
     $icons = wp_cache_get($cache_id);
     if ($icons === false) {
-        $icons_raw = glob(get_stylesheet_directory() . '/src/icons/*.svg');
+        $icons_raw = glob($icon_dir . '*.svg');
         $icons = array();
         foreach ($icons_raw as $icn) {
             $icn = str_replace('.svg', '', basename($icn));
