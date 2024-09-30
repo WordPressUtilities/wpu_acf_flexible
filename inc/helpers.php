@@ -558,6 +558,24 @@ function get_wpu_acf_minieditor($field, $args = array()) {
 }
 
 /* ----------------------------------------------------------
+  Text
+---------------------------------------------------------- */
+
+function get_wpu_acf_text($field_value, $args = array()) {
+    if (!is_array($args)) {
+        $args = array();
+    }
+    $args = array_merge(array(
+        'classname' => 'field-text cssc-content'
+    ), $args);
+    $field_value = trim(strip_tags($field_value));
+    if (!$field_value) {
+        return '';
+    }
+    return '<div class="' . esc_attr($args['classname']) . '">' . wpautop($field_value) . '</div>';
+}
+
+/* ----------------------------------------------------------
   Gallery
 ---------------------------------------------------------- */
 
@@ -843,7 +861,7 @@ function wpuacfflex__get_icons() {
     $cache_duration = 60;
 
     $icon_dir = get_stylesheet_directory() . '/src/icons/';
-    if(!is_dir($icon_dir)) {
+    if (!is_dir($icon_dir)) {
         return array();
     }
 
