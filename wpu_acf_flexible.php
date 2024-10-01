@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.68.0
+Version: 2.68.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.68.0';
+    private $plugin_version = '2.68.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -659,9 +659,19 @@ EOT;
                 $field['conditional_logic'] = array();
             }
             foreach ($field['wpuacf_condition'] as $condition_id => $condition_value) {
+                $condition_value_parts = explode(':', $condition_value);
+                $condition_operator = '==';
+                if(count($condition_value_parts) > 1){
+                    switch($condition_value_parts[0]){
+                        case 'not':
+                            $condition_operator = '!=';
+                            break;
+                    }
+                    $condition_value = $condition_value_parts[1];
+                }
                 $field['conditional_logic'][] = array(
                     'field' => $extras['wpuacf_parent_id'] . $condition_id,
-                    'operator' => '==',
+                    'operator' => $condition_operator,
                     'value' => $condition_value
                 );
             }
