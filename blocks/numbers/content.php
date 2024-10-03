@@ -13,7 +13,9 @@ if (empty($_numbers)) {
 $_numbers_html = '';
 while (has_sub_field('numbers')) {
     $_number_html = '';
-    $_number_html .= '<div class="number">' . strip_tags(get_sub_field('number'), $_numbers_list_number_tags) . '</div>';
+    $_number_raw = get_sub_field('number');
+    $_number_html_val = apply_filters('wpu_acf_flexible__content__numbers__number__value', strip_tags($_number_raw, $_numbers_list_number_tags), $_number_raw);
+    $_number_html .= '<div class="number">' . $_number_html_val . '</div>';
     $label = get_sub_field('label');
     if ($label) {
         $_number_html .= '<div class="label">' . strip_tags($label, $_numbers_list_label_tags) . '</div>';
