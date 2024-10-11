@@ -551,10 +551,23 @@ function get_wpu_acf_minieditor($field, $args = array()) {
     if (isset($args['extra_allowed_tags'])) {
         $args['allowed_tags'] .= $args['extra_allowed_tags'];
     }
+    if (!isset($args['add_wrapper'])) {
+        $args['add_wrapper'] = false;
+    }
+    if (!isset($args['wrapper_classname'])) {
+        $args['wrapper_classname'] = 'field-minieditor cssc-content';
+    }
     $args['allowed_tags'] = apply_filters('wpu_acf_flexible__get_wpu_acf_minieditor__allowed_tags', $args['allowed_tags'], $field, $args);
     $field = strip_tags($field, $args['allowed_tags']);
     $field = apply_filters('wpu_acf_flexible__get_wpu_acf_minieditor__before_wpautop', $field, $args['allowed_tags']);
-    return wpautop($field);
+    $field_content = wpautop($field);
+    if (!$field_content) {
+        return '';
+    }
+    if ($args['add_wrapper']) {
+        return '<div class="' . esc_attr($args['wrapper_classname']) . '">' . $field_content . '</div>';
+    }
+    return $return;
 }
 
 /* ----------------------------------------------------------

@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.68.2
+Version: 2.69.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.68.2';
+    private $plugin_version = '2.69.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -292,6 +292,7 @@ EOT;
         if (wpuacfflex__get_icons()) {
             add_thickbox();
         }
+        do_action('wpu_acf_flexible__admin_assets');
     }
 
     public function front_assets($hook_details) {
@@ -661,11 +662,11 @@ EOT;
             foreach ($field['wpuacf_condition'] as $condition_id => $condition_value) {
                 $condition_value_parts = explode(':', $condition_value);
                 $condition_operator = '==';
-                if(count($condition_value_parts) > 1){
-                    switch($condition_value_parts[0]){
-                        case 'not':
-                            $condition_operator = '!=';
-                            break;
+                if (count($condition_value_parts) > 1) {
+                    switch ($condition_value_parts[0]) {
+                    case 'not':
+                        $condition_operator = '!=';
+                        break;
                     }
                     $condition_value = $condition_value_parts[1];
                 }
@@ -768,6 +769,7 @@ EOT;
     public function get_var_content_field($id, $sub_field, $level = 2, $nb_subfields = 0) {
         $sub_field = $this->get_default_field($sub_field, $id);
 
+        $default_call = '$' . $this->get_protected_dollar_var_name($id) . ' = get_sub_field(\'' . $id . '\');' . "\n";
         $vars = '';
         switch ($sub_field['type']) {
         case 'taxonomy':
@@ -776,15 +778,19 @@ EOT;
         case 'gallery':
             $vars = str_replace('##ID##', $id, $this->default_var_gallery) . "\n";
             break;
-        case 'color':
         case 'image':
+            if (!isset($sub_field['required']) || !$sub_field['required']) {
+                $vars = $default_call;
+            }
+            break;
+        case 'color':
         case 'textarea':
         case 'editor':
         case 'color_picker':
         case 'url':
         case 'true_false':
         case 'file':
-            $vars = '$' . $this->get_protected_dollar_var_name($id) . ' = get_sub_field(\'' . $id . '\');' . "\n";
+            $vars = $default_call;
             break;
         default:
 
@@ -816,7 +822,11 @@ EOT;
         $classname = 'class="' . $class_id . '"';
         switch ($sub_field['type']) {
         case 'image':
-            $values = '<?php echo $' . $this->get_protected_dollar_var_name($id) . ' ? get_wpu_acf_image($' . $this->get_protected_dollar_var_name($id) . ',\'medium\') : \'\'; ?>' . "\n";
+            if (isset($sub_field['required']) && $sub_field['required']) {
+                $values = '<?php echo get_wpu_acf_image(get_sub_field(\'' . $id . '\'),\'medium\'); ?>' . "\n";
+            } else {
+                $values = '<?php echo $' . $this->get_protected_dollar_var_name($id) . ' ? get_wpu_acf_image($' . $this->get_protected_dollar_var_name($id) . ',\'medium\') : \'\'; ?>' . "\n";
+            }
             break;
         case 'file':
             $attachment_url = '<?php echo wp_get_attachment_url($' . $this->get_protected_dollar_var_name($id) . '); ?>';

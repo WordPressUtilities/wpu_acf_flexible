@@ -9,8 +9,22 @@
     max-width: 100%;
 }
 
+#TB_window > #TB_title {
+    z-index: 2;
+    position: relative;
+}
+
 #TB_window > #TB_ajaxContent {
-    min-height: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 29px;
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    left: 0;
+    width: auto!important;
+    height: auto!important;
+    margin: auto;
 }
 
 /* ----------------------------------------------------------
