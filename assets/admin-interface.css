@@ -20,8 +20,8 @@
     top: 29px;
     right: 0;
     bottom: 0;
-    box-sizing: border-box;
     left: 0;
+    box-sizing: border-box;
     width: auto!important;
     height: auto!important;
     margin: auto;
@@ -39,4 +39,13 @@
 .wpuacf-icons-list > * {
     padding-bottom: 0.5em;
     overflow: hidden;
+}
+
+/* ----------------------------------------------------------
+  Blocks thumbnails
+---------------------------------------------------------- */
+
+a:hover .acfe-flexible-layout-thumbnail {
+    background-color: #fff;
+    background-size: contain;
 }

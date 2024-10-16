@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.69.0
+Version: 2.69.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.69.0';
+    private $plugin_version = '2.69.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -109,7 +109,7 @@ if($##ID##):
 foreach ($##ID## as \$tmp_post_id):
     echo '<a href="'.get_permalink(\$tmp_post_id).'">';
     if (has_post_thumbnail(\$tmp_post_id)) {
-        echo the_post_thumbnail(\$tmp_post_id, 'medium', array('loading' => 'lazy'));
+        echo get_the_post_thumbnail(\$tmp_post_id, 'medium', array('loading' => 'lazy'));
     }
     echo get_the_title(\$tmp_post_id);
     echo '</a>';
@@ -123,7 +123,7 @@ EOT;
 foreach ($##ID## as \$tmp_post_id):
     echo '<a href="'.get_permalink(\$tmp_post_id).'">';
     if (has_post_thumbnail(\$tmp_post_id)) {
-        echo the_post_thumbnail(\$tmp_post_id, 'medium', array('loading' => 'lazy'));
+        echo get_the_post_thumbnail(\$tmp_post_id, 'medium', array('loading' => 'lazy'));
     }
     echo get_the_title(\$tmp_post_id);
     echo '</a>';
