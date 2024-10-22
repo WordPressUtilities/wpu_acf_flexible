@@ -567,7 +567,7 @@ function get_wpu_acf_minieditor($field, $args = array()) {
     if ($args['add_wrapper']) {
         return '<div class="' . esc_attr($args['wrapper_classname']) . '">' . $field_content . '</div>';
     }
-    return $return;
+    return $field_content;
 }
 
 /* ----------------------------------------------------------
@@ -786,6 +786,60 @@ function wpuacfflex_is_html_valid($string) {
 
     /* Return error count */
     return $count_error == 0;
+}
+
+/* ----------------------------------------------------------
+  Fix HTML
+---------------------------------------------------------- */
+
+/**
+ * Fix HTML
+ * @param  string     $string    HTML to fix
+ * @return string
+ */
+function wpuacfflex_fix_html_validity($string) {
+
+    if (wpuacfflex_is_html_valid($string)) {
+        return $string;
+    }
+
+    $non_closing_tags = array(
+        'br',
+        'hr',
+        'img'
+    );
+
+    /* List all open tags */
+    $open_tags = array();
+    preg_match_all('/<([a-z]+)(?: .*)?>/i', $string, $matches);
+    foreach ($matches[1] as $tag) {
+        if (!in_array($tag, $non_closing_tags)) {
+            $open_tags[] = $tag;
+        }
+    }
+
+    /* List all close tags */
+    $close_tags = array();
+    preg_match_all('/<\/([a-z]+)>/i', $string, $matches);
+    foreach ($matches[1] as $tag) {
+        if (!in_array($tag, $non_closing_tags)) {
+            $close_tags[] = $tag;
+        }
+    }
+
+    /* Close open tags */
+    $close_tags_diff = array_diff($open_tags, $close_tags);
+    foreach ($close_tags_diff as $tag) {
+        $string .= "</$tag>";
+    }
+
+    /* Open closed tags */
+    $open_tags_diff = array_diff($close_tags, $open_tags);
+    foreach ($open_tags_diff as $tag) {
+        $string = "<$tag>$string";
+    }
+
+    return $string;
 }
 
 /* ----------------------------------------------------------
