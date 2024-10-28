@@ -579,9 +579,10 @@ function get_wpu_acf_text($field_value, $args = array()) {
         $args = array();
     }
     $args = array_merge(array(
-        'classname' => 'field-text cssc-content'
+        'classname' => 'field-text cssc-content',
+        'allowed_tags' => '',
     ), $args);
-    $field_value = trim(strip_tags($field_value));
+    $field_value = trim(strip_tags($field_value, $args['allowed_tags']));
     if (!$field_value) {
         return '';
     }
