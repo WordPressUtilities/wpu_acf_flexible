@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.70.1
+Version: 2.70.2
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.70.1';
+    private $plugin_version = '2.70.2';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -467,7 +467,21 @@ EOT;
                     'label' => __('Default cover image', 'wpu_acf_flexible'),
                     'type' => 'image'
                 )
-            )
+            ),
+            'field_vars_callback' => function ($id, $sub_field, $level) {
+                return '$' . $id . ' = get_sub_field(\'' . $id . '\');' . "\n";
+            },
+            'field_html_callback' => function ($id, $sub_field, $level) {
+                return '<?php
+if($embed){
+    echo get_wpu_acf_video_embed_image(array(
+        \'video_field\' => $embed[\'embed\'],
+        \'use_thumb\' => $embed[\'use_thumb\'],
+        \'image_field\' => $embed[\'cover_image\']
+    ));
+}
+?>' . "\n";
+            }
         );
 
         /* Advanced groups : slider */

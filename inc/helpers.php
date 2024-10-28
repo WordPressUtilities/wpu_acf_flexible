@@ -953,7 +953,7 @@ function wpuacfflex__get_icons() {
 
 function get_wpu_acf_icon($icon = '') {
     $icons = wpuacfflex__get_icons();
-    if (!$icon || !array_key_exists($icon, $icons)) {
+    if (!$icon || !is_string($icon) || !array_key_exists($icon, $icons)) {
         return '';
     }
     return '<i aria-hidden="true" class="icon icon_' . esc_attr($icon) . ' wpuacfflex-icn"></i>';
