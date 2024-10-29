@@ -546,7 +546,7 @@ function get_wpu_acf_minieditor($field, $args = array()) {
         $args = array();
     }
     if (!isset($args['allowed_tags'])) {
-        $args['allowed_tags'] = '<u><a><strong><span><em>';
+        $args['allowed_tags'] = '<u><a><strong><span><em><p>';
     }
     if (isset($args['extra_allowed_tags'])) {
         $args['allowed_tags'] .= $args['extra_allowed_tags'];
