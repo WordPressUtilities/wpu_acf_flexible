@@ -120,3 +120,33 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }());
 });
+
+
+/* exported wpuacf_load_mapbox */
+function wpuacf_load_mapbox(_token) {
+    jQuery(document).on('focus', 'input[name*="mapbox_autocomplete_address"] ', function() {
+        var jq_the_input = jQuery(this),
+            the_input = jq_the_input.get(0);
+
+        /* Only once */
+        if (jq_the_input.attr('data-has-mapbox-autocomplete')) {
+            return;
+        }
+        jq_the_input.attr('data-has-mapbox-autocomplete', 1);
+
+        /* Build autocomplete */
+        var autofillElement = new mapboxsearch.MapboxAddressAutofill(),
+            the_form = the_input.parentElement,
+            the_wrapper = the_input.closest('[data-type="group"]')
+        autofillElement.accessToken = _token;
+        autofillElement.options = {}
+        autofillElement.appendChild(the_input);
+        the_form.appendChild(autofillElement);
+
+        /* When an address is selected : fill lat/lng fields */
+        autofillElement.addEventListener('retrieve', function(event) {
+            the_wrapper.querySelector('input[name*="lat"]').value = event.detail.features[0].geometry.coordinates[1];
+            the_wrapper.querySelector('input[name*="lng"]').value = event.detail.features[0].geometry.coordinates[0];
+        });
+    });
+}

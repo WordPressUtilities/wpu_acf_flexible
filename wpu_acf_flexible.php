@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.70.3
+Version: 2.71.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.70.3';
+    private $plugin_version = '2.71.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -431,87 +431,6 @@ EOT;
                 'columns' => $col_value
             );
         }
-
-        /* Advanced groups : responsive image */
-        $field_types['wpuacf_responsive_image'] = array(
-            'type' => 'group',
-            'label' => 'Responsive image',
-            'sub_fields' => array(
-                'cola' => 'wpuacf_50p',
-                'image' => 'wpuacf_image',
-                'colb' => 'wpuacf_50p',
-                'image_mobile' => array(
-                    'label' => 'Image mobile',
-                    'required' => false,
-                    'type' => 'wpuacf_image'
-                )
-            )
-        );
-
-        /* Advanced groups : embed */
-        $field_types['wpuacf_embed'] = array(
-            'label' => __('Video', 'wpu_acf_flexible'),
-            'type' => 'group',
-            'sub_fields' => array(
-                'cola' => 'wpuacf_50p',
-                'embed' => array(
-                    'label' => __('Source', 'wpu_acf_flexible'),
-                    'type' => 'oembed'
-                ),
-                'colb' => 'wpuacf_50p',
-                'use_thumb' => array(
-                    'label' => __('Use embed thumbnail if available', 'wpu_acf_flexible'),
-                    'type' => 'true_false'
-                ),
-                'cover_image' => array(
-                    'label' => __('Default cover image', 'wpu_acf_flexible'),
-                    'type' => 'image'
-                )
-            ),
-            'field_vars_callback' => function ($id, $sub_field, $level) {
-                return '$' . $id . ' = get_sub_field(\'' . $id . '\');' . "\n";
-            },
-            'field_html_callback' => function ($id, $sub_field, $level) {
-                return '<?php
-if($embed){
-    echo get_wpu_acf_video_embed_image(array(
-        \'video_field\' => $embed[\'embed\'],
-        \'use_thumb\' => $embed[\'use_thumb\'],
-        \'image_field\' => $embed[\'cover_image\']
-    ));
-}
-?>' . "\n";
-            }
-        );
-
-        /* Advanced groups : slider */
-        $field_types['wpuacf_slider'] = array(
-            'label' => __('Slider', 'wpu_acf_flexible'),
-            'type' => 'group',
-            'sub_fields' => array(
-                'cola' => 'wpuacf_50p',
-                'gallery' => array(
-                    'label' => __('Images', 'wpu_acf_flexible'),
-                    'type' => 'gallery'
-                ),
-                'colb' => 'wpuacf_50p',
-                'slider_options' => array(
-                    'label' => __('Options', 'wpu_acf_flexible'),
-                    'type' => 'group',
-                    'sub_fields' => array(
-                        'autoplay' => array(
-                            'label' => __('Autoplay', 'wpu_acf_flexible'),
-                            'type' => 'true_false'
-                        ),
-                        'autoplay_speed' => array(
-                            'label' => __('Autoplay speed (ms)', 'wpu_acf_flexible'),
-                            'type' => 'number',
-                            'default_value' => 5000
-                        )
-                    )
-                )
-            )
-        );
 
         /* Hook */
         $fields_types = apply_filters('wpu_acf_flexible__field_types', $field_types);
@@ -1462,3 +1381,10 @@ $wpu_acf_flexible = new wpu_acf_flexible();
 
 require_once __DIR__ . '/inc/master-generator.php';
 require_once __DIR__ . '/inc/helpers.php';
+
+/* Load fields */
+$wpu_acf_flexible_fields_files = glob(__DIR__ . '/fields/*.php');
+foreach ($wpu_acf_flexible_fields_files as $wpu_acf_flexible_fields_file) {
+    require_once $wpu_acf_flexible_fields_file;
+}
+
