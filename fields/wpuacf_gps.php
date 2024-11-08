@@ -11,7 +11,7 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
         'label' => __('GPS Coordinates', 'wpu_acf_flexible'),
         'type' => 'group',
         'sub_fields' => array(
-            'mapbox_autocomplete_address' => array(
+            'wpuacf_autocomplete_address' => array(
                 'label' => __('Address', 'wpu_acf_flexible'),
                 'type' => 'text'
             ),

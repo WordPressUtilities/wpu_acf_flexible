@@ -124,15 +124,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* exported wpuacf_load_mapbox */
 function wpuacf_load_mapbox(_token) {
-    jQuery(document).on('focus', 'input[name*="mapbox_autocomplete_address"] ', function() {
+    jQuery(document).on('focus', 'input[name*="wpuacf_autocomplete_address"] ', function() {
         var jq_the_input = jQuery(this),
             the_input = jq_the_input.get(0);
 
         /* Only once */
-        if (jq_the_input.attr('data-has-mapbox-autocomplete')) {
+        if (jq_the_input.attr('data-has-wpuacf-autocomplete-address')) {
             return;
         }
-        jq_the_input.attr('data-has-mapbox-autocomplete', 1);
+        jq_the_input.attr('data-has-wpuacf-autocomplete-address', 1);
 
         /* Build autocomplete */
         var autofillElement = new mapboxsearch.MapboxAddressAutofill(),
@@ -143,10 +143,14 @@ function wpuacf_load_mapbox(_token) {
         autofillElement.appendChild(the_input);
         the_form.appendChild(autofillElement);
 
-        /* When an address is selected : fill lat/lng fields */
         autofillElement.addEventListener('retrieve', function(event) {
+            /* When an address is selected : fill lat/lng fields */
             the_wrapper.querySelector('input[name*="lat"]').value = event.detail.features[0].geometry.coordinates[1];
             the_wrapper.querySelector('input[name*="lng"]').value = event.detail.features[0].geometry.coordinates[0];
+            /* Save full address */
+            setTimeout(function() {
+                the_input.value = event.detail.features[0].properties.full_address;
+            }, 100);
         });
     });
 }
