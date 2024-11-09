@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.72.0
+Version: 2.72.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.72.0';
+    private $plugin_version = '2.72.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -180,9 +180,7 @@ EOT;
         add_action('acf/input/admin_footer', array(&$this,
             'add_draft_validation'
         ), 10);
-        add_action('acf/input/admin_footer', array(&$this,
-            'add_icon_modal'
-        ), 10);
+
         add_action('admin_enqueue_scripts', array(&$this,
             'admin_assets'
         ));
@@ -290,9 +288,7 @@ EOT;
         wp_localize_script('wpu_acf_flexible-script-wpuacfadmin', 'wpu_acf_flexible_script_wpuacfadmin', apply_filters('wpu_acf_flexible_script_wpuacfadmin_settings', array(
             'color_picker_palettes' => array()
         )));
-        if (wpuacfflex__get_icons()) {
-            add_thickbox();
-        }
+
         do_action('wpu_acf_flexible__admin_assets');
     }
 
@@ -331,11 +327,6 @@ EOT;
     public function get_custom_field_types() {
         $upload_size = floor(wp_max_upload_size() / 1024 / 1024);
         $field_types = array(
-            'wpuacf_100p' => array(
-                'type' => 'acfe_column',
-                'columns' => '6/6',
-                'endpoint' => true
-            ),
             'wpuacf_image' => array(
                 'label' => __('Image', 'wpu_acf_flexible'),
                 'type' => 'image',
@@ -408,30 +399,8 @@ EOT;
                     'right' => __('Right', 'wpu_acf_flexible')
                 )
             ),
-            'wpuacf_icon' => array(
-                'label' => __('Icon', 'wpu_acf_flexible'),
-                'type' => 'select',
-                'ui' => 1,
-                'instructions' => '<a title="' . esc_attr(__('Icon list', 'wpu_acf_flexible')) . '" href="#TB_inline?height=500&width=780&inlineId=wpu_acf_flex_icon_list" class="thickbox">' . esc_html(__('View the list', 'wpu_acf_flexible')) . '</a>',
-                'choices' => wpuacfflex__get_icons(),
-                'field_html_callback' => function ($id, $sub_field, $level) {
-                    return '<?php echo get_wpu_acf_icon(get_sub_field(\'' . $id . '\')); ?>' . "\n";
-                }
-            )
         );
-        $columns = array(
-            '25' => '3/12',
-            '33' => '4/12',
-            '50' => '6/12',
-            '66' => '8/12',
-            '75' => '9/12'
-        );
-        foreach ($columns as $col_width => $col_value) {
-            $field_types['wpuacf_' . $col_width . 'p'] = array(
-                'type' => 'acfe_column',
-                'columns' => $col_value
-            );
-        }
+
 
         /* Hook */
         $fields_types = apply_filters('wpu_acf_flexible__field_types', $field_types);
@@ -1274,24 +1243,6 @@ EOT;
         echo "});";
         echo "});";
         echo '</script>';
-    }
-
-    /* Add modal for icon */
-    public function add_icon_modal() {
-        $icons = wpuacfflex__get_icons();
-        if (!$icons) {
-            return;
-        }
-        echo '<div id="wpu_acf_flex_icon_list" style="display: none;"><div>';
-        echo '<ul class="wpuacf-icons-list">';
-        foreach ($icons as $icon_id => $icon_name) {
-            if (!$icon_id) {
-                continue;
-            }
-            echo '<li>' . get_wpu_acf_icon($icon_id) . ' : ' . $icon_id . ' </li>';
-        }
-        echo '</ul>';
-        echo '</div></div>';
     }
 
     /* Set editor height */
