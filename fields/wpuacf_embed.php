@@ -170,23 +170,34 @@ function get_wpu_acf_embed_image($embed_url) {
         }
     }
     if (strpos($embed_url, 'vimeo') !== false) {
-        $cache_key = 'vimeo' . md5($embed_url);
-        global $wpuacf_oembed_url;
-        $wpuacf_oembed_url = 'https://vimeo.com/api/oembed.json?url=' . urlencode($embed_url);
+        $cache_key = 'vimeo_thumb_' . md5($embed_url);
+
+        global $vimeo_id;
+        $vimeo_id = get_wpu_acf_vimeo_id_from_url($embed_url);
         return wpuacfflex_get_file_cache($cache_key, YEAR_IN_SECONDS, function () {
-            global $wpuacf_oembed_url;
-            $response = wp_remote_get($wpuacf_oembed_url);
+            global $vimeo_id;
+            $response = wp_remote_get('https://vimeo.com/api/v2/video/' . $vimeo_id . '.json');
             if (is_wp_error($response)) {
                 return '';
             }
             $json = json_decode(wp_remote_retrieve_body($response));
-            if(!isset($json->thumbnail_url)){
+            if (!isset($json[0]->thumbnail_large)) {
                 return '';
             }
-            return $json->thumbnail_url;
+            return $json[0]->thumbnail_large;
         });
-        return $url;
     }
 
     return '';
+}
+
+function get_wpu_acf_vimeo_id_from_url($url) {
+    $url_parts = explode('/', str_replace(array('&', '?', '#'), '/', $url));
+    foreach ($url_parts as $part) {
+        if (is_numeric($part)) {
+            return $part;
+        }
+    }
+
+    return false;
 }
