@@ -60,7 +60,7 @@ function wpuacf_gps($field) {
   Autocomplete
 ---------------------------------------------------------- */
 
-add_action('acf/input/admin_footer', function () {
+add_action('wpu_acf_flexible__admin_assets', function () {
     if (!defined('WPUACF_GPS_MAPBOX_TOKEN')) {
         return;
     }
