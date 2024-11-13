@@ -26,8 +26,8 @@ add_action('init', function () {
             'new_item' => __('New Reusable Block', 'wpu_acf_flexible'),
             'search_items' => __('Search Reusable Blocks', 'wpu_acf_flexible'),
             'not_found' => __('No Reusable Blocks found', 'wpu_acf_flexible'),
-            'not_found_in_trash' => __('No Reusable Blocks found in Trash', 'wpu_acf_flexible'),
-        ),
+            'not_found_in_trash' => __('No Reusable Blocks found in Trash', 'wpu_acf_flexible')
+        )
     ));
 });
 
@@ -60,6 +60,7 @@ add_filter('wpu_acf_flexible_content', function ($blocks) {
                     'wpuacf_blocks' => array(
                         'type' => 'post',
                         'label' => __('Reusable Block', 'wpu_acf_flexible'),
+                        'instructions' => sprintf(__('View all <a %s>reusable blocks</a>', 'wpu_acf_flexible'), 'target="_blank" href="' . admin_url('edit.php?post_type=wpuacf_blocks') . '"'),
                         'post_type' => 'wpuacf_blocks'
                     )
                 )
