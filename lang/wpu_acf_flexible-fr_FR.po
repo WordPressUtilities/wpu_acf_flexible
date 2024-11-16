@@ -500,7 +500,7 @@ msgstr "Aucun modèle de bloc n’a été trouvé dans la corbeille"
 #: .././inc/reusable-blocks.php:63
 #, php-format
 msgid "View all <a %s>reusable blocks</a>"
-msgstr "Voir tous les <a %s> modèles de blocs"
+msgstr "Voir tous les <a %s>modèles de blocs</a>"
 
 #: .././wpu_acf_flexible.php:226
 msgid "Quickly generate flexible content in ACF"
