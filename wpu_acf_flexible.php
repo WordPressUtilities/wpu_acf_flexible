@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.74.3
+Version: 2.74.4
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.74.3';
+    private $plugin_version = '2.74.4';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -174,6 +174,9 @@ EOT;
         add_action('plugins_loaded', array(&$this,
             'plugins_loaded'
         ));
+        add_action('after_setup_theme', array(&$this,
+            'after_setup_theme'
+        ));
         add_action('acf/save_post', array(&$this,
             'save_post'
         ), 99);
@@ -219,11 +222,6 @@ EOT;
     }
 
     public function plugins_loaded() {
-        # Translations
-        if (!load_plugin_textdomain('wpu_acf_flexible', false, dirname(plugin_basename(__FILE__)) . '/lang/')) {
-            load_muplugin_textdomain('wpu_acf_flexible', dirname(plugin_basename(__FILE__)) . '/lang/');
-        }
-        $this->plugin_description = __('Quickly generate flexible content in ACF', 'wpu_acf_flexible');
 
         # TOOLBOX
         require_once __DIR__ . '/inc/WPUBaseToolbox/WPUBaseToolbox.php';
@@ -244,6 +242,18 @@ EOT;
             )
         ));
 
+    }
+
+    # Translations
+    public function after_setup_theme() {
+        $lang_dir = dirname(plugin_basename(__FILE__)) . '/lang/';
+        if (strpos(__DIR__, 'mu-plugins') !== false) {
+            load_muplugin_textdomain('wpu_acf_flexible', $lang_dir);
+        } else {
+            load_plugin_textdomain('wpu_acf_flexible', false, $lang_dir);
+        }
+
+        $this->plugin_description = __('Quickly generate flexible content in ACF', 'wpu_acf_flexible');
     }
 
     public function init() {
