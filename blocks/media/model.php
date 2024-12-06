@@ -13,6 +13,7 @@ $model = array(
             'rows' => 2
         ),
         'media_type' => array(
+            'required' => true,
             'type' => 'select',
             'label' => __('Media type', 'wpu_acf_flexible'),
             'choices' => array(

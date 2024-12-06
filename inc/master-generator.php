@@ -351,9 +351,12 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
 if (defined('WP_CLI')) {
     WP_CLI::add_command('wpu-acf-flex-master-generator', function ($args, $assoc_args) {
+        add_action('wpu_acf_flexible__master_generator__after_insert_post', function ($post_id) {
+            WP_CLI::success('Page Master');
+            WP_CLI::success(get_page_link($post_id));
+        });
         $wpu_acf_flexible__master_generator = new wpu_acf_flexible__master_generator($args, $assoc_args);
         $wpu_acf_flexible__master_generator->_plugins_loaded();
-        WP_CLI::success('Page Master');
     }, array(
         'shortdesc' => 'Generate a page with all blocks, filled with random data.'
     ));
