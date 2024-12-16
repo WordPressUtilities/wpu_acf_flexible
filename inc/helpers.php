@@ -801,3 +801,18 @@ function wpuacfflex_get_file_cache($cache_key, $duration, $callback) {
     }
     return $query_value;
 }
+
+/* ----------------------------------------------------------
+  Test if a link is external
+---------------------------------------------------------- */
+
+function wpuacfflex_is_external_link($url) {
+    if (strpos($url, 'http') !== 0) {
+        return false;
+    }
+    $site_url = get_site_url();
+    if (strpos($url, $site_url) === 0) {
+        return false;
+    }
+    return true;
+}
