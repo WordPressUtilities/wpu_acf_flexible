@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.75.0
+Version: 2.76.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.75.0';
+    private $plugin_version = '2.76.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -276,6 +276,16 @@ EOT;
     }
 
     public function admin_assets($hook_details) {
+
+        /* Nav */
+        $hooks_menus = array(
+            'nav-menus.php'
+        );
+        if (in_array($hook_details, $hooks_menus)) {
+            wp_enqueue_style('wpu_acf_flexible-style-admin-nav-menus', plugins_url('assets/admin-nav.css', __FILE__), array(), $this->plugin_version);
+        }
+
+        /* Post */
         $hooks_ok = array(
             'post.php',
             'post-new.php',
@@ -499,6 +509,19 @@ EOT;
         }
         if ($instructions_part && (!isset($field['instructions']) || !$field['instructions'])) {
             $field['instructions'] = implode('. ', $instructions_part) . '.';
+        }
+
+        if (isset($field['wpuacf_nav_item_depth']) && is_array($field['wpuacf_nav_item_depth'])) {
+            if (!isset($field['wrapper'])) {
+                $field['wrapper'] = array();
+            }
+            if (!isset($field['wrapper']['class'])) {
+                $field['wrapper']['class'] = '';
+            }
+            $field['wrapper']['class'] .= ' wpuacf-nav-item-depth-variable';
+            foreach ($field['wpuacf_nav_item_depth'] as $depth) {
+                $field['wrapper']['class'] .= ' wpuacf-nav-item-depth-' . $depth;
+            }
         }
 
         /* Required */

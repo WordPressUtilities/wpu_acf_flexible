@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+/* ----------------------------------------------------------
+  Menu depth
+---------------------------------------------------------- */
+
+#menu-to-edit .wpuacf-nav-item-depth-variable {
+    display: none;
+}
+
+#menu-to-edit .menu-item-depth-0 .wpuacf-nav-item-depth-variable.wpuacf-nav-item-depth-0,
+#menu-to-edit .menu-item-depth-1 .wpuacf-nav-item-depth-variable.wpuacf-nav-item-depth-1,
+#menu-to-edit .menu-item-depth-2 .wpuacf-nav-item-depth-variable.wpuacf-nav-item-depth-2,
+#menu-to-edit .menu-item-depth-3 .wpuacf-nav-item-depth-variable.wpuacf-nav-item-depth-3 {
+    display: block;
+}
