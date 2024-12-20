@@ -80,10 +80,27 @@ function wpuacfflex__get_icons() {
 /* Display an icon
 -------------------------- */
 
-function get_wpu_acf_icon($icon = '') {
+function get_wpu_acf_icon($icon = '', $args = array()) {
     $icons = wpuacfflex__get_icons();
     if (!$icon || !is_string($icon) || !array_key_exists($icon, $icons)) {
         return '';
     }
-    return '<i aria-hidden="true" class="icon icon_' . esc_attr($icon) . ' wpuacfflex-icn"></i>';
+    if (!is_array($args)) {
+        $args = array();
+    }
+    $classname = 'icon icon_' . $icon . ' wpuacfflex-icn';
+    if (isset($args['classname'])) {
+        $classname .= ' ' . $args['classname'];
+    }
+    $html = '<i aria-hidden="true" class="' . esc_attr(trim($classname)) . ' "></i>';
+
+    $wrapper_classname = 'wpuacfflex-icon-wrapper';
+    if (isset($args['wrapper_classname'])) {
+        $wrapper_classname .= ' ' . $args['wrapper_classname'];
+    }
+    if (isset($args['wrapper']) && $args['wrapper']) {
+        $html = '<div class="' . esc_attr($wrapper_classname) . '">' . $html . '</div>';
+    }
+
+    return $html;
 }
