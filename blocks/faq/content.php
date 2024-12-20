@@ -9,7 +9,7 @@ $_content_after = apply_filters('wpu_acf_flexible__content__faq__after', '');
 echo '<section class="' . get_wpu_acf_wrapper_classname('faq') . '">';
 echo $_content_before;
 echo '<div class="block--faq">';
-echo get_wpu_acf__title();
+echo get_wpu_acf_title_content();
 echo '<div class="faq-list__items">';
 while (have_rows('questions')):
     the_row();
