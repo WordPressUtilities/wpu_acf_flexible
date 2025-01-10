@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.76.2
+Version: 2.77.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.76.2';
+    private $plugin_version = '2.77.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -289,7 +289,9 @@ EOT;
         $hooks_ok = array(
             'post.php',
             'post-new.php',
-            'edit.php'
+            'edit.php',
+            'term.php',
+            'edit-tags.php'
         );
         $hooks_ok = apply_filters('wpu_acf_flexible__admin_js__hooks_ok', $hooks_ok, $hook_details);
         if (!in_array($hook_details, $hooks_ok)) {
@@ -779,7 +781,7 @@ EOT;
             $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo ' . $value_content . '; ?></div>' . $c__end . "\n";
             break;
         case 'textarea':
-            $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop(strip_tags($' . $this->get_protected_dollar_var_name($id) . ')); ?></div>' . $c__end . "\n";
+            $values = $c__start . '<div class="' . $class_id . ' cssc-content"><?php echo wpautop(wp_strip_all_tags($' . $this->get_protected_dollar_var_name($id) . ')); ?></div>' . $c__end . "\n";
             break;
         case 'true_false':
             $values = $c__start . $c__end . "\n";
@@ -854,7 +856,7 @@ EOT;
                 $tag = 'h' . $level;
                 $classname = str_replace('class="', 'class="h' . $level . ' ', $classname);
             }
-            $values = '<' . $tag . ' ' . $classname . '><?php echo strip_tags(' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\')) ?></' . $tag . '>' . "\n";
+            $values = '<' . $tag . ' ' . $classname . '><?php echo wp_strip_all_tags(' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\')) ?></' . $tag . '>' . "\n";
         }
 
         if (isset($sub_field['field_html_callback'])) {
