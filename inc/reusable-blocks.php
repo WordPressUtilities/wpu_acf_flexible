@@ -104,3 +104,156 @@ add_filter('wpu_acf_flexible_content', function ($blocks) {
     }
     return $blocks;
 }, 999, 1);
+
+/* ----------------------------------------------------------
+  Block areas
+---------------------------------------------------------- */
+
+/* Load all areas
+-------------------------- */
+
+function wpuacfflexible_reusableblocks_get_areas() {
+    $areas = apply_filters('wpu_acf_flexible__reusable_blocks_areas', array());
+
+    if (!is_array($areas)) {
+        $areas = array();
+    }
+
+    if (!isset($areas['all_pages'])) {
+        $areas['all_pages'] = array(
+            'label' => __('All pages', 'wpu_acf_flexible'),
+            'display_conditions' => function () {
+                return true;
+            },
+        );
+    }
+
+    /* Ensure everything is correct */
+    foreach ($areas as $id => $area) {
+        if (!isset($area['display_conditions'])) {
+            $areas[$id]['display_conditions'] = function () {
+                return true;
+            };
+        }
+        if (!isset($area['label'])) {
+            $areas[$id]['label'] = $id;
+        }
+
+    }
+
+    return $areas;
+}
+
+/* Create an option page
+-------------------------- */
+
+add_action('init', function () {
+    if (!function_exists('acf_add_options_page')) {
+        return;
+    }
+    if (!apply_filters('wpu_acf_flexible__enable_reusable_blocks', false)) {
+        return;
+    }
+    $conditional_areas = wpuacfflexible_reusableblocks_get_areas();
+    if (!$conditional_areas) {
+        return;
+    }
+    acf_add_options_page(array(
+        'page_title' => __('Blocs areas', 'wpu_acf_flexible'),
+        'menu_slug' => 'wpuacfflexblocks_reusableoptions',
+        'menu_title' => __('Blocs areas', 'wpu_acf_flexible'),
+        'capability' => 'edit_posts',
+        'position' => '50',
+        'parent_slug' => 'edit.php?post_type=wpuacf_blocks',
+        'redirect' => true,
+        'post_id' => 'wpuacfflexblocks_reusableoptions',
+        'autoload' => false,
+        'update_button' => __('Update', 'wpu_acf_flexible'),
+        'updated_message' => __('Areas saved', 'wpu_acf_flexible')
+    ));
+});
+/*
+-------------------------- */
+
+add_filter('wpu_acf_flexible_content', function ($contents) {
+    if (!apply_filters('wpu_acf_flexible__enable_reusable_blocks', false)) {
+        return $contents;
+    }
+
+    $conditional_areas = wpuacfflexible_reusableblocks_get_areas();
+    if (!$conditional_areas) {
+        return $contents;
+    }
+
+    $fields = array(
+        'wpuacf_blocks' => array(
+            'label' => __('Info', 'wpu_acf_flexible'),
+            'type' => 'message',
+            'message' => __('Choose which reusable blocs will be displayed on these pages', 'wpu_acf_flexible')
+        )
+    );
+    foreach ($conditional_areas as $id => $areas) {
+        $fields[$id] = array(
+            'type' => 'post',
+            'post_type' => 'wpuacf_blocks',
+            'allow_null' => 1,
+            'label' => $areas['label']
+        );
+    }
+
+    /* Page */
+    $contents['wpuacfflexblocks_reusableoptions'] = array(
+        'name' => __('Blocs areas', 'wpu_acf_flexible'),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'options_page',
+                    'operator' => '==',
+                    'value' => 'wpuacfflexblocks_reusableoptions'
+                )
+            )
+        ),
+        'fields' => $fields
+    );
+    return $contents;
+}, 12, 1);
+
+add_action('wp_footer', function () {
+    if (!function_exists('get_field')) {
+        return;
+    }
+    if (!apply_filters('wpu_acf_flexible__enable_reusable_blocks', false)) {
+        return;
+    }
+    $areas = wpuacfflexible_reusableblocks_get_areas();
+    foreach ($areas as $id => $area) {
+        $new_post = get_field($id, 'wpuacfflexblocks_reusableoptions');
+        if (!$new_post) {
+            continue;
+        }
+        if (!isset($area['display_conditions']) || !$area['display_conditions']()) {
+            continue;
+        }
+        echo wpuacfflexible_reusableblocks__get_content($new_post);
+    }
+});
+
+/* ----------------------------------------------------------
+  Helper block
+---------------------------------------------------------- */
+
+function wpuacfflexible_reusableblocks__get_content($new_post) {
+    global $post;
+    $block_group_id = apply_filters('wpu_acf_flexible__reusable_blocks_group_id', 'content-blocks');
+
+    /* Save old post */
+    $old_post = $post;
+    $post = $new_post;
+
+    /* Display value */
+    $content = get_wpu_acf_flexible_content($block_group_id, 'front', array(
+        'opt_group' => $new_post
+    ));
+    $post = $old_post;
+    return $content;
+}
