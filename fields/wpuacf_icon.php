@@ -92,7 +92,7 @@ function get_wpu_acf_icon($icon = '', $args = array()) {
     if (isset($args['classname'])) {
         $classname .= ' ' . $args['classname'];
     }
-    $html = '<i aria-hidden="true" class="' . esc_attr(trim($classname)) . ' "></i>';
+    $html = '<i aria-hidden="true" class="' . esc_attr(trim($classname)) . '"></i>';
 
     $wrapper_classname = 'wpuacfflex-icon-wrapper';
     if (isset($args['wrapper_classname'])) {

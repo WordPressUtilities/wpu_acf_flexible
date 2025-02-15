@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2025-01-15 19:46+0100\n"
+"POT-Creation-Date: 2025-02-15 22:54+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -408,6 +408,22 @@ msgstr "Image Responsive"
 #: .././fields/wpuacf_responsive_image.php:17
 msgid "Mobile image"
 msgstr "Image mobile"
+
+#: .././fields/wpuacf_responsive_visibility.php:10
+msgid "Responsive visibility"
+msgstr "Visibilité responsive"
+
+#: .././fields/wpuacf_responsive_visibility.php:13
+msgid "Hide on desktop"
+msgstr "Masquer sur Ordinateur"
+
+#: .././fields/wpuacf_responsive_visibility.php:14
+msgid "Hide on tablet"
+msgstr "Masquer sur Tablette"
+
+#: .././fields/wpuacf_responsive_visibility.php:15
+msgid "Hide on mobile"
+msgstr "Masquer sur Mobile"
 
 #: .././fields/wpuacf_slider.php:20
 msgid "Options"
