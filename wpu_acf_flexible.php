@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.79.0
+Version: 2.80.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.79.0';
+    private $plugin_version = '2.80.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -218,7 +218,6 @@ EOT;
         add_filter('acfe/flexible/secondary_actions', array($this,
             'secondary_actions'
         ), 20, 2);
-
     }
 
     public function plugins_loaded() {
@@ -257,6 +256,12 @@ EOT;
     }
 
     public function init() {
+
+        if (apply_filters('wpu_acf_flexible__apply_copy_metas_bugfix', true)) {
+            add_filter('pll_copy_post_metas', array($this,
+                'pll_copy_post_metas'
+            ), 20, 3);
+        }
 
         if (!function_exists('acf_add_local_field_group')) {
             return;
@@ -1360,6 +1365,41 @@ EOT;
             }
         }
 
+    }
+
+    /**
+     * Copy post meta fix : Ensure flexible content is only copied and translated once
+     *
+     * @param array $metas
+     * @return array
+     */
+    function pll_copy_post_metas($metas) {
+        $layouts = apply_filters('wpu_acf_flexible_content', array());
+
+        /* Loop through all layouts */
+        foreach ($layouts as $key => $layout) {
+
+            /* If this layout is not in the metas list */
+            if (!in_array($key, $metas)) {
+                continue;
+            }
+
+            /* Look for another field starting with this ID */
+            $count = 0;
+            foreach ($metas as $meta) {
+                if (strpos($meta, $key . '_') === 0) {
+                    $count++;
+                }
+            }
+
+            /* No other field starting with this ID : remove it from copied fields */
+            if (!$count) {
+                unset($metas[array_search($key, $metas)]);
+            }
+        }
+
+        /* Clean return array */
+        return array_values($metas);
     }
 }
 
