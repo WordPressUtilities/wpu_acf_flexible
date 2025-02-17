@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.80.0
+Version: 2.80.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.80.0';
+    private $plugin_version = '2.80.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1374,27 +1374,32 @@ EOT;
      * @return array
      */
     function pll_copy_post_metas($metas) {
-        $layouts = apply_filters('wpu_acf_flexible_content', array());
+        $flexible_contents = apply_filters('wpu_acf_flexible_content', array());
 
-        /* Loop through all layouts */
-        foreach ($layouts as $key => $layout) {
+        /* Loop through all contents groups */
+        foreach ($flexible_contents as $key => $layout) {
 
-            /* If this layout is not in the metas list */
+            /* If this group is not in the metas list */
             if (!in_array($key, $metas)) {
                 continue;
             }
 
-            /* Look for another field starting with this ID */
+            /* Look if a clean layout exists */
             $count = 0;
             foreach ($metas as $meta) {
-                if (strpos($meta, $key . '_') === 0) {
+                if (strpos($meta, $key . '_0') === 0) {
                     $count++;
                 }
             }
-
-            /* No other field starting with this ID : remove it from copied fields */
+            /* No clean layout found : remove all traces from this content group from copied fields */
             if (!$count) {
-                unset($metas[array_search($key, $metas)]);
+                $new_metas = array();
+                foreach ($metas as $meta) {
+                    if (strpos($meta, $key) !== 0) {
+                        $new_metas[] = $meta;
+                    }
+                }
+                $metas = $new_metas;
             }
         }
 
