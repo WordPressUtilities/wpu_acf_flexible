@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2025-02-15 22:54+0100\n"
+"POT-Creation-Date: 2025-02-19 20:37+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -62,14 +62,14 @@ msgstr "Surtitre"
 #: .././blocks/logos/model.php:8 .././blocks/media/model.php:8
 #: .././blocks/posts/model.php:9 .././blocks/quote/model.php:8
 #: .././blocks/rich-table/model.php:8 .././blocks/team-quote/model.php:8
-#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:381
+#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:386
 msgid "Title"
 msgstr "Titre"
 
 #: .././blocks/columns/model.php:35 .././blocks/columns/model.php:39
 #: .././blocks/features/model.php:23 .././blocks/logos/model.php:20
 #: .././blocks/media/model.php:20 .././blocks/rich-table/model.php:59
-#: .././wpu_acf_flexible.php:353
+#: .././wpu_acf_flexible.php:358
 msgid "Image"
 msgstr "Image"
 
@@ -79,7 +79,7 @@ msgid "Slider"
 msgstr "Slider"
 
 #: .././blocks/columns/model.php:51 .././blocks/video/model.php:19
-#: .././fields/wpuacf_embed.php:10 .././wpu_acf_flexible.php:358
+#: .././fields/wpuacf_embed.php:10 .././wpu_acf_flexible.php:363
 msgid "Video"
 msgstr "Vidéo"
 
@@ -229,7 +229,7 @@ msgstr "[WPUACF] Logos"
 msgid "Logos"
 msgstr "Logos"
 
-#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:364
+#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:369
 msgid "Link"
 msgstr "Lien"
 
@@ -277,7 +277,7 @@ msgstr "Publications enfants"
 msgid "Manual posts"
 msgstr "Publications manuelles"
 
-#: .././blocks/posts/model.php:26
+#: .././blocks/posts/model.php:26 .././inc/reusable-blocks.php:59
 msgid "Posts"
 msgstr "Publications"
 
@@ -313,7 +313,7 @@ msgstr "Ajouter une ligne"
 msgid "Add a column"
 msgstr "Ajouter une colonne"
 
-#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:394
+#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:399
 msgid "Text"
 msgstr "Texte"
 
@@ -441,11 +441,11 @@ msgstr "Vitesse de la lecture auto (ms)"
 msgid "Submit"
 msgstr "Envoyer"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:244 .././wpu_acf_flexible.php:548
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:244 .././wpu_acf_flexible.php:553
 msgid "No"
 msgstr "Non"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:245 .././wpu_acf_flexible.php:548
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:245 .././wpu_acf_flexible.php:553
 msgid "Yes"
 msgstr "Oui"
 
@@ -478,11 +478,11 @@ msgstr ""
 "l’activer."
 
 #: .././inc/reusable-blocks.php:18 .././inc/reusable-blocks.php:21
-#: .././inc/reusable-blocks.php:93
+#: .././inc/reusable-blocks.php:116
 msgid "Reusable Blocks"
 msgstr "Blocs modèles"
 
-#: .././inc/reusable-blocks.php:22 .././inc/reusable-blocks.php:97
+#: .././inc/reusable-blocks.php:22 .././inc/reusable-blocks.php:120
 msgid "Reusable Block"
 msgstr "Bloc modèle"
 
@@ -518,102 +518,111 @@ msgstr "Aucun modèle de bloc n’a été trouvé dans la corbeille"
 msgid "Block usage"
 msgstr "Utilisation du bloc"
 
-#: .././inc/reusable-blocks.php:98
+#: .././inc/reusable-blocks.php:76 .././inc/reusable-blocks.php:203
+#: .././inc/reusable-blocks.php:205 .././inc/reusable-blocks.php:247
+msgid "Blocs areas"
+msgstr "Zones de blocs"
+
+#: .././inc/reusable-blocks.php:85
+msgid "This block is not used yet."
+msgstr "Ce bloc n’est pas encore utilisé."
+
+#: .././inc/reusable-blocks.php:121
 #, php-format
 msgid "View all <a %s>reusable blocks</a>"
 msgstr "Voir tous les <a %s>modèles de blocs</a>"
 
-#: .././inc/reusable-blocks.php:124
+#: .././inc/reusable-blocks.php:153 .././inc/reusable-blocks.php:164
 msgid "All pages"
 msgstr "Toutes les pages"
 
-#: .././inc/reusable-blocks.php:162 .././inc/reusable-blocks.php:164
-#: .././inc/reusable-blocks.php:206
-msgid "Blocs areas"
-msgstr "Zones de blocs"
-
-#: .././inc/reusable-blocks.php:171
+#: .././inc/reusable-blocks.php:212
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: .././inc/reusable-blocks.php:172
+#: .././inc/reusable-blocks.php:213
 msgid "Areas saved"
 msgstr "Zones sauvegardées"
 
-#: .././inc/reusable-blocks.php:190
+#: .././inc/reusable-blocks.php:231
 msgid "Info"
 msgstr "Info"
 
-#: .././inc/reusable-blocks.php:192
+#: .././inc/reusable-blocks.php:233
 msgid "Choose which reusable blocs will be displayed on these pages"
 msgstr "Choisissez les blocs modèles qui seront affichés sur ces pages"
 
-#: .././wpu_acf_flexible.php:256
+#: .././wpu_acf_flexible.php:255
 msgid "Quickly generate flexible content in ACF"
 msgstr "Générez rapidement du contenu flexible dans ACF"
 
-#: .././wpu_acf_flexible.php:359
+#: .././wpu_acf_flexible.php:364
 #, php-format
 msgid "MP4 format. Max %sMB. Rec: 1.5MB."
 msgstr "Format MP4. Max %sMo. Rec: 1.5Mo."
 
-#: .././wpu_acf_flexible.php:368
+#: .././wpu_acf_flexible.php:373
 msgid "Clickable image"
 msgstr "Image cliquable"
 
-#: .././wpu_acf_flexible.php:385
+#: .././wpu_acf_flexible.php:390
 msgid "Unique ID"
 msgstr "ID unique"
 
-#: .././wpu_acf_flexible.php:405
+#: .././wpu_acf_flexible.php:410
 msgid "Editor"
 msgstr "Éditeur"
 
-#: .././wpu_acf_flexible.php:417
+#: .././wpu_acf_flexible.php:422
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:420
+#: .././wpu_acf_flexible.php:425
 msgid "Left"
 msgstr "Gauche"
 
-#: .././wpu_acf_flexible.php:421
+#: .././wpu_acf_flexible.php:426
 msgid "Right"
 msgstr "Droite"
 
-#: .././wpu_acf_flexible.php:503
+#: .././wpu_acf_flexible.php:508
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:510
+#: .././wpu_acf_flexible.php:515
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:919 .././wpu_acf_flexible.php:928
+#: .././wpu_acf_flexible.php:924 .././wpu_acf_flexible.php:933
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1257
+#: .././wpu_acf_flexible.php:1262
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1265
+#: .././wpu_acf_flexible.php:1270
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1266
+#: .././wpu_acf_flexible.php:1271
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1299
+#: .././wpu_acf_flexible.php:1304
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1355
+#: .././wpu_acf_flexible.php:1360
 msgid "Add a block"
 msgstr "Ajouter un bloc"
+
+#, fuzzy
+#~| msgid "Areas saved"
+#~ msgid "Areas"
+#~ msgstr "Zones sauvegardées"
 
 #~ msgid "External file"
 #~ msgstr "Fichier externe"

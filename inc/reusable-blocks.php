@@ -40,6 +40,7 @@ add_action('add_meta_boxes', function () {
         return;
     }
     add_meta_box('wpuacf_blocks', __('Block usage', 'wpu_acf_flexible'), function ($post) {
+        $html = '';
         global $wpdb;
         $q = "
         SELECT *  FROM $wpdb->posts
@@ -54,15 +55,37 @@ add_action('add_meta_boxes', function () {
             ORDER BY ID ASC
         ";
         $metas = $wpdb->get_results($q);
-        if (!is_array($metas)) {
-            return;
+        if (is_array($metas) && !empty($metas)) {
+            $html .= '<h3>' . __('Posts', 'wpu_acf_flexible') . '</h3>';
+            $html .= '<ul>';
+            foreach ($metas as $meta) {
+                $p = get_post($meta->ID);
+                $html .= '<li><a href="' . get_edit_post_link($meta->ID) . '">' . $p->post_title . '</a> (' . $p->post_type . ')</li>';
+            }
+            $html .= '</ul>';
         }
-        echo '<ul>';
-        foreach ($metas as $meta) {
-            $p = get_post($meta->ID);
-            echo '<li><a href="' . get_edit_post_link($meta->ID) . '">' . $p->post_title . '</a> (' . $p->post_type . ')</li>';
+        $areas = wpuacfflexible_reusableblocks_get_areas();
+        $areas_with_this_block = array();
+        foreach ($areas as $id => $area) {
+            $new_post = get_field($id, 'wpuacfflexblocks_reusableoptions');
+            if ($new_post && $new_post == $post->ID) {
+                $areas_with_this_block[] = $area['label'];
+            }
         }
-        echo '</ul>';
+        if (!empty($areas_with_this_block)) {
+            $html .= '<h3>' . __('Blocs areas', 'wpu_acf_flexible') . '</h3>';
+            $html .= '<ul>';
+            foreach ($areas_with_this_block as $area) {
+                $html .= '<li><a href="'.admin_url('edit.php?post_type=wpuacf_blocks&page=wpuacfflexblocks_reusableoptions').'">' . $area . '</a></li>';
+            }
+            $html .= '</ul>';
+        }
+
+        if(!$html){
+            $html = '<p>' . __('This block is not used yet.', 'wpu_acf_flexible') . '</p>';
+        }
+        echo $html;
+
     }, 'wpuacf_blocks', 'normal', 'high');
 });
 
@@ -119,19 +142,37 @@ function wpuacfflexible_reusableblocks_get_areas() {
         $areas = array();
     }
 
-    if (!isset($areas['all_pages'])) {
-        $areas['all_pages'] = array(
-            'label' => __('All pages', 'wpu_acf_flexible'),
-            'display_conditions' => function () {
-                return true;
-            },
-        );
+    if (function_exists('pll_languages_list')) {
+        $languages = pll_languages_list();
+        foreach ($languages as $lang) {
+            $area_id = 'all_pages__' . $lang;
+            if (isset($areas[$area_id])) {
+                continue;
+            }
+            $areas[$area_id] = array(
+                'label' => '[' . strtoupper($lang) . '] ' . __('All pages', 'wpu_acf_flexible'),
+                'current_lang' => $lang,
+                'display_conditions' => function ($args) {
+                    return (pll_current_language() == $args['current_lang']);
+                }
+            );
+
+        }
+    } else {
+        if (!isset($areas['all_pages'])) {
+            $areas['all_pages'] = array(
+                'label' => __('All pages', 'wpu_acf_flexible'),
+                'display_conditions' => function ($args) {
+                    return true;
+                }
+            );
+        }
     }
 
     /* Ensure everything is correct */
     foreach ($areas as $id => $area) {
         if (!isset($area['display_conditions'])) {
-            $areas[$id]['display_conditions'] = function () {
+            $areas[$id]['display_conditions'] = function ($args) {
                 return true;
             };
         }
@@ -231,7 +272,7 @@ add_action('wp_footer', function () {
         if (!$new_post) {
             continue;
         }
-        if (!isset($area['display_conditions']) || !$area['display_conditions']()) {
+        if (!isset($area['display_conditions']) || !$area['display_conditions']($area)) {
             continue;
         }
         echo wpuacfflexible_reusableblocks__get_content($new_post);

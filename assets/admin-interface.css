@@ -49,3 +49,23 @@ a:hover .acfe-flexible-layout-thumbnail {
     background-color: #fff;
     background-size: contain;
 }
+
+.acfe-flex-thumbnails a[data-max].disabled {
+    position: relative;
+}
+
+.acfe-flex-thumbnails a[data-max].disabled:after {
+    content: 'Max: ' attr(data-max);
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    padding: 0.5em;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    opacity: 0.9;
+    background-color: #000;
+    transform: translateY(-50%);
+}
