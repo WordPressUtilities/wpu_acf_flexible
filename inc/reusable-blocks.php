@@ -39,6 +39,18 @@ add_action('add_meta_boxes', function () {
     if (!apply_filters('wpu_acf_flexible__enable_reusable_blocks', false)) {
         return;
     }
+
+    if (!function_exists('get_current_screen')) {
+        return;
+    }
+    $screen = get_current_screen();
+    if (!$screen) {
+        return;
+    }
+    if ($screen->post_type == 'wpuacf_blocks' && $screen->action == 'add') {
+        return;
+    }
+
     add_meta_box('wpuacf_blocks', __('Block usage', 'wpu_acf_flexible'), function ($post) {
         $html = '';
         global $wpdb;
@@ -76,12 +88,12 @@ add_action('add_meta_boxes', function () {
             $html .= '<h3>' . __('Blocs areas', 'wpu_acf_flexible') . '</h3>';
             $html .= '<ul>';
             foreach ($areas_with_this_block as $area) {
-                $html .= '<li><a href="'.admin_url('edit.php?post_type=wpuacf_blocks&page=wpuacfflexblocks_reusableoptions').'">' . $area . '</a></li>';
+                $html .= '<li><a href="' . admin_url('edit.php?post_type=wpuacf_blocks&page=wpuacfflexblocks_reusableoptions') . '">' . $area . '</a></li>';
             }
             $html .= '</ul>';
         }
 
-        if(!$html){
+        if (!$html) {
             $html = '<p>' . __('This block is not used yet.', 'wpu_acf_flexible') . '</p>';
         }
         echo $html;
@@ -237,6 +249,7 @@ add_filter('wpu_acf_flexible_content', function ($contents) {
         $fields[$id] = array(
             'type' => 'post',
             'post_type' => 'wpuacf_blocks',
+            'post_status' => 'publish',
             'allow_null' => 1,
             'label' => $areas['label']
         );
