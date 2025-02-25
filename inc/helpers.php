@@ -333,7 +333,7 @@ function get_wpu_acf_responsive_image($field_value, $classname = '') {
     $mobile_max = apply_filters('get_wpu_acf_responsive_image__mobile_max', 767);
     $classname = apply_filters('get_wpu_acf_responsive_image__classname', 'wpu-acf-responsive-image ' . $classname);
     $html = '<picture class="' . trim(esc_attr($classname)) . '">';
-    if ($field_value['image_mobile']):
+    if (isset($field_value['image_mobile']) && $field_value['image_mobile']):
         $html .= '<source media="(max-width: ' . $mobile_max . 'px)" srcset="' . get_wpu_acf_image_src($field_value['image_mobile'], 'large') . '">';
     endif;
     $html .= get_wpu_acf_image($field_value['image'], 'large');
@@ -452,6 +452,12 @@ function get_wpu_acf_text($field_value, $args = array()) {
     if (!is_array($args)) {
         $args = array();
     }
+
+    /* Null field */
+    if (!$field_value) {
+        return '';
+    }
+
     $args = array_merge(array(
         'classname' => 'field-text cssc-content',
         'allowed_tags' => ''

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2025-02-22 22:47+0100\n"
+"POT-Creation-Date: 2025-02-25 17:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -377,6 +377,22 @@ msgstr "Image de couverture"
 msgid "Use embed thumbnail if available"
 msgstr "Utiliser la vignette de l’embed si disponible"
 
+#: .././fields/wpuacf_align.php:10
+msgid "Alignment"
+msgstr "Alignement"
+
+#: .././fields/wpuacf_align.php:13 .././wpu_acf_flexible.php:425
+msgid "Left"
+msgstr "Gauche"
+
+#: .././fields/wpuacf_align.php:14
+msgid "Center"
+msgstr "Centre"
+
+#: .././fields/wpuacf_align.php:15 .././wpu_acf_flexible.php:426
+msgid "Right"
+msgstr "Droite"
+
 #: .././fields/wpuacf_embed.php:15
 msgid "Source"
 msgstr "Source"
@@ -593,14 +609,6 @@ msgstr "Éditeur"
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:425
-msgid "Left"
-msgstr "Gauche"
-
-#: .././wpu_acf_flexible.php:426
-msgid "Right"
-msgstr "Droite"
-
 #: .././wpu_acf_flexible.php:508
 #, php-format
 msgid "Dimensions: min %s"
@@ -615,23 +623,23 @@ msgstr "Format : %s"
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1262
+#: .././wpu_acf_flexible.php:1276
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1270
+#: .././wpu_acf_flexible.php:1284
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1271
+#: .././wpu_acf_flexible.php:1285
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1304
+#: .././wpu_acf_flexible.php:1318
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1360
+#: .././wpu_acf_flexible.php:1374
 msgid "Add a block"
 msgstr "Ajouter un bloc"
 

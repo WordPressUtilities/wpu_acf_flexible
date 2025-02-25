@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.82.0
+Version: 2.83.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.82.0';
+    private $plugin_version = '2.83.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -198,7 +198,7 @@ EOT;
             'add_toolbars'
         ));
         add_filter('acf/prepare_field', array(&$this,
-            'conditionally_hide_fields'
+            'conditionally_show_hide_fields'
         ));
         add_action('admin_head', array(&$this,
             'admin_set_editor_height'
@@ -1169,11 +1169,14 @@ EOT;
      * @param  object $field ACF field
      * @return object
      */
-    public function conditionally_hide_fields($field) {
-        if (is_admin() && isset($field['wpuacf_hidden_on']) && is_array($field['wpuacf_hidden_on'])) {
-            global $pagenow;
+    public function conditionally_show_hide_fields($field) {
+        if (!is_admin()) {
+            return $field;
+        }
+        global $pagenow;
+        $page_post_type = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
+        if (isset($field['wpuacf_hidden_on']) && is_array($field['wpuacf_hidden_on'])) {
             foreach ($field['wpuacf_hidden_on'] as $post_type) {
-                $page_post_type = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
                 if ('post-new.php' === $pagenow && $page_post_type == $post_type) {
                     return false;
                 }
@@ -1181,6 +1184,17 @@ EOT;
                     return false;
                 }
             }
+        }
+        if (isset($field['wpuacf_visible_on']) && is_array($field['wpuacf_visible_on'])) {
+            foreach ($field['wpuacf_visible_on'] as $post_type) {
+                if ('post-new.php' === $pagenow && $page_post_type == $post_type) {
+                    return $field;
+                }
+                if ('post.php' === $pagenow && isset($_GET['post']) && is_numeric($_GET['post']) && get_post_type($_GET['post']) == $post_type) {
+                    return $field;
+                }
+            }
+            return false;
         }
         return $field;
     }
