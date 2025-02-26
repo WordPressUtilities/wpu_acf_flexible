@@ -330,6 +330,9 @@ function get_wpu_acf_imagecta($field, $classname = '', $attributes = '', $args =
 }
 
 function get_wpu_acf_responsive_image($field_value, $classname = '') {
+    if(!is_array($field_value) || !isset($field_value['image'])) {
+        return '';
+    }
     $mobile_max = apply_filters('get_wpu_acf_responsive_image__mobile_max', 767);
     $classname = apply_filters('get_wpu_acf_responsive_image__classname', 'wpu-acf-responsive-image ' . $classname);
     $html = '<picture class="' . trim(esc_attr($classname)) . '">';
