@@ -329,17 +329,26 @@ function get_wpu_acf_imagecta($field, $classname = '', $attributes = '', $args =
     return $html;
 }
 
-function get_wpu_acf_responsive_image($field_value, $classname = '') {
-    if(!is_array($field_value) || !isset($field_value['image'])) {
+function get_wpu_acf_responsive_image($field_value, $classname = '', $args = array()) {
+    if (!is_array($field_value) || !isset($field_value['image'])) {
         return '';
     }
-    $mobile_max = apply_filters('get_wpu_acf_responsive_image__mobile_max', 767);
+    if (!is_array($args)) {
+        $args = array();
+    }
+    $args = array_merge(array(
+        'mobile_max' => 767,
+        'mobile_size' => 'large',
+        'desktop_size' => 'large'
+    ), $args);
+
+    $mobile_max = apply_filters('get_wpu_acf_responsive_image__mobile_max', $args['mobile_max']);
     $classname = apply_filters('get_wpu_acf_responsive_image__classname', 'wpu-acf-responsive-image ' . $classname);
     $html = '<picture class="' . trim(esc_attr($classname)) . '">';
     if (isset($field_value['image_mobile']) && $field_value['image_mobile']):
-        $html .= '<source media="(max-width: ' . $mobile_max . 'px)" srcset="' . get_wpu_acf_image_src($field_value['image_mobile'], 'large') . '">';
+        $html .= '<source media="(max-width: ' . $mobile_max . 'px)" srcset="' . get_wpu_acf_image_src($field_value['image_mobile'], $args['mobile_size']) . '">';
     endif;
-    $html .= get_wpu_acf_image($field_value['image'], 'large');
+    $html .= get_wpu_acf_image($field_value['image'], $args['desktop_size']);
     $html .= '</picture>';
     return $html;
 }
