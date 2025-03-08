@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.83.2
+Version: 2.84.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.83.2';
+    private $plugin_version = '2.84.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -556,7 +556,6 @@ EOT;
         if (isset($extras['group'])) {
             $file_path = $this->get_controller_path($extras['group']);
             $file_id = $file_path . $field_id . '.php';
-            $file_css = $file_path . $field_id . '.css';
             $tpl_file = false;
             if (file_exists($file_id)) {
                 $tpl_file = $file_id;
@@ -568,6 +567,11 @@ EOT;
 
             $thumbnail = false;
 
+            $thumbnail_folders = array(
+                 $this->plugin_dir_path,
+                get_stylesheet_directory()
+            );
+
             $thumbnail_paths = array(
                 '/images/blocks/',
                 '/assets/images/blocks/'
@@ -577,17 +581,20 @@ EOT;
                 'png'
             );
 
-            foreach ($thumbnail_paths as $thumbnails_path_item) {
-                $thumb_path = $thumbnails_path_item . $field_id;
-                $thumb_dir_base = get_stylesheet_directory() . $thumb_path;
-                $thumb_url_base = get_stylesheet_directory_uri() . $thumb_path;
-                foreach ($thumbnails_formats as $thumb_format) {
-                    if (file_exists($thumb_dir_base . '.' . $thumb_format)) {
-                        $thumbnail = $thumb_url_base . '.' . $thumb_format;
+            foreach ($thumbnail_folders as $thumbnail_folder) {
+
+                $thumbnail_folder_url = str_replace(ABSPATH, get_site_url() . '/', $thumbnail_folder);
+                foreach ($thumbnail_paths as $thumbnails_path_item) {
+                    $thumb_path = $thumbnails_path_item . $field_id;
+                    $thumb_dir_base = $thumbnail_folder . $thumb_path;
+                    $thumb_url_base = $thumbnail_folder_url . $thumb_path;
+                    foreach ($thumbnails_formats as $thumb_format) {
+                        if (file_exists($thumb_dir_base . '.' . $thumb_format)) {
+                            $thumbnail = $thumb_url_base . '.' . $thumb_format;
+                        }
                     }
                 }
             }
-
             if ($tpl_file) {
                 $field['acfe_flexible_render_template'] = $tpl_file;
                 $field['acfe_flexible_thumbnail'] = $thumbnail;
