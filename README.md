@@ -139,3 +139,8 @@ function example_wpu_acf_flexible_content($contents) {
 
 - [ ] Slider : Images with title and content (<figure>).
 - [ ] Tabs : Multiple tabs with content.
+
+
+## Credits
+
+- Use icons from [Feather Icons](https://feathericons.com/).

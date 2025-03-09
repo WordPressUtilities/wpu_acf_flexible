@@ -567,31 +567,22 @@ EOT;
 
             $thumbnail = false;
 
-            $thumbnail_folders = array(
-                 $this->plugin_dir_path,
-                get_stylesheet_directory()
-            );
+            $thumbnail_folders = apply_filters('wpu_acf_flexible__thumbnail_folders', array(
+                $this->plugin_dir_path . 'assets/images/blocks/',
+                get_stylesheet_directory() . '/images/blocks/',
+                get_stylesheet_directory() . '/assets/images/blocks/'
+            ));
 
-            $thumbnail_paths = array(
-                '/images/blocks/',
-                '/assets/images/blocks/'
-            );
-            $thumbnails_formats = array(
+            $thumbnails_formats = apply_filters('wpu_acf_flexible__thumbnails_formats', array(
                 'jpg',
                 'png'
-            );
+            ));
 
             foreach ($thumbnail_folders as $thumbnail_folder) {
-
                 $thumbnail_folder_url = str_replace(ABSPATH, get_site_url() . '/', $thumbnail_folder);
-                foreach ($thumbnail_paths as $thumbnails_path_item) {
-                    $thumb_path = $thumbnails_path_item . $field_id;
-                    $thumb_dir_base = $thumbnail_folder . $thumb_path;
-                    $thumb_url_base = $thumbnail_folder_url . $thumb_path;
-                    foreach ($thumbnails_formats as $thumb_format) {
-                        if (file_exists($thumb_dir_base . '.' . $thumb_format)) {
-                            $thumbnail = $thumb_url_base . '.' . $thumb_format;
-                        }
+                foreach ($thumbnails_formats as $thumb_format) {
+                    if (file_exists($thumbnail_folder . $field_id . '.' . $thumb_format)) {
+                        $thumbnail = $thumbnail_folder_url . $field_id . '.' . $thumb_format;
                     }
                 }
             }
