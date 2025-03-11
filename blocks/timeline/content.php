@@ -14,11 +14,12 @@ if (!$_events) {
 
 $_events_html = '';
 while (has_sub_field('events')) {
+    $title = get_sub_field('title');
     $_events_html .= '<li><div class="events-list__item">';
-    $_events_html .= '<div class="col-image">' . get_wpu_acf_image(get_sub_field('image'), $_timeline_events_image_size) . '</div>';
+    $_events_html .= '<div class="col-image"><div class="events-list__item__image">' . get_wpu_acf_image(get_sub_field('image'), $_timeline_events_image_size) . '</div></div>';
     $_events_html .= '<div class="col-content">';
-    $_events_html .= '<div class="field-date">' . wp_strip_all_tags(get_sub_field('date')) . '</div>';
-    $_events_html .= '<h3 class="field-title">' . wp_strip_all_tags(get_sub_field('title')) . '</h3>';
+    $_events_html .= '<div class="field-date events-list__item__date">' . wp_strip_all_tags(get_sub_field('date')) . '</div>';
+    $_events_html .= apply_filters('wpu_acf_flexible__content__timeline__events__title', '<h3 class="field-title events-list__item__title">' . wp_strip_all_tags($title) . '</h3>', $title);
     $_events_html .= get_wpu_acf_minieditor(get_sub_field('text'));
     $_events_html .= get_wpu_acf_cta(get_sub_field('cta'));
     $_events_html .= '</div>';
