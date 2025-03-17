@@ -37,6 +37,9 @@ case 'slider':
 ---------------------------------------------------------- */
 
 echo '<section class="centered-container cc-block--media ' . get_wpu_acf_wrapper_classname('media') . '"><div class="block--media">';
+echo apply_filters('wpu_acf_flexible__content__media__before', '');
 echo get_wpu_acf_title_content();
+echo apply_filters('wpu_acf_flexible__content__media__between', '');
 echo $block_content;
+echo apply_filters('wpu_acf_flexible__content__media__after', '');
 echo '</div></section>';
