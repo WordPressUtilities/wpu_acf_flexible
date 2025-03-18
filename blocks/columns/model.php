@@ -6,6 +6,7 @@ $model = array(
     'save_post' => false,
     'sub_fields' => array(
         'columns' => array(
+            'button_label' => __('Add a column', 'wpu_acf_flexible'),
             'label' => __('Columns', 'wpu_acf_flexible'),
             'type' => 'repeater',
             'min' => 1,

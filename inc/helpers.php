@@ -392,10 +392,10 @@ function get_wpu_acf_title_content() {
     return get_wpu_acf__title() . get_wpu_acf__content();
 }
 
-function get_wpu_acf__title($field_name = 'title') {
+function get_wpu_acf__title($field_name = 'title', $classname = '') {
     $_title = get_sub_field($field_name);
     if ($_title) {
-        return apply_filters('get_wpu_acf__title__html', '<h2 class="field-title"><span>' . nl2br(trim($_title)) . '</span></h2>', $_title, $field_name);
+        return apply_filters('get_wpu_acf__title__html', '<h2 class="field-title ' . esc_attr($classname) . '"><span>' . nl2br(trim($_title)) . '</span></h2>', $_title, $field_name);
     }
     return '';
 }

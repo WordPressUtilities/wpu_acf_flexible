@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2025-02-25 17:53+0100\n"
+"POT-Creation-Date: 2025-03-18 19:29+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -34,11 +34,15 @@ msgstr ""
 msgid "[WPUACF] Columns"
 msgstr "[WPUACF] Colonnes"
 
-#: .././blocks/columns/model.php:9 .././blocks/rich-table/model.php:28
+#: .././blocks/columns/model.php:9 .././blocks/rich-table/model.php:37
+msgid "Add a column"
+msgstr "Ajouter une colonne"
+
+#: .././blocks/columns/model.php:10 .././blocks/rich-table/model.php:28
 msgid "Columns"
 msgstr "Colonnes"
 
-#: .././blocks/columns/model.php:17 .././blocks/columns/model.php:29
+#: .././blocks/columns/model.php:18 .././blocks/columns/model.php:30
 #: .././blocks/content-classic/model.php:14 .././blocks/downloads/model.php:11
 #: .././blocks/faq/model.php:10 .././blocks/features/model.php:11
 #: .././blocks/features/model.php:30 .././blocks/gallery/model.php:11
@@ -47,14 +51,15 @@ msgstr "Colonnes"
 #: .././blocks/posts/model.php:12 .././blocks/rich-table/model.php:11
 #: .././blocks/rich-table/model.php:40 .././blocks/rich-table/model.php:88
 #: .././blocks/timeline/model.php:27 .././blocks/video/model.php:10
+#: .././fields/wpuacf_iconlist.php:23
 msgid "Content"
 msgstr "Contenu"
 
-#: .././blocks/columns/model.php:21
+#: .././blocks/columns/model.php:22
 msgid "Surtitle"
 msgstr "Surtitre"
 
-#: .././blocks/columns/model.php:25 .././blocks/content-classic/model.php:10
+#: .././blocks/columns/model.php:26 .././blocks/content-classic/model.php:10
 #: .././blocks/downloads/model.php:8 .././blocks/faq/model.php:7
 #: .././blocks/features/model.php:8 .././blocks/features/model.php:27
 #: .././blocks/gallery/model.php:8 .././blocks/hero/model.php:8
@@ -66,32 +71,32 @@ msgstr "Surtitre"
 msgid "Title"
 msgstr "Titre"
 
-#: .././blocks/columns/model.php:35 .././blocks/columns/model.php:39
+#: .././blocks/columns/model.php:36 .././blocks/columns/model.php:40
 #: .././blocks/features/model.php:23 .././blocks/logos/model.php:20
 #: .././blocks/media/model.php:20 .././blocks/rich-table/model.php:59
-#: .././wpu_acf_flexible.php:358
+#: .././fields/wpuacf_responsive_image.php:28 .././wpu_acf_flexible.php:358
 msgid "Image"
 msgstr "Image"
 
-#: .././blocks/columns/model.php:45 .././blocks/media/model.php:22
+#: .././blocks/columns/model.php:46 .././blocks/media/model.php:22
 #: .././blocks/media/model.php:39 .././fields/wpuacf_slider.php:10
 msgid "Slider"
 msgstr "Slider"
 
-#: .././blocks/columns/model.php:51 .././blocks/video/model.php:19
+#: .././blocks/columns/model.php:52 .././blocks/video/model.php:19
 #: .././fields/wpuacf_embed.php:10 .././wpu_acf_flexible.php:363
 msgid "Video"
 msgstr "Vidéo"
 
-#: .././blocks/columns/model.php:57
+#: .././blocks/columns/model.php:58
 msgid "Call to action"
 msgstr "Call to action"
 
-#: .././blocks/columns/model.php:62
+#: .././blocks/columns/model.php:63
 msgid "Main action"
 msgstr "Action principale"
 
-#: .././blocks/columns/model.php:67
+#: .././blocks/columns/model.php:68
 msgid "Secondary action"
 msgstr "Action secondaire"
 
@@ -277,7 +282,7 @@ msgstr "Publications enfants"
 msgid "Manual posts"
 msgstr "Publications manuelles"
 
-#: .././blocks/posts/model.php:26 .././inc/reusable-blocks.php:71
+#: .././blocks/posts/model.php:26 .././inc/reusable-blocks.php:73
 msgid "Posts"
 msgstr "Publications"
 
@@ -305,13 +310,9 @@ msgstr "[WPUACF] Tableau"
 msgid "Table lines"
 msgstr "Lignes de table"
 
-#: .././blocks/rich-table/model.php:25
+#: .././blocks/rich-table/model.php:25 .././fields/wpuacf_iconlist.php:13
 msgid "Add a line"
 msgstr "Ajouter une ligne"
-
-#: .././blocks/rich-table/model.php:37
-msgid "Add a column"
-msgstr "Ajouter une colonne"
 
 #: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:399
 msgid "Text"
@@ -421,7 +422,7 @@ msgstr "Longitude"
 msgid "Icon"
 msgstr "Icône"
 
-#: .././fields/wpuacf_icon.php:13
+#: .././fields/wpuacf_icon.php:13 .././fields/wpuacf_iconlist.php:10
 msgid "Icon list"
 msgstr "Liste d’icônes"
 
@@ -433,11 +434,11 @@ msgstr "Voir la liste"
 msgid "-- No Icon --"
 msgstr "-- Aucune icône --"
 
-#: .././fields/wpuacf_responsive_image.php:11
+#: .././fields/wpuacf_responsive_image.php:12
 msgid "Responsive image"
 msgstr "Image Responsive"
 
-#: .././fields/wpuacf_responsive_image.php:17
+#: .././fields/wpuacf_responsive_image.php:18
 msgid "Mobile image"
 msgstr "Image mobile"
 
@@ -509,78 +510,78 @@ msgstr ""
 "Le plugin <b>%s</b> dépend du plugin <b>%s</b>. Merci de l’installer et de "
 "l’activer."
 
-#: .././inc/reusable-blocks.php:18 .././inc/reusable-blocks.php:21
-#: .././inc/reusable-blocks.php:128
+#: .././inc/reusable-blocks.php:20 .././inc/reusable-blocks.php:23
+#: .././inc/reusable-blocks.php:130
 msgid "Reusable Blocks"
 msgstr "Blocs modèles"
 
-#: .././inc/reusable-blocks.php:22 .././inc/reusable-blocks.php:132
+#: .././inc/reusable-blocks.php:24 .././inc/reusable-blocks.php:134
 msgid "Reusable Block"
 msgstr "Bloc modèle"
 
-#: .././inc/reusable-blocks.php:23
+#: .././inc/reusable-blocks.php:25
 msgid "Add New"
 msgstr "Ajouter"
 
-#: .././inc/reusable-blocks.php:24
+#: .././inc/reusable-blocks.php:26
 msgid "Add New Reusable Block"
 msgstr "Ajouter un nouveau modèle de bloc"
 
-#: .././inc/reusable-blocks.php:25
+#: .././inc/reusable-blocks.php:27
 msgid "Edit Reusable Block"
 msgstr "Modifier le modèle de bloc"
 
-#: .././inc/reusable-blocks.php:26
+#: .././inc/reusable-blocks.php:28
 msgid "New Reusable Block"
 msgstr "Nouveau modèle de bloc"
 
-#: .././inc/reusable-blocks.php:27
+#: .././inc/reusable-blocks.php:29
 msgid "Search Reusable Blocks"
 msgstr "Recherche de blocs modèles"
 
-#: .././inc/reusable-blocks.php:28
+#: .././inc/reusable-blocks.php:30
 msgid "No Reusable Blocks found"
 msgstr "Aucun modèle de bloc trouvé"
 
-#: .././inc/reusable-blocks.php:29
+#: .././inc/reusable-blocks.php:31
 msgid "No Reusable Blocks found in Trash"
 msgstr "Aucun modèle de bloc n’a été trouvé dans la corbeille"
 
-#: .././inc/reusable-blocks.php:54
+#: .././inc/reusable-blocks.php:56
 msgid "Block usage"
 msgstr "Utilisation du bloc"
 
-#: .././inc/reusable-blocks.php:88 .././inc/reusable-blocks.php:215
-#: .././inc/reusable-blocks.php:217 .././inc/reusable-blocks.php:260
+#: .././inc/reusable-blocks.php:90 .././inc/reusable-blocks.php:217
+#: .././inc/reusable-blocks.php:219 .././inc/reusable-blocks.php:262
 msgid "Blocs areas"
 msgstr "Zones de blocs"
 
-#: .././inc/reusable-blocks.php:97
+#: .././inc/reusable-blocks.php:99
 msgid "This block is not used yet."
 msgstr "Ce bloc n’est pas encore utilisé."
 
-#: .././inc/reusable-blocks.php:133
+#: .././inc/reusable-blocks.php:135
 #, php-format
 msgid "View all <a %s>reusable blocks</a>"
 msgstr "Voir tous les <a %s>modèles de blocs</a>"
 
-#: .././inc/reusable-blocks.php:165 .././inc/reusable-blocks.php:176
+#: .././inc/reusable-blocks.php:167 .././inc/reusable-blocks.php:178
 msgid "All pages"
 msgstr "Toutes les pages"
 
-#: .././inc/reusable-blocks.php:224
+#: .././inc/reusable-blocks.php:226
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: .././inc/reusable-blocks.php:225
+#: .././inc/reusable-blocks.php:227
 msgid "Areas saved"
 msgstr "Zones sauvegardées"
 
-#: .././inc/reusable-blocks.php:243
+#: .././inc/reusable-blocks.php:245
 msgid "Info"
 msgstr "Info"
 
-#: .././inc/reusable-blocks.php:245
+#: .././inc/reusable-blocks.php:247
 msgid "Choose which reusable blocs will be displayed on these pages"
 msgstr "Choisissez les blocs modèles qui seront affichés sur ces pages"
 
@@ -619,27 +620,27 @@ msgstr "Dimensions: min %s"
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:924 .././wpu_acf_flexible.php:933
+#: .././wpu_acf_flexible.php:922 .././wpu_acf_flexible.php:931
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1276
+#: .././wpu_acf_flexible.php:1274
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1284
+#: .././wpu_acf_flexible.php:1282
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1285
+#: .././wpu_acf_flexible.php:1283
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1318
+#: .././wpu_acf_flexible.php:1316
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1374
+#: .././wpu_acf_flexible.php:1372
 msgid "Add a block"
 msgstr "Ajouter un bloc"
 

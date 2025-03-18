@@ -31,13 +31,12 @@ while (have_rows('columns')): the_row();
 
     /* Content */
     $surtitle = get_sub_field('surtitle');
-    $title = get_sub_field('title');
     $content = get_sub_field('content');
     if ($surtitle) {
         $column['surtitle'] = '<div class="columns-list__item__surtitle">' . strip_tags($surtitle) . '</div>';
     }
-    if ($title) {
-        $column['title'] = '<h2 class="columns-list__item__title">' . strip_tags($title) . '</h2>';
+    if (get_sub_field('title')) {
+        $column['title'] = get_wpu_acf__title('title', 'columns-list__item__title');
     }
     if ($content) {
         $column['content'] = '<div class="' . esc_attr($content_classname) . '">' . get_wpu_acf_minieditor($content) . '</div>';
