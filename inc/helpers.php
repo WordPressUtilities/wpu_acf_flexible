@@ -802,3 +802,11 @@ function wpuacfflex_is_external_link($url) {
     }
     return true;
 }
+
+/* ----------------------------------------------------------
+  Get row ID
+---------------------------------------------------------- */
+
+function wpuacfflex_get_row_id() {
+    return 'wpuacfflex_id_' . get_row_index() . '_' . get_row_layout();
+}

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2025-03-18 19:29+0100\n"
+"POT-Creation-Date: 2025-03-29 23:10+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -210,9 +210,13 @@ msgstr "[WPUACF] Iframe"
 msgid "URL"
 msgstr "URL"
 
-#: .././blocks/iframe/model.php:13
+#: .././blocks/iframe/model.php:14
 msgid "Iframe Height"
 msgstr "Hauteur de l’iFrame"
+
+#: .././blocks/iframe/model.php:20
+msgid "Iframe Height (Mobile)"
+msgstr "Hauteur de l’iframe (mobile)"
 
 #: .././blocks/image-content/model.php:5
 msgid "[WPUACF] Image - Content"

@@ -9,10 +9,17 @@ $model = array(
             'type' => 'url',
             'required' => true
         ),
+        'cola' => 'wpuacf_50p',
         'height' => array(
             'label' => __('Iframe Height', 'wpu_acf_flexible'),
             'type' => 'number',
             'default_value' => 500
-        )
+        ),
+        'colb' => 'wpuacf_50p',
+        'mobile_height' => array(
+            'label' => __('Iframe Height (Mobile)', 'wpu_acf_flexible'),
+            'type' => 'number'
+        ),
+        'colc' => 'wpuacf_100p'
     )
 );
