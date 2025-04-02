@@ -13,7 +13,9 @@ switch ($media_type) {
 case 'image':
     $image = get_sub_field('image');
     if ($image) {
-        $block_content .= '<div class="block-media__image"><div class="img">' . get_wpu_acf_image($image, 'large') . '</div></div>';
+        $block_content .= '<div class="block-media__image"><div class="img">' . get_wpu_acf_image($image, 'large', array(
+            'has_srcset' => true
+        )) . '</div></div>';
     }
     break;
 case 'embed':
@@ -36,7 +38,7 @@ case 'slider':
   Content
 ---------------------------------------------------------- */
 
-echo '<section class="centered-container cc-block--media ' . get_wpu_acf_wrapper_classname('media') . '"><div class="block--media">';
+echo '<section class="centered-container cc-block--media ' . get_wpu_acf_wrapper_classname('media') . '" data-media-type="' . esc_attr($media_type) . '"><div class="block--media">';
 echo apply_filters('wpu_acf_flexible__content__media__before', '');
 echo get_wpu_acf_title_content();
 echo apply_filters('wpu_acf_flexible__content__media__between', '');

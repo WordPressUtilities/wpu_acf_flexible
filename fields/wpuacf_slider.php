@@ -25,8 +25,9 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
                         'type' => 'true_false'
                     ),
                     'autoplay_speed' => array(
-                        'label' => __('Autoplay speed (ms)', 'wpu_acf_flexible'),
+                        'label' => __('Autoplay speed', 'wpu_acf_flexible'),
                         'type' => 'number',
+                        'append' => 'ms',
                         'default_value' => 5000
                     )
                 )
