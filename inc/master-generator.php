@@ -36,6 +36,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
     public function _plugins_loaded() {
         $layout_id = apply_filters('wpu_acf_flexible__master_generator__layout_id', 'content-blocks');
+        $layout_masterheader_id = apply_filters('wpu_acf_flexible__master_generator__layout_masterheader_id', 'master-header');
         $this->random_datas = $this->generate_random_datas();
         $this->post_details = apply_filters('wpu_acf_flexible__master_generator__post_details', $this->post_details);
 
@@ -46,6 +47,12 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             '_' . $layout_id => $layouts_details['fields'][0]['key'],
             $layout_id => array()
         );
+
+        if (isset($layouts[$layout_masterheader_id])) {
+            $layout_master_header = $this->add_field_group($layout_masterheader_id, $layouts[$layout_masterheader_id]);
+            $layout_master_header_parts = array_keys($layout_master_header['fields']);
+            $metas = $this->get_layout_value($metas, $layout_master_header['fields'][$layout_master_header_parts[0]]['sub_fields'], $layout_master_header_parts[0]);
+        }
 
         /* If only_layout mode is enabled : load 10 random versions of the same block */
         $number_of_iterations = 1;
