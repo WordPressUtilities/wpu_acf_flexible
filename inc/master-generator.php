@@ -345,6 +345,10 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             }
         }
 
+        if(isset($field['maxlength']) && $field['maxlength'] > 0) {
+            $metas[$base_field_key] = substr($metas[$base_field_key], 0, $field['maxlength']);
+        }
+
         if (isset($metas[$base_field_key])) {
             $metas[$base_field_key] = apply_filters('wpu_acf_flexible__master_generator__meta_item', $metas[$base_field_key], $metas, $field);
         }
