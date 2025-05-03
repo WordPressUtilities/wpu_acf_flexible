@@ -139,24 +139,33 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         return $closest;
     }
 
-    public function generate_random_datas() {
-        $random_datas = array();
-
-        /* Images */
-        $random_datas['images'] = get_posts(array(
+    public function get_random_images($number = 5) {
+        $images = get_posts(array(
             'post_type' => 'attachment',
             'post_mime_type' => 'image/jpeg',
             'fields' => 'ids',
+            'cache_results' => false,
             'post_status' => 'inherit',
-            'posts_per_page' => 5,
+            'posts_per_page' => $number,
             'orderby' => 'rand'
         ));
 
-        if (empty($random_datas['images'])) {
+
+        if (empty($images)) {
             echo "You should add some images";
             die;
         }
 
+        return $images;
+    }
+
+    public function generate_random_datas() {
+        $random_datas = array();
+
+        /* Images */
+        $random_datas['images'] = $this->get_random_images(5);
+
+        /* Strings */
         $html_string = '<a href="#">a</a> text with <strong><em><span style="text-decoration:underline">HTML</span></em></strong> and an emoji 😬';
         $long_word = 'thiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolongthiswordistoolong';
 
@@ -308,7 +317,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             $metas[$base_field_key] = $this->get_random_value($this->random_datas['editors']);
             break;
         case 'gallery':
-            $metas[$base_field_key] = $this->random_datas['images'];
+            $metas[$base_field_key] = $this->get_random_images(mt_rand(1, 10));
             break;
         case 'file':
         case 'image':
