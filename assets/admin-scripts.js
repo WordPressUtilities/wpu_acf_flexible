@@ -124,7 +124,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* exported wpuacf_load_mapbox */
 function wpuacf_load_mapbox(_token) {
-    jQuery(document).on('focus', 'input[name*="wpuacf_autocomplete_address"] ', function() {
+    var $wrapper = jQuery('#wpwrap');
+    if (!$wrapper.length) {
+        return;
+    }
+
+    function wpuacf_setup_input() {
         var jq_the_input = jQuery(this),
             the_input = jq_the_input.get(0);
 
@@ -152,5 +157,12 @@ function wpuacf_load_mapbox(_token) {
                 the_input.value = event.detail.features[0].properties.full_address;
             }, 100);
         });
+    }
+
+    var _input_query = 'input[name*="wpuacf_autocomplete_address"]';
+
+    $wrapper.on('focus', _input_query, wpuacf_setup_input);
+    $wrapper.find(_input_query).each(function(){
+        wpuacf_setup_input.call(this);
     });
 }

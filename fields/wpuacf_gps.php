@@ -5,7 +5,6 @@ defined('ABSPATH') || die;
   GPS Coordinates
 ---------------------------------------------------------- */
 
-
 add_filter('wpu_acf_flexible__field_types', function ($types) {
     $types['wpuacf_gps'] = array(
         'label' => __('GPS Coordinates', 'wpu_acf_flexible'),
@@ -32,7 +31,7 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
             return '';
         },
         'field_html_callback' => function ($id, $sub_field, $level) {
-            return '<?php echo wpuacf_gps(get_sub_field(\'' . $id . '\')); ?>' . "\n";
+            return '<?php echo json_encode(wpuacf_gps(get_sub_field(\'' . $id . '\'))); ?>' . "\n";
         }
 
     );
@@ -61,10 +60,14 @@ function wpuacf_gps($field) {
 ---------------------------------------------------------- */
 
 add_action('wpu_acf_flexible__admin_assets', function () {
-    if (!defined('WPUACF_GPS_MAPBOX_TOKEN')) {
+    $token = apply_filters('wpu_acf_flexible__mapbox_token', '');
+    if (!defined('WPUACF_GPS_MAPBOX_TOKEN') && !$token) {
         return;
     }
-    $token = WPUACF_GPS_MAPBOX_TOKEN;
+    if(defined('WPUACF_GPS_MAPBOX_TOKEN')) {
+        $token = WPUACF_GPS_MAPBOX_TOKEN;
+    }
+    $script_src = apply_filters('wpu_acf_flexible__mapbox_search_script_src', 'https://api.mapbox.com/search-js/v1.1.0/web.js');
     echo <<<EOT
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -75,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
     script.onload = function(){
         wpuacf_load_mapbox('{$token}');
     }
-    script.src = "https://api.mapbox.com/search-js/v1.0.0-beta.21/web.js";
+    script.src = "{$script_src}";
 });
 </script>
 EOT;
