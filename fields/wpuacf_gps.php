@@ -61,12 +61,13 @@ function wpuacf_gps($field) {
 
 add_action('wpu_acf_flexible__admin_assets', function () {
     $token = apply_filters('wpu_acf_flexible__mapbox_token', '');
-    if (!defined('WPUACF_GPS_MAPBOX_TOKEN') && !$token) {
-        return;
-    }
-    if(defined('WPUACF_GPS_MAPBOX_TOKEN')) {
+    if (defined('WPUACF_GPS_MAPBOX_TOKEN')) {
         $token = WPUACF_GPS_MAPBOX_TOKEN;
     }
+    if (!$token) {
+        return;
+    }
+
     $script_src = apply_filters('wpu_acf_flexible__mapbox_search_script_src', 'https://api.mapbox.com/search-js/v1.1.0/web.js');
     echo <<<EOT
 <script>

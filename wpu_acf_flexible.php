@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.86.4
+Version: 2.86.5
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.86.4';
+    private $plugin_version = '2.86.5';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1084,6 +1084,12 @@ EOT;
         $content = preg_replace('/<\?php(\s\n)\?>/isU', '', $content);
         $content = preg_replace('/(?:(?:\r\n|\r|\n)){2}/s', "\n", $content);
         $file_path = $this->get_controller_path($group);
+
+        if(!is_dir($file_path)) {
+            error_log(sprintf('The folder %s does not exist. Please create it.', $file_path));
+            return;
+        }
+
         $file_id = $file_path . $layout_id . '.php';
 
         do_action('wpu_acf_flexible__set_file_content', $layout_id, $group);
