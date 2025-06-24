@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.86.5
+Version: 2.87.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.86.5';
+    private $plugin_version = '2.87.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -241,6 +241,14 @@ EOT;
             )
         ));
 
+        /* Check if Polylang Pro is installed and version is higher than 3.7 */
+        if ($this->pll_has_translate_once()) {
+            $this->base_field['translations'] = 'translate_once';
+        }
+    }
+
+    public function pll_has_translate_once() {
+        return (defined('POLYLANG_VERSION') && version_compare(POLYLANG_VERSION, '3.7', '>'));
     }
 
     # Translations
@@ -257,7 +265,7 @@ EOT;
 
     public function init() {
 
-        if (apply_filters('wpu_acf_flexible__apply_copy_metas_bugfix', true)) {
+        if (apply_filters('wpu_acf_flexible__apply_copy_metas_bugfix', true) && !$this->pll_has_translate_once()) {
             add_filter('pll_copy_post_metas', array($this,
                 'pll_copy_post_metas'
             ), 20, 3);
@@ -1085,7 +1093,7 @@ EOT;
         $content = preg_replace('/(?:(?:\r\n|\r|\n)){2}/s', "\n", $content);
         $file_path = $this->get_controller_path($group);
 
-        if(!is_dir($file_path)) {
+        if (!is_dir($file_path)) {
             error_log(sprintf('The folder %s does not exist. Please create it.', $file_path));
             return;
         }
