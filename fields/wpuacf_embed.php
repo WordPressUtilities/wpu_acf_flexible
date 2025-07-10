@@ -43,6 +43,13 @@ if($embed){
     return $types;
 }, 10, 1);
 
+/* ----------------------------------------------------------
+  Helpers
+---------------------------------------------------------- */
+
+/* Get video+embed image
+-------------------------- */
+
 function get_wpu_acf_video_embed_image($args = array()) {
     if (!is_array($args)) {
         $args = array();
@@ -149,6 +156,9 @@ function get_wpu_acf_video_embed_image($args = array()) {
     return $_image;
 }
 
+/* Get embed image
+-------------------------- */
+
 function get_wpu_acf_embed_image($embed_url) {
 
     if (strpos($embed_url, '<iframe') !== false) {
@@ -164,18 +174,22 @@ function get_wpu_acf_embed_image($embed_url) {
 
     /* Extract youtube : thx https://stackoverflow.com/a/64320469 */
     if (strpos($embed_url, 'youtu') !== false) {
-        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $embed_url, $match);
-        if (isset($match[1]) && $match[1]) {
-            return 'https://img.youtube.com/vi/' . $match[1] . '/hqdefault.jpg';
-        }
+        $youtube_id = get_wpu_acf_youtube_id_from_url($embed_url);
+        $cache_key = 'youtube_thumb_' . md5($youtube_id);
+        return wpuacfflex_get_file_cache($cache_key, YEAR_IN_SECONDS, function ($youtube_id) {
+            $maxres = 'https://img.youtube.com/vi/' . $youtube_id . '/maxresdefault.jpg';
+            $hq = 'https://img.youtube.com/vi/' . $youtube_id . '/hqdefault.jpg';
+            $response = wp_remote_head($maxres);
+            if (is_wp_error($response) || wp_remote_retrieve_response_code($response) == 404) {
+                return $hq;
+            }
+            return $maxres;
+        }, $youtube_id);
     }
     if (strpos($embed_url, 'vimeo') !== false) {
         $cache_key = 'vimeo_thumb_' . md5($embed_url);
-
-        global $vimeo_id;
         $vimeo_id = get_wpu_acf_vimeo_id_from_url($embed_url);
-        return wpuacfflex_get_file_cache($cache_key, YEAR_IN_SECONDS, function () {
-            global $vimeo_id;
+        return wpuacfflex_get_file_cache($cache_key, YEAR_IN_SECONDS, function ($vimeo_id) {
             $response = wp_remote_get('https://vimeo.com/api/v2/video/' . $vimeo_id . '.json');
             if (is_wp_error($response)) {
                 return '';
@@ -185,11 +199,14 @@ function get_wpu_acf_embed_image($embed_url) {
                 return '';
             }
             return $json[0]->thumbnail_large;
-        });
+        }, $vimeo_id);
     }
 
     return '';
 }
+
+/* Extract Vimeo ID from URL
+-------------------------- */
 
 function get_wpu_acf_vimeo_id_from_url($url) {
     $url_parts = explode('/', str_replace(array('&', '?', '#'), '/', $url));
@@ -199,5 +216,16 @@ function get_wpu_acf_vimeo_id_from_url($url) {
         }
     }
 
+    return false;
+}
+
+/* Extract YouTube ID from URL
+-------------------------- */
+
+function get_wpu_acf_youtube_id_from_url($embed_url) {
+    preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $embed_url, $match);
+    if (isset($match[1]) && $match[1]) {
+        return $match[1];
+    }
     return false;
 }

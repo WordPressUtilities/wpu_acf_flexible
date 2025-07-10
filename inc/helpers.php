@@ -781,12 +781,12 @@ function wpuacfflex_get_value_based_on_post_type($values = array()) {
   FileCache
 ---------------------------------------------------------- */
 
-function wpuacfflex_get_file_cache($cache_key, $duration, $callback) {
+function wpuacfflex_get_file_cache($cache_key, $duration, $callback, $callback_args = array()) {
     require_once __DIR__ . '/WPUBaseFileCache/WPUBaseFileCache.php';
     $wpubasefilecache = new \wpu_acf_flexible\WPUBaseFileCache('wpu_acf_flexible');
     $query_value = $wpubasefilecache->get_cache($cache_key, $duration);
     if (!$query_value) {
-        $query_value = call_user_func($callback);
+        $query_value = call_user_func($callback, $callback_args);
         $wpubasefilecache->set_cache($cache_key, $query_value);
     }
     return $query_value;
