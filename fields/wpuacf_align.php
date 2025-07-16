@@ -18,3 +18,21 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
     );
     return $types;
 }, 10, 1);
+
+/* ----------------------------------------------------------
+  Align vertical
+---------------------------------------------------------- */
+
+add_filter('wpu_acf_flexible__field_types', function ($types) {
+    $types['wpuacf_align_vertical'] = array(
+        'label' => __('Vertical Alignment', 'wpu_acf_flexible'),
+        'type' => 'select',
+        'choices' => array(
+            'top' => __('Top', 'wpu_acf_flexible'),
+            'middle' => __('Middle', 'wpu_acf_flexible'),
+            'bottom' => __('Bottom', 'wpu_acf_flexible')
+        ),
+        'default_value' => 'top'
+    );
+    return $types;
+}, 10, 1);
