@@ -217,7 +217,7 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
         unset($attr['has_srcset']);
         $attr['srcset'] = '';
     }
-    if(isset($attr['srcset'])) {
+    if (isset($attr['srcset'])) {
         $has_srcset = true;
     }
 
@@ -286,7 +286,7 @@ function get_wpu_acf_figure($image, $size = 'thumbnail', $attr = array()) {
     return '<figure class="acfflex-figure">' . $html . '</figure>';
 }
 
-function get_wpu_acf_link($link, $classname = '', $attributes = '') {
+function get_wpu_acf_link($link, $classname = '', $attributes = '', $args = array()) {
     if ($link && is_string($link) && substr($link, 0, 1) == '{') {
         $link = json_decode($link, true);
     }
@@ -300,13 +300,19 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         if (!isset($link['title_visible'])) {
             $link['title_visible'] = $link['title'];
         }
-        if (!isset($link['target'])) {
-            $link['target'] = '';
-        }
+        $link = array_merge(array(
+            'target' => '',
+            'before_span' => '',
+            'after_span' => ''
+        ), $link);
     }
     if (!$link || !is_array($link) || !isset($link['url'])) {
         return '';
     }
+    if (is_array($args) && $args) {
+        $link = array_merge($link, $args);
+    }
+
     $link = apply_filters('get_wpu_acf_link__link', $link);
     $link['title_visible'] = strip_tags($link['title_visible'], '<u><i><strong><em><span><img>');
     $classname = apply_filters('get_wpu_acf_link_classname', $classname);
@@ -316,7 +322,9 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '') {
         ' rel="noopener" ' .
         ($link['target'] ? ' target="' . $link['target'] . '"' : '') .
         ' href="' . $link['url'] . '">' .
+        $link['before_span'] .
         '<span>' . $link['title_visible'] . '</span>' .
+        $link['after_span'] .
         '</a>';
 }
 
