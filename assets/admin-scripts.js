@@ -159,7 +159,7 @@ function wpuacf_load_mapbox(_token) {
         });
     }
 
-    var _input_query = 'input[name*="wpuacf_autocomplete_address"]';
+    var _input_query = '.values input[name*="wpuacf_autocomplete_address"]';
 
     $wrapper.on('focus', _input_query, wpuacf_setup_input);
     $wrapper.find(_input_query).each(function(){
