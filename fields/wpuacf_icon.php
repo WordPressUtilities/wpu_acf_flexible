@@ -10,8 +10,14 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
         'label' => __('Icon', 'wpu_acf_flexible'),
         'type' => 'select',
         'ui' => 1,
+        'allow_null' => 1,
+        'wrapper' => array(
+            'class' => 'wpuacf-icons-list'
+        ),
         'instructions' => '<a title="' . esc_attr(__('Icon list', 'wpu_acf_flexible')) . '" href="#TB_inline?height=500&width=780&inlineId=wpu_acf_flex_icon_list" class="thickbox">' . esc_html(__('View the list', 'wpu_acf_flexible')) . '</a>',
-        'choices' => wpuacfflex__get_icons(),
+        'choices' => array_map(function ($icon) {
+            return get_wpu_acf_icon($icon) . ' ' . $icon;
+        }, wpuacfflex__get_icons()),
         'field_html_callback' => function ($id, $sub_field, $level) {
             return '<?php echo get_wpu_acf_icon(get_sub_field(\'' . $id . '\')); ?>' . "\n";
         }
@@ -72,9 +78,7 @@ function wpuacfflex__get_icons() {
         }
         wp_cache_set($cache_id, $icons, '', $cache_duration);
     }
-    return array(
-        '' => apply_filters('wpuacfflex__get_icons__no_icon_label', __('-- No Icon --', 'wpu_acf_flexible'))
-    ) + $icons;
+    return $icons;
 }
 
 /* Display an icon

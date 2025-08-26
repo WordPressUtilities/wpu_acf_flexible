@@ -31,14 +31,18 @@
   Icon list
 ---------------------------------------------------------- */
 
-.wpuacf-icons-list {
+#TB_window .wpuacf-icons-list {
     column-gap: 20px;
     column-count: 4;
 }
 
-.wpuacf-icons-list > * {
+#TB_window .wpuacf-icons-list > * {
     padding-bottom: 0.5em;
     overflow: hidden;
+}
+
+.wpuacfflex-icn {
+    vertical-align: middle;
 }
 
 /* ----------------------------------------------------------
