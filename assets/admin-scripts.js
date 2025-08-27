@@ -133,6 +133,10 @@ function wpuacf_load_mapbox(_token) {
         var jq_the_input = jQuery(this),
             the_input = jq_the_input.get(0);
 
+        if (jq_the_input.closest('.acf-clone').length) {
+            return;
+        }
+
         /* Only once */
         if (jq_the_input.attr('data-has-wpuacf-autocomplete-address')) {
             return;
@@ -162,7 +166,7 @@ function wpuacf_load_mapbox(_token) {
     var _input_query = '.values input[name*="wpuacf_autocomplete_address"]';
 
     $wrapper.on('focus', _input_query, wpuacf_setup_input);
-    $wrapper.find(_input_query).each(function(){
+    $wrapper.find(_input_query).each(function() {
         wpuacf_setup_input.call(this);
     });
 }
