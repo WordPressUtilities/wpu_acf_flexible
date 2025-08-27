@@ -98,6 +98,15 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         /* Include theme layout file */
         do_action('get_wpu_acf_flexible_content__before_layout', '', $layout);
         do_action('get_wpu_acf_flexible_content__before_layout__' . $layout, '');
+
+        /* Store variables */
+        $wpuacfflex_variables = array(
+            'layout' => $layout,
+            '_layout_settings' => $_layout_settings
+        );
+
+        $wpuacfflex_layout_index = get_row_index();
+
         if (file_exists($layout_file)) {
             include $layout_file;
         } else {
@@ -106,6 +115,11 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
                 include $wpu_acf_flexible->plugin_dir_path . 'blocks/' . $_layout_settings['wpuacf_model'] . '/content.php';
             }
         }
+
+        /* Restore variables */
+        $layout = $wpuacfflex_variables['layout'];
+        $_layout_settings = $wpuacfflex_variables['_layout_settings'];
+
         do_action('get_wpu_acf_flexible_content__after_layout__' . $layout, '');
         do_action('get_wpu_acf_flexible_content__after_layout', '', $layout);
 
@@ -491,6 +505,28 @@ function get_wpu_acf_text($field_value, $args = array()) {
         return '';
     }
     return '<div class="' . esc_attr($args['classname']) . '">' . wpautop($field_value) . '</div>';
+}
+
+/* Basic field
+-------------------------- */
+
+function get_wpu_acf_field_html($field_value, $args = array()) {
+    if (!$field_value) {
+        return '';
+    }
+
+    $args = array_merge(array(
+        'tag' => 'div',
+        'classname' => 'field',
+        'allowed_tags' => ''
+    ), $args);
+
+    $field_value = trim(strip_tags($field_value, $args['allowed_tags']));
+    if (!$field_value) {
+        return '';
+    }
+
+    return '<' . esc_attr($args['tag']) . ' class="' . esc_attr($args['classname']) . '">' . $field_value . '</' . esc_attr($args['tag']) . '>';
 }
 
 /* ----------------------------------------------------------

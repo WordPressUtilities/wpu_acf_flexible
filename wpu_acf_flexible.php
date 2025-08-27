@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 2.91.1
+Version: 3.0.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '2.91.1';
+    private $plugin_version = '3.0.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -863,11 +863,17 @@ EOT;
             break;
         default:
             $tag = 'div';
+            $content_value = ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\')';
             if ($id == 'title' || $sub_field['name'] == 'title') {
                 $tag = 'h' . $level;
                 $classname = str_replace('class="', 'class="h' . $level . ' ', $classname);
+                $values = '<' . $tag . ' ' . $classname . '><?php echo wp_strip_all_tags(' . $content_value . ') ?></' . $tag . '>' . "\n";
+            } else {
+                $helper_args = array(
+                    'classname' => $class_id
+                );
+                $values = '<?php echo get_wpu_acf_field_html(' . $content_value . ', ' . var_export($helper_args, true) . '); ?>';
             }
-            $values = '<' . $tag . ' ' . $classname . '><?php echo wp_strip_all_tags(' . ($level < 2 ? 'get_field' : 'get_sub_field') . '(\'' . $id . '\')) ?></' . $tag . '>' . "\n";
         }
 
         if (isset($sub_field['field_html_callback'])) {
