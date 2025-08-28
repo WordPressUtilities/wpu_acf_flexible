@@ -73,7 +73,7 @@ function wpuacfflex__get_icons() {
         $icons_raw = glob($icon_dir . '*.svg');
         $icons = array();
         foreach ($icons_raw as $icn) {
-            $icn = str_replace('.svg', '', basename($icn));
+            $icn = strtolower(str_replace('.svg', '', basename($icn)));
             $icons[$icn] = $icn;
         }
         wp_cache_set($cache_id, $icons, '', $cache_duration);
