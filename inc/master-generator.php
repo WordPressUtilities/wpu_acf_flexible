@@ -108,15 +108,27 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             return;
         }
 
-        /* Delete old page if needed */
+        /* Update old post if it exists */
         $option_value = get_option($this->option_id);
         if ($option_value) {
-            wp_delete_post($option_value);
-            delete_option($option_value);
+            $post_id = $option_value;
+
+            /* Delete all metas */
+            $all_metas = get_post_meta($post_id);
+            foreach ($all_metas as $key => $value) {
+                delete_post_meta($post_id, $key);
+            }
+
+            /* Update post */
+            $this->post_details['ID'] = $post_id;
+            wp_update_post($this->post_details);
+
+        }
+        else {
+            $post_id = wp_insert_post($this->post_details);
         }
 
-        $post_id = wp_insert_post($this->post_details);
-        update_option($this->option_id, $post_id);
+        /* Set new metas */
         foreach ($metas as $key => $value) {
             update_post_meta($post_id, $key, $value);
         }
