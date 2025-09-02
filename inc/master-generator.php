@@ -8,6 +8,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     private $random_datas = array();
     private $only_layout = false;
     private $is_dry_run = false;
+    private $post_id = false;
     private $option_id = 'wpu_acf_flexible_page_master';
     private $post_details = array(
         'post_type' => 'page',
@@ -26,18 +27,79 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         if (isset($assoc_args['only_layout'])) {
             $this->only_layout = $assoc_args['only_layout'];
         }
-        if (isset($assoc_args['nb_iterations']) && is_numeric($assoc_args['nb_iterations'])) {
+        if (isset($assoc_args['nb_iterations']) && ctype_digit($assoc_args['nb_iterations'])) {
             $this->number_of_iterations = intval($assoc_args['nb_iterations'], 10);
         }
+        if (isset($assoc_args['post_id']) && ctype_digit($assoc_args['post_id'])) {
+            $this->post_id = $assoc_args['post_id'];
+        }
+
         parent::init();
 
-        add_action('init', array(&$this, '_plugins_loaded'), 999);
+        add_action('init', array(&$this, '_launch'), 999);
     }
 
-    public function _plugins_loaded() {
+    public function _launch() {
+        $this->random_datas = $this->generate_random_datas();
+        if ($this->post_id) {
+            $this->_init_post();
+        } else {
+            $this->_init_master_page();
+        }
+    }
+
+    public function _init_post() {
+
+        $post_type = get_post_type($this->post_id);
+
+        $metas = array();
+        foreach ($this->contents as $id => $layout) {
+            if (!$this->_recursive_acf_match_location_groups($layout['location'], [
+                'post_id' => $this->post_id,
+                'post_type' => $post_type
+            ], $id)) {
+                continue;
+            }
+
+            if (!isset($layout['fields'])) {
+                continue;
+            }
+
+            $layouts_details = $this->add_field_group($id, $layout);
+            $parts = array_keys($layout['fields']);
+            $metas = $this->get_layout_value($metas, $layouts_details['fields'][$parts[0]]['sub_fields'], $parts[0]);
+
+        }
+
+        /* Set new metas */
+        foreach ($metas as $key => $value) {
+            update_post_meta($this->post_id, $key, $value);
+        }
+        do_action('wpu_acf_flexible__master_generator__after_update_post', $this->post_id);
+
+    }
+
+    function _recursive_acf_match_location_groups($rule_groups, $screen, $id) {
+        foreach ($rule_groups as $group) {
+            $group_valid = true;
+
+            foreach ($group as $rule) {
+                if (!acf_match_location_rule($rule, $screen, $id)) {
+                    $group_valid = false;
+                    break;
+                }
+            }
+
+            if ($group_valid) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function _init_master_page() {
         $layout_id = apply_filters('wpu_acf_flexible__master_generator__layout_id', 'content-blocks');
         $layout_masterheader_id = apply_filters('wpu_acf_flexible__master_generator__layout_masterheader_id', 'master-header');
-        $this->random_datas = $this->generate_random_datas();
         $this->post_details = apply_filters('wpu_acf_flexible__master_generator__post_details', $this->post_details);
 
         $layouts = apply_filters('wpu_acf_flexible_content', array());
@@ -122,10 +184,11 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             /* Update post */
             $this->post_details['ID'] = $post_id;
             wp_update_post($this->post_details);
+            do_action('wpu_acf_flexible__master_generator__after_update_post', $post_id);
 
-        }
-        else {
+        } else {
             $post_id = wp_insert_post($this->post_details);
+            do_action('wpu_acf_flexible__master_generator__after_insert_post', $post_id);
         }
 
         /* Set new metas */
@@ -133,7 +196,6 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             update_post_meta($post_id, $key, $value);
         }
 
-        do_action('wpu_acf_flexible__master_generator__after_insert_post', $post_id);
     }
 
     function find_closest_layout_by_name($layout_name, $layouts) {
@@ -215,13 +277,21 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         /* Videos */
         $random_datas['videos'] = array(
             'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-            'https://vimeo.com/109903713',
+            'https://vimeo.com/109903713'
         );
 
         /* Editors */
         $random_datas['editors'] = array(
             '<h2>Liste de citations</h2> <h3>Various quotes</h3> <p>For me, I am driven by two main philosophies, know more today about the world than I knew yesterday. And along the way, lessen the suffering of others. You’d be surprised how far that gets you. <a href="/">Neil deGrasse Tyson</a>. History does not repeat itself, but it does rhyme. <em>Mark Twain</em>.</p> <p>Any man who can drive safely while kissing a pretty girl is simply not giving the kiss the attention it deserves. <em>A. Einstein.</em> <img src="https://via.placeholder.com/16x16" alt="" /> When I am abroad, I always make it a rule never to criticize or attack the government of my own country. I make up for lost time when I come home. <strong>Winston Churchill.</strong></p> <h4>Other cool quotes</h4> <p>A hundredth of a second here, a hundredth of a second there - even if you put them end to end, they still only add up to one, two, perhaps three seconds, snatched from eternity. <a href="#">Robert Doisneau.</a> All I know is what the words know, and dead things, and that makes a handsome little sum, with a beginning and a middle and an end, as in the well-built phrase and the long sonata of the dead. <strong>Samuel Beckett.</strong></p> <p>And this, our life, exempt from public haunt, finds tongues in trees, books in the running brooks, sermons in stones, and good in everything. <a href="#"><strong>William Shakespeare.</strong></a></p> <h3>Abraham Lincoln</h3> <ul> <li>A friend is one who has the same enemies as you have. </li> <li>Am I not destroying my enemies when I make friends of them? </li> <li>Any people anywhere, being inclined and having the power, have the right to rise up, and shake off the existing government, and form a new one that suits them better. <img src="https://via.placeholder.com/16x16" alt="" /> This is a most valuable - a most sacred right - a right, which we hope and believe, is to liberate the world. </li> <li>Be sure you put your feet in the right place, then stand firm. </li> </ul> <blockquote><p>The world needs dreamers and the world needs doers. But above all, the world needs dreamers who do — Sarah Ban Breathnach.</p></blockquote> <h3>Martin Luther King, Jr</h3> <ul> <li>A man can’t ride your back unless it’s bent.</li> <li>Take the first step in faith. <ul> <li>You don’t have to see the whole staircase :</li> <li>just take the first step.</li> </ul> </li> <li>A genuine leader is not a searcher for consensus but a molder of consensus.</li> </ul> <table> <thead> <tr> <th>Title 1</th> <th>Title 2</th> <th>Title 3</th> </tr> </thead> <tbody> <tr> <td>Data 1</td> <td>Data 2</td> <td>Data 3</td> </tr> <tr> <td>Data 3</td> <td>Data 4 </td> <td>Data 4</td> </tr> </tbody> </table> <ol><li>An item</li><li>Another item</li><li>This item too</li></ol> <p>' . $long_word . '</p>',
             '<p>A short quote. <strong>Strong</strong> words, <em>Emphasized</em> words. Very nice <a href="#">links</a></p>'
+        );
+
+        /* Dates */
+        $random_datas['dates'] = array(
+            '1990-01-01',
+            '2023-02-14',
+            '2023-03-21',
+            date('Y-m-d')
         );
 
         return apply_filters('wpu_acf_flexible__master_generator__random_datas', $random_datas);
@@ -264,7 +334,6 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     }
 
     public function get_field_value($metas, $field, $prefix, $base_field_key) {
-
         if ($field['type'] == 'taxonomy' || $field['type'] == 'relationship') {
             $field['max'] = isset($field['max']) && $field['max'] ? $field['max'] : mt_rand(3, 10);
         }
@@ -358,6 +427,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         case 'true_false':
             $metas[$base_field_key] = !!mt_rand(0, 1);
             break;
+        case 'date_picker':
+            $metas[$base_field_key] = $this->get_random_value($this->random_datas['dates']);
+            break;
         default:
             //echo '<pre>';
             //var_dump($field['type']);
@@ -390,11 +462,15 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 if (defined('WP_CLI')) {
     WP_CLI::add_command('wpu-acf-flex-master-generator', function ($args, $assoc_args) {
         add_action('wpu_acf_flexible__master_generator__after_insert_post', function ($post_id) {
-            WP_CLI::success('Page Master');
+            WP_CLI::success(get_the_title($post_id) . ' - Created');
+            WP_CLI::success(get_page_link($post_id));
+        });
+        add_action('wpu_acf_flexible__master_generator__after_update_post', function ($post_id) {
+            WP_CLI::success(get_the_title($post_id) . ' - Updated');
             WP_CLI::success(get_page_link($post_id));
         });
         $wpu_acf_flexible__master_generator = new wpu_acf_flexible__master_generator($args, $assoc_args);
-        $wpu_acf_flexible__master_generator->_plugins_loaded();
+        $wpu_acf_flexible__master_generator->_launch();
     }, array(
         'shortdesc' => 'Generate a page with all blocks, filled with random data.'
     ));
