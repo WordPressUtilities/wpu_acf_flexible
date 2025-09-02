@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2025-07-16 17:03+0200\n"
+"POT-Creation-Date: 2025-09-02 19:16+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -442,17 +442,25 @@ msgstr "Longitude"
 msgid "Icon"
 msgstr "Icône"
 
-#: .././fields/wpuacf_icon.php:13 .././fields/wpuacf_iconlist.php:10
+#: .././fields/wpuacf_icon.php:17 .././fields/wpuacf_iconlist.php:10
 msgid "Icon list"
 msgstr "Liste d’icônes"
 
-#: .././fields/wpuacf_icon.php:13
+#: .././fields/wpuacf_icon.php:17
 msgid "View the list"
 msgstr "Voir la liste"
 
-#: .././fields/wpuacf_icon.php:76
-msgid "-- No Icon --"
-msgstr "-- Aucune icône --"
+#: .././fields/wpuacf_iconcta.php:10
+msgid "Icon + CTA"
+msgstr "Icône + CTA"
+
+#: .././fields/wpuacf_iconcta.php:17
+msgid "Show an Icon before text"
+msgstr "Afficher une icône avant le texte"
+
+#: .././fields/wpuacf_iconcta.php:28
+msgid "Show an Icon after text"
+msgstr "Afficher une icône après le texte"
 
 #: .././fields/wpuacf_responsive_image.php:12
 msgid "Responsive image"
@@ -640,29 +648,32 @@ msgstr "Dimensions: min %s"
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:930 .././wpu_acf_flexible.php:939
+#: .././wpu_acf_flexible.php:936 .././wpu_acf_flexible.php:945
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1288
+#: .././wpu_acf_flexible.php:1294
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1296
+#: .././wpu_acf_flexible.php:1302
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1297
+#: .././wpu_acf_flexible.php:1303
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1330
+#: .././wpu_acf_flexible.php:1336
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1386
+#: .././wpu_acf_flexible.php:1392
 msgid "Add a block"
 msgstr "Ajouter un bloc"
+
+#~ msgid "-- No Icon --"
+#~ msgstr "-- Aucune icône --"
 
 #, fuzzy
 #~| msgid "Areas saved"

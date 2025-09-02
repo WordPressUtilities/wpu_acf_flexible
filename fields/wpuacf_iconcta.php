@@ -11,18 +11,30 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
         'type' => 'group',
         'layout' => 'block',
         'sub_fields' => array(
-            'cola' => 'wpuacf_25p',
+            'link' => 'wpuacf_cta',
+            'cola' => 'wpuacf_50p',
+            'load_icon_before' => array(
+                'label' => __('Show an Icon before text', 'wpu_acf_flexible'),
+                'type' => 'true_false'
+            ),
             'icon_before' => array(
                 'type' => 'wpuacf_icon',
-                'required' => false
+                'wpuacf_condition' => array(
+                    'load_icon_before' => '1'
+                )
             ),
             'colb' => 'wpuacf_50p',
-            'link' => 'wpuacf_cta',
-            'colc' => 'wpuacf_25p',
+            'load_icon_after' => array(
+                'label' => __('Show an Icon after text', 'wpu_acf_flexible'),
+                'type' => 'true_false'
+            ),
             'icon_after' => array(
                 'type' => 'wpuacf_icon',
-                'required' => false
+                'wpuacf_condition' => array(
+                    'load_icon_after' => '1'
+                )
             )
+
         ),
         'field_vars_callback' => function ($id, $sub_field, $level) {
             return '';
@@ -38,10 +50,10 @@ function wpuacfflex_get_iconcta($field, $classname = '', $attributes = '', $args
     if (!is_array($field) || !isset($field['link']) || !is_array($field['link'])) {
         return '';
     }
-    if (isset($field['icon_before']) && $field['icon_before']) {
+    if (isset($field['load_icon_before'], $field['icon_before']) && $field['load_icon_before'] && $field['icon_before']) {
         $field['link']['before_span'] = get_wpu_acf_icon($field['icon_before']);
     }
-    if (isset($field['icon_after']) && $field['icon_after']) {
+    if (isset($field['load_icon_after'], $field['icon_after']) && $field['load_icon_after'] && $field['icon_after']) {
         $field['link']['after_span'] = get_wpu_acf_icon($field['icon_after']);
     }
     return get_wpu_acf_cta($field['link'], $classname, $attributes, $args);
