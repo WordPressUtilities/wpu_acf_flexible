@@ -18,8 +18,8 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
 }, 10, 1);
 
 function get_wpuacf_percent($field) {
-    if (!$field || !is_numeric($field)) {
+    if (!$field || !ctype_digit($field)) {
         return '';
     }
-    return $field . '%';
+    return '<span class="wpuacf-percent">' . esc_html($field) . '%</span>';
 }

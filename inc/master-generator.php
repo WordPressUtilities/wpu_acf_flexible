@@ -8,6 +8,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     private $random_datas = array();
     private $only_layout = false;
     private $is_dry_run = false;
+    private $post_type = false;
     private $post_id = false;
     private $option_id = 'wpu_acf_flexible_page_master';
     private $post_details = array(
@@ -30,6 +31,12 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         if (isset($assoc_args['nb_iterations']) && ctype_digit($assoc_args['nb_iterations'])) {
             $this->number_of_iterations = intval($assoc_args['nb_iterations'], 10);
         }
+        if (isset($assoc_args['post_type']) && $assoc_args['post_type']) {
+            $pt = get_post_type_object($assoc_args['post_type']);
+            if ($pt) {
+                $this->post_type = $assoc_args['post_type'];
+            }
+        }
         if (isset($assoc_args['post_id']) && ctype_digit($assoc_args['post_id'])) {
             $this->post_id = $assoc_args['post_id'];
         }
@@ -41,7 +48,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
     public function _launch() {
         $this->random_datas = $this->generate_random_datas();
-        if ($this->post_id) {
+        if ($this->post_id || $this->post_type) {
             $this->_init_post();
         } else {
             $this->_init_master_page();
@@ -49,6 +56,18 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     }
 
     public function _init_post() {
+
+        $post_creation = false;
+
+        if (!$this->post_id && $this->post_type) {
+            $post_creation = true;
+            $obj = get_post_type_object($this->post_type);
+            $this->post_id = wp_insert_post(array(
+                'post_type' => $this->post_type,
+                'post_title' => $obj->labels->singular_name . ' Master ' . date('Y-m-d H:i:s'),
+                'post_status' => 'draft'
+            ));
+        }
 
         $post_type = get_post_type($this->post_id);
 
@@ -75,7 +94,11 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         foreach ($metas as $key => $value) {
             update_post_meta($this->post_id, $key, $value);
         }
-        do_action('wpu_acf_flexible__master_generator__after_update_post', $this->post_id);
+        if ($post_creation) {
+            do_action('wpu_acf_flexible__master_generator__after_insert_post', $this->post_id);
+        } else {
+            do_action('wpu_acf_flexible__master_generator__after_update_post', $this->post_id);
+        }
 
     }
 
@@ -297,11 +320,10 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         return apply_filters('wpu_acf_flexible__master_generator__random_datas', $random_datas);
     }
 
-    public function get_layout_value($metas, $fields, $prefix, $layout_type = 'default') {
+    public function get_layout_value($metas, $fields, $prefix, $layout_type = 'default', $parent_prefix = '') {
 
         $nb_repeats = 1;
         $base_prefix = $prefix;
-
         if ($layout_type == 'repeater') {
             if (!isset($fields['max']) || !$fields['max']) {
                 $minmax = isset($fields['min']) && $fields['min'] ? $fields['min'] : 3;
@@ -316,6 +338,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         }
         if ($layout_type == 'group') {
             $fields = $fields['sub_fields'];
+            $group_id = str_replace($parent_prefix . '_', '', $base_prefix);
+            $metas[$base_prefix] = '';
+            $metas['_' . $base_prefix] = $parent_prefix . $group_id;
         }
 
         for ($i = 0; $i < $nb_repeats; $i++) {
@@ -326,6 +351,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
                 }
                 if ($layout_type == 'group') {
                     $base_field_key = $prefix . '_' . $field_key;
+
                 }
                 $metas = $this->get_field_value($metas, $field, $prefix, $base_field_key);
             }
@@ -381,10 +407,10 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
             break;
         case 'group':
-            $metas = $this->get_layout_value($metas, $field, $base_field_key, 'group');
+            $metas = $this->get_layout_value($metas, $field, $base_field_key, 'group', $prefix);
             break;
         case 'repeater':
-            $metas = $this->get_layout_value($metas, $field, $base_field_key, 'repeater');
+            $metas = $this->get_layout_value($metas, $field, $base_field_key, 'repeater', $prefix);
             break;
         case 'oembed':
             $metas[$base_field_key] = $this->get_random_value($this->random_datas['videos']);
@@ -463,11 +489,11 @@ if (defined('WP_CLI')) {
     WP_CLI::add_command('wpu-acf-flex-master-generator', function ($args, $assoc_args) {
         add_action('wpu_acf_flexible__master_generator__after_insert_post', function ($post_id) {
             WP_CLI::success(get_the_title($post_id) . ' - Created');
-            WP_CLI::success(get_page_link($post_id));
+            WP_CLI::success(get_permalink($post_id));
         });
         add_action('wpu_acf_flexible__master_generator__after_update_post', function ($post_id) {
             WP_CLI::success(get_the_title($post_id) . ' - Updated');
-            WP_CLI::success(get_page_link($post_id));
+            WP_CLI::success(get_permalink($post_id));
         });
         $wpu_acf_flexible__master_generator = new wpu_acf_flexible__master_generator($args, $assoc_args);
         $wpu_acf_flexible__master_generator->_launch();
