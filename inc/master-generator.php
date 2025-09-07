@@ -10,6 +10,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     private $is_dry_run = false;
     private $post_type = false;
     private $post_id = false;
+    private $terms_to_save = array();
     private $option_id = 'wpu_acf_flexible_page_master';
     private $post_details = array(
         'post_type' => 'page',
@@ -91,9 +92,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         }
 
         /* Set new metas */
-        foreach ($metas as $key => $value) {
-            update_post_meta($this->post_id, $key, $value);
-        }
+        $this->save_metas($this->post_id, $metas);
         if ($post_creation) {
             do_action('wpu_acf_flexible__master_generator__after_insert_post', $this->post_id);
         } else {
@@ -215,9 +214,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         }
 
         /* Set new metas */
-        foreach ($metas as $key => $value) {
-            update_post_meta($post_id, $key, $value);
-        }
+        $this->save_metas($post_id, $metas);
 
     }
 
@@ -401,6 +398,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
                 }
             }
             $metas[$base_field_key] = $terms;
+            if (isset($field['save_terms']) && $field['save_terms']) {
+                $this->terms_to_save[$field['taxonomy']] = $terms;
+            }
             if (isset($field['field_type']) && $field['field_type'] == 'select') {
                 $metas[$base_field_key] = $terms[0];
             }
@@ -482,6 +482,17 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
     public function get_random_value($array = array()) {
         return $array[array_rand($array)];
+    }
+
+    public function save_metas($post_id, $metas) {
+        foreach ($metas as $key => $value) {
+            update_post_meta($post_id, $key, $value);
+        }
+        if ($this->terms_to_save) {
+            foreach ($this->terms_to_save as $taxonomy => $terms) {
+                wp_set_object_terms($post_id, $terms, $taxonomy);
+            }
+        }
     }
 }
 
