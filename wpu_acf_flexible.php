@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.3.1
+Version: 3.3.2
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.3.1';
+    private $plugin_version = '3.3.2';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -798,7 +798,16 @@ EOT;
             $values = $c__start . $c__end . "\n";
             break;
         case 'taxonomy':
-            $values = '<?php if($' . $this->get_protected_dollar_var_name($id) . '_tax):?><a href="<?php echo get_term_link($' . $this->get_protected_dollar_var_name($id) . '_tax); ?>"><?php echo $' . $this->get_protected_dollar_var_name($id) . '_tax->name; ?></a>' . $c__end . "\n";
+            $values = '<?php if($' . $this->get_protected_dollar_var_name($id) . '_tax):?>';
+            if (isset($sub_field['field_type']) && $sub_field['field_type'] == 'checkbox') {
+                $values .= '<?php foreach($' . $this->get_protected_dollar_var_name($id) . '_tax as $tmp_tax_id): $tmp_tax = get_term($tmp_tax_id); ?>';
+                $values .= '<a href="<?php echo get_term_link($tmp_tax); ?>"><?php echo $tmp_tax->name; ?></a> ';
+                $values .= '<?php endforeach; ?>';
+            } else {
+                $values .= '<a href="<?php echo get_term_link($' . $this->get_protected_dollar_var_name($id) . '_tax); ?>"><?php echo $' . $this->get_protected_dollar_var_name($id) . '_tax->name; ?></a>';
+            }
+
+            $values .= $c__end . "\n";
             break;
         case 'gallery':
             $values = '<div ' . $classname . '><?php foreach($' . $this->get_protected_dollar_var_name($id) . '_gallery as $img): ?><?php echo get_wpu_acf_image($img[\'ID\'], \'large\');?><?php endforeach; ?></div>' . "\n";
