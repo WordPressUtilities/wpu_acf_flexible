@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.3.2
+Version: 3.4.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.3.2';
+    private $plugin_version = '3.4.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1304,7 +1304,46 @@ EOT;
             }
         }
 
+        /* Required only on publish */
+        if (isset($field['wpuacf_required_on_publish']) && $field['wpuacf_required_on_publish']) {
+            if ($this->acf_is_publishing()) {
+                if (empty($value) || (is_array($value) && count($value) == 0) || !$value) {
+                    return __('This field is required to publish', 'wpu_acf_flexible');
+                }
+            }
+        }
+
         return $valid;
+    }
+
+    public function acf_is_publishing() {
+
+        $is_publishing = false;
+
+        // Ignore autosave/revisions
+        if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) || (defined('DOING_AJAX') && DOING_AJAX && !isset($_POST['action']))) {
+            return false;
+        }
+
+        // Classic editor flow: changing from non-publish to publish
+        if (isset($_POST['original_post_status'], $_POST['post_status'])) {
+            if ($_POST['post_status'] === 'publish' && $_POST['original_post_status'] !== 'publish') {
+                return true;
+            }
+        }
+
+        // Block editor / updating an already published post
+        if (isset($_POST['post_status'], $_POST['hidden_post_status'])) {
+            if ($_POST['post_status'] === 'publish' && $_POST['hidden_post_status'] === 'publish') {
+                return true;
+            }
+        }
+
+        // Fallback: explicit status check
+        if (!$is_publishing && isset($_POST['post_status']) && $_POST['post_status'] === 'publish') {
+            return true;
+        }
+        return false;
     }
 
     public function secondary_actions($actions) {
