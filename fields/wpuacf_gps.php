@@ -18,13 +18,17 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
             'lat' => array(
                 'required' => 1,
                 'label' => __('Latitude', 'wpu_acf_flexible'),
-                'type' => 'number'
+                'type' => 'number',
+                'min' => -90,
+                'max' => 90,
             ),
             'colb' => 'wpuacf_50p',
             'lng' => array(
                 'required' => 1,
                 'label' => __('Longitude', 'wpu_acf_flexible'),
-                'type' => 'number'
+                'type' => 'number',
+                'min' => -180,
+                'max' => 180,
             )
         ),
         'field_vars_callback' => function ($id, $sub_field, $level) {

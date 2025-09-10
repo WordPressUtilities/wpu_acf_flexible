@@ -16,7 +16,10 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
         ),
         'instructions' => '<a title="' . esc_attr(__('Icon list', 'wpu_acf_flexible')) . '" href="#TB_inline?height=500&width=780&inlineId=wpu_acf_flex_icon_list" class="thickbox">' . esc_html(__('View the list', 'wpu_acf_flexible')) . '</a>',
         'choices' => array_map(function ($icon) {
-            return get_wpu_acf_icon($icon) . ' ' . $icon;
+            $extra_names = apply_filters('wpuacf_icon_admin_choices', array(), $icon);
+            $extra_names = array_filter(array_unique($extra_names));
+            asort($extra_names);
+            return get_wpu_acf_icon($icon) . ' ' . $icon . ($extra_names ? ' <small>(' . implode(', ', $extra_names) . ')</small>' : '');
         }, wpuacfflex__get_icons()),
         'field_html_callback' => function ($id, $sub_field, $level) {
             return '<?php echo get_wpu_acf_icon(get_sub_field(\'' . $id . '\')); ?>' . "\n";
@@ -63,7 +66,7 @@ function wpuacfflex__get_icons() {
     $cache_id = 'wpuacfflex__get_icons';
     $cache_duration = 60;
 
-    $icon_dir = get_stylesheet_directory() . '/src/icons/';
+    $icon_dir = apply_filters('wpuacf_icon_dir', get_stylesheet_directory() . '/src/icons/');
     if (!is_dir($icon_dir)) {
         return array();
     }
@@ -81,6 +84,7 @@ function wpuacfflex__get_icons() {
     }
     return $icons;
 }
+
 
 /* Display an icon
 -------------------------- */
