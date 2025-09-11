@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.4.1
+Version: 3.4.2
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.4.1';
+    private $plugin_version = '3.4.2';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -290,12 +290,24 @@ EOT;
 
     public function admin_assets($hook_details) {
 
+        /* Extra JS */
+        wp_enqueue_script('wpu_acf_flexible-script-wpuacfadmin', plugins_url('assets/admin-scripts.js', __FILE__), array(), $this->plugin_version);
+        wp_localize_script('wpu_acf_flexible-script-wpuacfadmin', 'wpu_acf_flexible_script_wpuacfadmin', apply_filters('wpu_acf_flexible_script_wpuacfadmin_settings', array(
+            'color_picker_palettes' => array()
+        )));
+
         /* Nav */
         $hooks_menus = array(
             'nav-menus.php'
         );
         if (in_array($hook_details, $hooks_menus)) {
-            wp_enqueue_style('wpu_acf_flexible-style-admin-nav-menus', plugins_url('assets/admin-nav.css', __FILE__), array(), $this->plugin_version);
+            $custom_css = apply_filters('wpu_acf_flexible__admin_css__nav_menus', array(
+                'admin-nav-menus' => plugins_url('assets/admin-nav.css', __FILE__)
+            ));
+            $custom_css['admin-interface'] = plugins_url('assets/admin-interface.css', __FILE__);
+            foreach ($custom_css as $id => $file) {
+                wp_enqueue_style('wpu_acf_flexible-style-admin-nav-menus-' . $id, $file, array(), $this->plugin_version);
+            }
         }
 
         /* Post */
@@ -318,11 +330,6 @@ EOT;
         foreach ($custom_css as $id => $file) {
             wp_enqueue_style('wpu_acf_flexible-style-admin-' . $id, $file, array(), $this->plugin_version);
         }
-        /* Extra JS */
-        wp_enqueue_script('wpu_acf_flexible-script-wpuacfadmin', plugins_url('assets/admin-scripts.js', __FILE__), array(), $this->plugin_version);
-        wp_localize_script('wpu_acf_flexible-script-wpuacfadmin', 'wpu_acf_flexible_script_wpuacfadmin', apply_filters('wpu_acf_flexible_script_wpuacfadmin_settings', array(
-            'color_picker_palettes' => array()
-        )));
 
         do_action('wpu_acf_flexible__admin_assets');
     }

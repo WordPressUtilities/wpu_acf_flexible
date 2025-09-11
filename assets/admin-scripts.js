@@ -1,6 +1,19 @@
 document.addEventListener("DOMContentLoaded", function() {
     'use strict';
 
+    jQuery(document).on('click', 'a.thickbox-wpuacf-icon', function(e) {
+        e.preventDefault();
+
+        // call thickbox manually
+        tb_show(this.title, '#TB_inline?height=500&width=780&inlineId=wpu_acf_flex_icon_list');
+
+        // Add a custom CSS class
+        setTimeout(function() {
+            document.getElementById("TB_window").classList.add("wpu-acf-thickbox-icons");
+        }, 100);
+    });
+
+
     /* Toggle visibility on layouts */
     (function() {
         jQuery('body').on('click', '.acf-icon[data-name="wpu-acf-flex-toggle"]', function(e) {

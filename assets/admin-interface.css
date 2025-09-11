@@ -4,17 +4,23 @@
   Thickbox fixes
 ---------------------------------------------------------- */
 
-#TB_ajaxContent {
-    box-sizing: border-box;
-    max-width: 100%;
+#TB_window.wpu-acf-thickbox-icons {
+    top: 50%!important;
+    left: 50%!important;
+    height: 80vh!important;
+    margin: 0!important;
+    max-height: 600px!important;
+    max-width: 90vw!important;
+    min-height: 200px!important;
+    transform: translate3d(-50%,-50%,0) !important;
 }
 
-#TB_window > #TB_title {
+.wpu-acf-thickbox-icons #TB_title {
     z-index: 2;
     position: relative;
 }
 
-#TB_window > #TB_ajaxContent {
+.wpu-acf-thickbox-icons #TB_ajaxContent {
     z-index: 1;
     position: absolute;
     top: 29px;
@@ -25,6 +31,7 @@
     width: auto!important;
     height: auto!important;
     margin: auto;
+    max-width: 100%;
 }
 
 /* ----------------------------------------------------------
@@ -34,6 +41,12 @@
 #TB_window .wpuacf-icons-list {
     column-gap: 20px;
     column-count: 4;
+}
+
+@media (max-width:800px) {
+    #TB_window .wpuacf-icons-list {
+        column-count: 2;
+    }
 }
 
 #TB_window .wpuacf-icons-list > * {

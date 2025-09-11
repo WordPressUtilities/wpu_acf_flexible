@@ -14,7 +14,7 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
         'wrapper' => array(
             'class' => 'wpuacf-icons-list'
         ),
-        'instructions' => '<a title="' . esc_attr(__('Icon list', 'wpu_acf_flexible')) . '" href="#TB_inline?height=500&width=780&inlineId=wpu_acf_flex_icon_list" class="thickbox">' . esc_html(__('View the list', 'wpu_acf_flexible')) . '</a>',
+        'instructions' => '<a data-wpuacf-thickbox-classname="wpuacf-icon-window" title="' . esc_attr(__('Icon list', 'wpu_acf_flexible')) . '" href="#" class="thickbox-wpuacf-icon">' . esc_html(__('View the list', 'wpu_acf_flexible')) . '</a>',
         'choices' => array_map(function ($icon) {
             $extra_names = apply_filters('wpuacf_icon_admin_choices', array(), $icon);
             $extra_names = array_filter(array_unique($extra_names));
