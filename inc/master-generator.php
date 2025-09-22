@@ -71,6 +71,10 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         }
 
         $post_type = get_post_type($this->post_id);
+        if (!$post_type) {
+            WP_CLI::error('The post #' . $this->post_id . ' does not exist.');
+            return;
+        }
 
         $metas = array();
         foreach ($this->contents as $id => $layout) {
