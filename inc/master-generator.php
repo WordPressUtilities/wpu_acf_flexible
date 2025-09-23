@@ -142,9 +142,13 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             $metas = $this->get_layout_value($metas, $layout_master_header['fields'][$layout_master_header_parts[0]]['sub_fields'], $layout_master_header_parts[0]);
         }
 
-        /* If only_layout mode is enabled : load 10 random versions of the same block */
         $number_of_iterations = 1;
-        if ($this->only_layout) {
+        if ($this->only_layout !== false) {
+            if(!$this->only_layout){
+                WP_CLI::error('You must provide a layout name after --only_layout. Available layouts are: ' . implode(', ', array_keys($layouts_details_list)));
+                return;
+            }
+
             if (!isset($layouts_details_list[$this->only_layout . '_layout']) && isset($layouts_details_list[$this->only_layout])) {
                 $layouts_details_list[$this->only_layout . '_layout'] = $layouts_details_list[$this->only_layout];
             }
@@ -163,6 +167,8 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
             $layouts_details_list = array(
                 $this->only_layout . '_layout' => $layouts_details_list[$this->only_layout . '_layout']
             );
+
+            /* If only_layout mode is enabled : load 10 random versions of the same block */
             $number_of_iterations = 10;
         }
 
@@ -214,6 +220,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
         } else {
             $post_id = wp_insert_post($this->post_details);
+            update_option($this->option_id, $post_id);
             do_action('wpu_acf_flexible__master_generator__after_insert_post', $post_id);
         }
 
