@@ -504,6 +504,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
                 wp_set_object_terms($post_id, $terms, $taxonomy);
             }
         }
+        set_post_thumbnail($post_id, $this->get_random_value($this->random_datas['images']));
     }
 }
 
