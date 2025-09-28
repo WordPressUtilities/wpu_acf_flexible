@@ -7,6 +7,7 @@ include __DIR__ . '/helpers/media.php';
 include __DIR__ . '/helpers/cta.php';
 include __DIR__ . '/helpers/language.php';
 include __DIR__ . '/helpers/text.php';
+include __DIR__ . '/helpers/similar.php';
 
 /* ----------------------------------------------------------
   Internal helpers

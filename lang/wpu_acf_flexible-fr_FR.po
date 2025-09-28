@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2025-09-02 19:16+0200\n"
+"POT-Creation-Date: 2025-09-28 23:24+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -67,14 +67,14 @@ msgstr "Surtitre"
 #: .././blocks/logos/model.php:8 .././blocks/media/model.php:8
 #: .././blocks/posts/model.php:9 .././blocks/quote/model.php:8
 #: .././blocks/rich-table/model.php:8 .././blocks/team-quote/model.php:8
-#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:394
+#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:401
 msgid "Title"
 msgstr "Titre"
 
 #: .././blocks/columns/model.php:36 .././blocks/columns/model.php:40
 #: .././blocks/features/model.php:23 .././blocks/logos/model.php:20
 #: .././blocks/media/model.php:20 .././blocks/rich-table/model.php:59
-#: .././fields/wpuacf_responsive_image.php:28 .././wpu_acf_flexible.php:366
+#: .././fields/wpuacf_responsive_image.php:28 .././wpu_acf_flexible.php:373
 msgid "Image"
 msgstr "Image"
 
@@ -84,7 +84,7 @@ msgid "Slider"
 msgstr "Slider"
 
 #: .././blocks/columns/model.php:52 .././blocks/video/model.php:19
-#: .././fields/wpuacf_embed.php:10 .././wpu_acf_flexible.php:371
+#: .././fields/wpuacf_embed.php:10 .././wpu_acf_flexible.php:378
 msgid "Video"
 msgstr "Vidéo"
 
@@ -238,7 +238,7 @@ msgstr "[WPUACF] Logos"
 msgid "Logos"
 msgstr "Logos"
 
-#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:377
+#: .././blocks/logos/model.php:24 .././wpu_acf_flexible.php:384
 msgid "Link"
 msgstr "Lien"
 
@@ -270,7 +270,7 @@ msgstr "Label"
 msgid "[WPUACF] Posts"
 msgstr "[WPUACF] Articles"
 
-#: .././blocks/posts/model.php:17
+#: .././blocks/posts/model.php:17 .././blocks/similar/model.php:40
 msgid "Type"
 msgstr "Type"
 
@@ -318,7 +318,7 @@ msgstr "Lignes de table"
 msgid "Add a line"
 msgstr "Ajouter une ligne"
 
-#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:407
+#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:414
 msgid "Text"
 msgstr "Texte"
 
@@ -345,6 +345,20 @@ msgstr "Nombre de colonnes"
 #: .././blocks/rich-table/model.php:108
 msgid "Number of rows"
 msgstr "Nombre de lignes"
+
+#: .././blocks/similar/model.php:18
+#, php-format
+msgid "Similar %s"
+msgstr "%s similaires"
+
+#: .././blocks/similar/model.php:33
+msgid "[WPUACF] Similar"
+msgstr "[WPUACF] Similaires"
+
+#: .././blocks/similar/model.php:51
+msgid "Use the default CTA and the default title if no content"
+msgstr ""
+"Utiliser le CTA par défaut et le titre par défaut s’il n’y a pas de contenu"
 
 #: .././blocks/team-quote/model.php:5
 msgid "[WPUACF] Team Quote"
@@ -386,7 +400,7 @@ msgstr "Utiliser la vignette de l’embed si disponible"
 msgid "Alignment"
 msgstr "Alignement"
 
-#: .././fields/wpuacf_align.php:13 .././wpu_acf_flexible.php:433
+#: .././fields/wpuacf_align.php:13 .././wpu_acf_flexible.php:440
 msgid "Left"
 msgstr "Gauche"
 
@@ -394,7 +408,7 @@ msgstr "Gauche"
 msgid "Center"
 msgstr "Centre"
 
-#: .././fields/wpuacf_align.php:15 .././wpu_acf_flexible.php:434
+#: .././fields/wpuacf_align.php:15 .././wpu_acf_flexible.php:441
 msgid "Right"
 msgstr "Droite"
 
@@ -434,7 +448,7 @@ msgstr "Adresse"
 msgid "Latitude"
 msgstr "Latitude"
 
-#: .././fields/wpuacf_gps.php:26
+#: .././fields/wpuacf_gps.php:28
 msgid "Longitude"
 msgstr "Longitude"
 
@@ -502,11 +516,11 @@ msgstr "Vitesse de lecture auto"
 msgid "Submit"
 msgstr "Envoyer"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:244 .././wpu_acf_flexible.php:561
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:244 .././wpu_acf_flexible.php:568
 msgid "No"
 msgstr "Non"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:245 .././wpu_acf_flexible.php:561
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:245 .././wpu_acf_flexible.php:568
 msgid "Yes"
 msgstr "Oui"
 
@@ -537,6 +551,14 @@ msgid ""
 msgstr ""
 "Le plugin <b>%s</b> dépend du plugin <b>%s</b>. Merci de l’installer et de "
 "l’activer."
+
+#: .././inc/helpers/similar.php:17
+msgid "Similar posts"
+msgstr "Articles similaires"
+
+#: .././inc/helpers/similar.php:19
+msgid "Home"
+msgstr "Accueil"
 
 #: .././inc/reusable-blocks.php:20 .././inc/reusable-blocks.php:23
 #: .././inc/reusable-blocks.php:130
@@ -617,58 +639,62 @@ msgstr "Choisissez les blocs modèles qui seront affichés sur ces pages"
 msgid "Quickly generate flexible content in ACF"
 msgstr "Générez rapidement du contenu flexible dans ACF"
 
-#: .././wpu_acf_flexible.php:372
+#: .././wpu_acf_flexible.php:379
 #, php-format
 msgid "MP4 format. Max %sMB. Rec: 1.5MB."
 msgstr "Format MP4. Max %sMo. Rec: 1.5Mo."
 
-#: .././wpu_acf_flexible.php:381
+#: .././wpu_acf_flexible.php:388
 msgid "Clickable image"
 msgstr "Image cliquable"
 
-#: .././wpu_acf_flexible.php:398
+#: .././wpu_acf_flexible.php:405
 msgid "Unique ID"
 msgstr "ID unique"
 
-#: .././wpu_acf_flexible.php:418
+#: .././wpu_acf_flexible.php:425
 msgid "Editor"
 msgstr "Éditeur"
 
-#: .././wpu_acf_flexible.php:430
+#: .././wpu_acf_flexible.php:437
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:516
+#: .././wpu_acf_flexible.php:523
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:523
+#: .././wpu_acf_flexible.php:530
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:936 .././wpu_acf_flexible.php:945
+#: .././wpu_acf_flexible.php:952 .././wpu_acf_flexible.php:961
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1294
+#: .././wpu_acf_flexible.php:1310
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1302
+#: .././wpu_acf_flexible.php:1318
+msgid "This field is required to publish"
+msgstr "Ce champ est obligatoire pour publier"
+
+#: .././wpu_acf_flexible.php:1357
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1303
+#: .././wpu_acf_flexible.php:1358
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1336
+#: .././wpu_acf_flexible.php:1391
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1392
+#: .././wpu_acf_flexible.php:1450
 msgid "Add a block"
 msgstr "Ajouter un bloc"
 
