@@ -19,6 +19,13 @@ function get_wpu_acf_text($field_value, $args = array()) {
         'classname' => 'field-text cssc-content',
         'allowed_tags' => ''
     ), $args);
+
+    /* Handle an edge case with single brackets */
+    if (strpos($field_value, '<') !== false XOR strpos($field_value, '>') !== false) {
+        $field_value = str_replace('<', '&lt;', $field_value);
+        $field_value = str_replace('>', '&gt;', $field_value);
+    }
+
     $field_value = trim(strip_tags($field_value, $args['allowed_tags']));
     if (!$field_value) {
         return '';
