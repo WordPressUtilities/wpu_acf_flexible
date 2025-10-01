@@ -5,10 +5,10 @@ defined('ABSPATH') || die;
   Data
 ---------------------------------------------------------- */
 
-$_post_types = apply_filters('wpu_acf_flexible_similar_post_types', array('post'));
+$_post_types = apply_filters('wpu_acf_flexible_similar_post_types', array('post' => array()));
 $_choices = array();
 $_type_fields = array();
-foreach ($_post_types as $_post_type) {
+foreach ($_post_types as $_post_type => $_data) {
     $obj = get_post_type_object($_post_type);
     if (!$obj) {
         continue;
