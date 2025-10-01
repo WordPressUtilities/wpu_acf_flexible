@@ -64,7 +64,7 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
         unset($attr['has_srcset']);
         $attr['srcset'] = '';
     }
-    if (isset($attr['srcset'])) {
+    if (!isset($attr['srcset'])) {
         $has_srcset = true;
     }
 
