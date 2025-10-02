@@ -56,7 +56,7 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
     if (!isset($attr['loading'])) {
         $attr['loading'] = 'lazy';
     }
-    $attr = apply_filters('get_wpu_acf_image__image_attr', $attr);
+    $attr = apply_filters('get_wpu_acf_image__image_attr', $attr, $image, $size);
 
     $has_srcset = apply_filters('get_wpu_acf_image__has_srcset', false);
     if (isset($attr['has_srcset'])) {
@@ -66,6 +66,14 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
     }
     if (!isset($attr['srcset'])) {
         $has_srcset = true;
+    }
+
+    /* Force default alt text if needed */
+    if (apply_filters('get_wpu_acf_image__force_alt', false)) {
+        $alt_text = get_post_meta($image, '_wp_attachment_image_alt', true);
+        if (empty($alt_text)) {
+            $attr['alt'] = apply_filters('get_wpu_acf_image__default_alt', get_the_title($image));
+        }
     }
 
     /* Retrieve image HTML without srcset */
