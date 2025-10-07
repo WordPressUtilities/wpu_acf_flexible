@@ -76,7 +76,9 @@ function get_wpu_acf_minieditor($field, $args = array()) {
         $args['wrapper_classname'] = 'field-minieditor cssc-content';
     }
     $args['allowed_tags'] = apply_filters('wpu_acf_flexible__get_wpu_acf_minieditor__allowed_tags', $args['allowed_tags'], $field, $args);
-    $field = strip_tags($field, $args['allowed_tags']);
+    if ($field) {
+        $field = strip_tags($field, $args['allowed_tags']);
+    }
     $field = apply_filters('wpu_acf_flexible__get_wpu_acf_minieditor__before_wpautop', $field, $args['allowed_tags']);
     $field_content = wpautop($field);
     if (!$field_content) {
