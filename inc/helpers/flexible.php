@@ -30,7 +30,7 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
     if (is_post_type_archive()) {
         $opt_group = get_post_type() . '_options';
     }
-    if (is_tax()) {
+    if (is_tax() || is_category() || is_tag()) {
         $term = get_queried_object();
         $opt_group = $term->taxonomy . '_' . $term->term_id;
     }
