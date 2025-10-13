@@ -19,6 +19,7 @@ foreach ($_post_types as $_post_type => $_data) {
         'type' => 'relationship',
         'post_type' => $_post_type,
         'return_format' => 'id',
+        'max' => apply_filters('wpu_acf_flexible_similar_max_items', 16, $_post_type),
         'wpuacf_condition' => array(
             'similar_type' => $_post_type
         )
