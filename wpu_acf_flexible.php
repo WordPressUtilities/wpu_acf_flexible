@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.6.2
+Version: 3.6.3
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.6.2';
+    private $plugin_version = '3.6.3';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -180,6 +180,9 @@ EOT;
         add_action('acf/save_post', array(&$this,
             'save_post'
         ), 99);
+        add_action('wpu_acf_flexible__trigger_save_post', array(&$this,
+            'trigger_save_post'
+        ), 10, 1);
         add_action('acf/input/admin_footer', array(&$this,
             'add_draft_validation'
         ), 10);
@@ -1269,31 +1272,37 @@ EOT;
         if (empty($_POST)) {
             return;
         }
+        $this->trigger_save_post($post_ID);
+    }
 
+    public function trigger_save_post($post_ID) {
         $content_html = $this->secure_post_content(apply_filters('wpu_acf_flexible__save_post_default_content_html', '', $post_ID));
 
         foreach ($this->contents as $group => $blocks) {
             if (!isset($blocks['save_post']) || !$blocks['save_post']) {
                 continue;
             }
-            $content_html .= $this->secure_post_content(get_wpu_acf_flexible_content($group, 'admin', array('save_post_mode' => true)));
+            $content_html .= $this->secure_post_content(get_wpu_acf_flexible_content($group, 'admin', array('opt_group' => $post_ID, 'save_post_mode' => true)));
         }
 
         $content_html .= $this->secure_post_content(apply_filters('wpu_acf_flexible__save_post_default_content_html__after', '', $post_ID));
 
-        if (!empty($content_html)) {
-            $_post = get_post($post_ID);
-            $post_infos = array(
-                'ID' => $post_ID,
-                'post_content' => $content_html
-            );
-
-            if (empty($_post->post_excerpt)) {
-                $post_infos['post_excerpt'] = wp_trim_words(wp_strip_all_tags($content_html), 20, '');
-            }
-
-            wp_update_post($post_infos);
+        if (empty($content_html)) {
+            return;
         }
+
+        $_p = get_post($post_ID);
+        $post_infos = array(
+            'ID' => $post_ID,
+            'post_content' => $content_html
+        );
+
+        if (empty($_p->post_excerpt)) {
+            $post_infos['post_excerpt'] = wp_trim_words(wp_strip_all_tags($content_html), 20, '');
+        }
+
+        wp_update_post($post_infos);
+        do_action('wpu_acf_flexible__custom_save_post', $post_ID);
     }
 
     /* Custom validation */
