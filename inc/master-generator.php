@@ -144,7 +144,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
         $number_of_iterations = 1;
         if ($this->only_layout !== false) {
-            if(!$this->only_layout){
+            if (!$this->only_layout) {
                 WP_CLI::error('You must provide a layout name after --only_layout. Available layouts are: ' . implode(', ', array_keys($layouts_details_list)));
                 return;
             }
@@ -510,6 +510,12 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
 if (defined('WP_CLI')) {
     WP_CLI::add_command('wpu-acf-flex-master-generator', function ($args, $assoc_args) {
+
+        if (is_multisite() && isset($_SERVER['argv']) && !empty($_SERVER['argv']) && !strpos(implode(' ', $_SERVER['argv']), '--url')) {
+            WP_CLI::error('You must provide an --url argument when running on multisite.');
+            exit;
+        }
+
         add_action('wpu_acf_flexible__master_generator__after_insert_post', function ($post_id) {
             WP_CLI::success(get_the_title($post_id) . ' - Created');
             WP_CLI::success(get_permalink($post_id));
