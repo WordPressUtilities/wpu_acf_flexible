@@ -34,7 +34,7 @@ function get_wpu_acf_link($link, $classname = '', $attributes = '', $args = arra
 
     $link = apply_filters('get_wpu_acf_link__link', $link);
     $link['title_visible'] = strip_tags($link['title_visible'], '<u><i><strong><em><span><img>');
-    $classname = apply_filters('get_wpu_acf_link_classname', $classname);
+    $classname = apply_filters('get_wpu_acf_link_classname', $classname, $link);
     return '<a title="' . esc_attr(strip_tags($link['title'])) . '"' .
     ' class="acfflex-link ' . esc_attr($classname) . '"' .
         ' ' . $attributes .
