@@ -7,6 +7,7 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     private $number_of_iterations = false;
     private $random_datas = array();
     private $only_layout = false;
+    private $use_example_values = false;
     private $is_dry_run = false;
     private $post_type = false;
     private $post_id = false;
@@ -28,6 +29,9 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
         }
         if (isset($assoc_args['only_layout'])) {
             $this->only_layout = $assoc_args['only_layout'];
+        }
+        if (isset($assoc_args['use_example_values'])) {
+            $this->use_example_values = true;
         }
         if (isset($assoc_args['nb_iterations']) && ctype_digit($assoc_args['nb_iterations'])) {
             $this->number_of_iterations = intval($assoc_args['nb_iterations'], 10);
@@ -370,6 +374,16 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
     public function get_field_value($metas, $field, $prefix, $base_field_key) {
         if ($field['type'] == 'taxonomy' || $field['type'] == 'relationship') {
             $field['max'] = isset($field['max']) && $field['max'] ? $field['max'] : mt_rand(3, 10);
+        }
+
+        /* Use example values */
+        if ($this->use_example_values && isset($field['wpuacf_example_values']) && !empty($field['wpuacf_example_values'])) {
+            if (!is_array($field['wpuacf_example_values'])) {
+                $field['wpuacf_example_values'] = array($field['wpuacf_example_values']);
+            }
+
+            $metas[$base_field_key] = $this->get_random_value($field['wpuacf_example_values']);
+            return $metas;
         }
 
         switch ($field['type']) {

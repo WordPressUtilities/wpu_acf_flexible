@@ -15,7 +15,12 @@ $model = array(
             'sub_fields' => array(
                 'cola' => 'wpuacf_33p',
                 'date' => array(
-                    'label' => __('Date', 'wpu_acf_flexible')
+                    'label' => __('Date', 'wpu_acf_flexible'),
+                    'wpuacf_example_values' => array(
+                        2024,
+                        'March 15',
+                        '15/03/2024',
+                    )
                 ),
                 'image' => array(
                     'required' => false,

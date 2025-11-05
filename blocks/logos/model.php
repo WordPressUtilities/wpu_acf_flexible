@@ -18,7 +18,8 @@ $model = array(
             'sub_fields' => array(
                 'image' => array(
                     'label' => __('Image', 'wpu_acf_flexible'),
-                    'type' => 'image'
+                    'type' => 'image',
+                    'required' => true
                 ),
                 'url' => array(
                     'label' => __('Link', 'wpu_acf_flexible'),
