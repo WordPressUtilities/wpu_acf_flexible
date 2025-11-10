@@ -160,7 +160,10 @@ function get_wpu_acf_responsive_image($field_value, $classname = '', $args = arr
     if (isset($field_value['image_mobile']) && $field_value['image_mobile']):
         $html .= '<source media="(max-width: ' . $mobile_max . 'px)" srcset="' . get_wpu_acf_image_src($field_value['image_mobile'], $args['mobile_size']) . '">';
     endif;
-    $html .= get_wpu_acf_image($field_value['image'], $args['desktop_size']);
+    $html .= get_wpu_acf_image($field_value['image'], $args['desktop_size'], array(
+        'loading' => 'lazy',
+        'has_srcset' => apply_filters('get_wpu_acf_responsive_image__has_srcset', false)
+    ));
     $html .= '</picture>';
     return $html;
 }
