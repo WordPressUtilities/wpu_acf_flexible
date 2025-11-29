@@ -242,3 +242,23 @@ function wpuacfflex_is_external_link($url) {
 function wpuacfflex_get_row_id() {
     return 'wpuacfflex_id_' . get_row_index() . '_' . get_row_layout();
 }
+
+/* ----------------------------------------------------------
+  WP-CLI : Display ACF Flexible Content layouts & fields HTML
+---------------------------------------------------------- */
+
+if (defined('WP_CLI')) {
+    /* Layout */
+    WP_CLI::add_command('wpu-acf-flex-get-layout-content', function ($args, $assoc_args) {
+        do_action('wpu_acf_flexible_generate_layout_content', $args[0]);
+    }, array(
+        'when' => 'wp_loaded'
+    ));
+
+    /* Fields */
+    WP_CLI::add_command('wpu-acf-flex-get-field-content', function ($args, $assoc_args) {
+        do_action('wpu_acf_flexible_generate_field_content', $args[0]);
+    }, array(
+        'when' => 'wp_loaded'
+    ));
+}

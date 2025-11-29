@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.7.2
+Version: 3.8.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.7.2';
+    private $plugin_version = '3.8.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -221,6 +221,12 @@ EOT;
         add_filter('acfe/flexible/secondary_actions', array($this,
             'secondary_actions'
         ), 20, 2);
+        add_action('wpu_acf_flexible_generate_layout_content', array($this,
+            'generate_layout_content_html_action'
+        ), 10, 2);
+        add_action('wpu_acf_flexible_generate_field_content', array($this,
+            'generate_field_content_html_action'
+        ), 10, 4);
     }
 
     public function plugins_loaded() {
@@ -1002,35 +1008,14 @@ EOT;
                     if (isset($layout['wpuacf_model']) && !isset($layout['override_view'])) {
                         continue;
                     }
-                    $vars = '';
-                    $values = '';
-                    if (!isset($layout['sub_fields']) || !is_array($layout['sub_fields'])) {
-                        continue;
-                    }
-                    $nb_subfields = count($layout['sub_fields']);
-                    foreach ($layout['sub_fields'] as $id => $sub_field) {
-                        $vars .= $this->get_var_content_field($id, $sub_field, 2, $nb_subfields);
-                        $values .= $this->get_value_content_field($id, $sub_field, 2, $nb_subfields);
-                    }
-                    $this->set_file_content($layout_id, $vars, $values, $content);
+                    $layout_content = $this->generate_layout_content($layout_id, $layout);
+                    $this->set_file_content($layout_id, $layout_content['vars'], $layout_content['values'], $content);
                 }
             }
 
             if (!empty($fields)) {
-                $vars = '';
-                $values = '';
-                foreach ($fields as $id => $field) {
-                    if (isset($field['type']) && $field['type'] == 'group') {
-                        foreach ($field['sub_fields'] as $child_id => $sub_field) {
-                            $vars .= $this->get_var_content_field($id . '_' . $child_id, $sub_field, 1);
-                            $values .= $this->get_value_content_field($id . '_' . $child_id, $sub_field, 1);
-                        }
-                    } else {
-                        $vars .= $this->get_var_content_field($id, $field, 1);
-                        $values .= $this->get_value_content_field($id, $field, 1);
-                    }
-                }
-                $this->set_file_content($content_id, $vars, $values, $content);
+                $fields_content = $this->generate_fields_content($fields);
+                $this->set_file_content($content_id, $fields_content['vars'], $fields_content['values'], $content);
             }
         }
 
@@ -1092,6 +1077,69 @@ EOT;
         return $group;
     }
 
+    function generate_layout_content_html_action($layout_id) {
+        foreach ($this->contents as $content_id => $content) {
+            if (!isset($content['layouts'], $content['layouts'][$layout_id])) {
+                continue;
+            }
+            $layout_content = $this->generate_layout_content($layout_id, $content['layouts'][$layout_id]);
+            echo $this->prepare_file_content($layout_id, $layout_content['vars'], $layout_content['values'], false);
+            die;
+        }
+    }
+
+    function generate_layout_content($layout_id, $layout) {
+        $vars = '';
+        $values = '';
+        if (!isset($layout['sub_fields']) || !is_array($layout['sub_fields'])) {
+            return false;
+        }
+        $nb_subfields = count($layout['sub_fields']);
+        foreach ($layout['sub_fields'] as $id => $sub_field) {
+            $vars .= $this->get_var_content_field($id, $sub_field, 2, $nb_subfields);
+            $values .= $this->get_value_content_field($id, $sub_field, 2, $nb_subfields);
+        }
+
+        return array(
+            'vars' => $vars,
+            'values' => $values
+        );
+    }
+
+    function generate_field_content_html_action($group_id) {
+        foreach ($this->contents as $content_id => $content) {
+            if($content_id != $group_id) {
+                continue;
+            }
+            if (!isset($content['fields'])) {
+                continue;
+            }
+            $field_content = $this->generate_fields_content($content['fields']);
+            echo $this->prepare_file_content($group_id, $field_content['vars'], $field_content['values'], false);
+            die;
+        }
+    }
+
+    function generate_fields_content($fields) {
+        $vars = '';
+        $values = '';
+        foreach ($fields as $id => $field) {
+            if (isset($field['type']) && $field['type'] == 'group') {
+                foreach ($field['sub_fields'] as $child_id => $sub_field) {
+                    $vars .= $this->get_var_content_field($id . '_' . $child_id, $sub_field, 1);
+                    $values .= $this->get_value_content_field($id . '_' . $child_id, $sub_field, 1);
+                }
+            } else {
+                $vars .= $this->get_var_content_field($id, $field, 1);
+                $values .= $this->get_value_content_field($id, $field, 1);
+            }
+        }
+        return array(
+            'vars' => $vars,
+            'values' => $values
+        );
+    }
+
     public function get_layout_model($id, $layout_id) {
         $model_file = $this->plugin_dir_path . 'blocks/' . $id . '/model.php';
         if (!file_exists($model_file)) {
@@ -1107,7 +1155,7 @@ EOT;
         return false;
     }
 
-    public function set_file_content($layout_id, $vars, $values, $group) {
+    public function prepare_file_content($layout_id, $vars, $values, $group) {
         $content = str_replace('###varsblockid###', $vars, $this->default_content);
         $content = str_replace('###valuesblockid###', $values, $content);
         $content = str_replace('###testblockid###', $layout_id, $content);
@@ -1116,6 +1164,12 @@ EOT;
         /* Remove empty */
         $content = preg_replace('/<\?php(\s\n)\?>/isU', '', $content);
         $content = preg_replace('/(?:(?:\r\n|\r|\n)){2}/s', "\n", $content);
+        return $content;
+    }
+
+    public function set_file_content($layout_id, $vars, $values, $group) {
+        $content = $this->prepare_file_content($layout_id, $vars, $values, $group);
+
         $file_path = $this->get_controller_path($group);
 
         if (!is_dir($file_path)) {
