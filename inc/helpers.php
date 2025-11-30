@@ -44,7 +44,6 @@ function get_wpu_acf__content($field_name = 'content') {
     return '';
 }
 
-
 /* ----------------------------------------------------------
   Loop
 ---------------------------------------------------------- */
@@ -250,6 +249,9 @@ function wpuacfflex_get_row_id() {
 if (defined('WP_CLI')) {
     /* Layout */
     WP_CLI::add_command('wpu-acf-flex-get-layout-content', function ($args, $assoc_args) {
+        if (empty($args[0])) {
+            WP_CLI::error('Please provide a layout name as first argument.');
+        }
         do_action('wpu_acf_flexible_generate_layout_content', $args[0]);
     }, array(
         'when' => 'wp_loaded'
@@ -257,7 +259,10 @@ if (defined('WP_CLI')) {
 
     /* Fields */
     WP_CLI::add_command('wpu-acf-flex-get-field-content', function ($args, $assoc_args) {
-        do_action('wpu_acf_flexible_generate_field_content', $args[0]);
+        if (empty($args[0])) {
+            WP_CLI::error('Please provide a field name as first argument.');
+        }
+        do_action('wpu_acf_flexible_generate_field_content', $args[0], isset($args[1]) ? $args[1] : null);
     }, array(
         'when' => 'wp_loaded'
     ));

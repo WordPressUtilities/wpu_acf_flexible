@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.8.0
+Version: 3.8.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.8.0';
+    private $plugin_version = '3.8.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -226,7 +226,7 @@ EOT;
         ), 10, 2);
         add_action('wpu_acf_flexible_generate_field_content', array($this,
             'generate_field_content_html_action'
-        ), 10, 4);
+        ), 10, 2);
     }
 
     public function plugins_loaded() {
@@ -1077,7 +1077,8 @@ EOT;
         return $group;
     }
 
-    function generate_layout_content_html_action($layout_id) {
+    public function generate_layout_content_html_action($layout_id) {
+        $layouts_found = array();
         foreach ($this->contents as $content_id => $content) {
             if (!isset($content['layouts'], $content['layouts'][$layout_id])) {
                 continue;
@@ -1086,9 +1087,11 @@ EOT;
             echo $this->prepare_file_content($layout_id, $layout_content['vars'], $layout_content['values'], false);
             die;
         }
+        echo __('Layout not found', 'wpu_acf_flexible') . "\n";
+        die;
     }
 
-    function generate_layout_content($layout_id, $layout) {
+    public function generate_layout_content($layout_id, $layout) {
         $vars = '';
         $values = '';
         if (!isset($layout['sub_fields']) || !is_array($layout['sub_fields'])) {
@@ -1106,21 +1109,37 @@ EOT;
         );
     }
 
-    function generate_field_content_html_action($group_id) {
+    public function generate_field_content_html_action($group_id, $sub_field_id = false) {
+        $groups_with_fields = array();
         foreach ($this->contents as $content_id => $content) {
-            if($content_id != $group_id) {
+            if (!isset($content['fields']) || empty($content['fields'])) {
                 continue;
             }
-            if (!isset($content['fields'])) {
+            $groups_with_fields[] = $content_id;
+            if ($content_id != $group_id) {
                 continue;
             }
-            $field_content = $this->generate_fields_content($content['fields']);
+            $fields_to_process = $content['fields'];
+            if ($sub_field_id) {
+                if (!isset($content['fields'][$sub_field_id])) {
+                    $sub_fields = array_keys($content['fields']);
+                    echo sprintf(__('Sub-field not found in list : %s', 'wpu_acf_flexible'), implode(', ', $sub_fields)) . "\n";
+                    die;
+                }
+                $fields_to_process = array(
+                    $sub_field_id => $content['fields'][$sub_field_id]
+                );
+            }
+            $field_content = $this->generate_fields_content($fields_to_process);
             echo $this->prepare_file_content($group_id, $field_content['vars'], $field_content['values'], false);
             die;
         }
+        $sep = "\n - ";
+        printf(__("Group not found in list :%s", 'wpu_acf_flexible') . "\n", $sep . implode($sep, $groups_with_fields));
+        die;
     }
 
-    function generate_fields_content($fields) {
+    public function generate_fields_content($fields) {
         $vars = '';
         $values = '';
         foreach ($fields as $id => $field) {
