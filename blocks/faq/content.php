@@ -25,9 +25,9 @@ while (have_rows('questions')):
     $faq_id = sanitize_title('faq-' . $answer) . uniqid();
     $question = get_sub_field('question');
     $attributes = apply_filters('wpu_acf_flexible__content__faq__item_attributes', '', get_row());
-    echo '<dl ' . $attributes . ' class="faq-list__item wpuacfflexfaq-list__item" itemscope="" itemtype="https://schema.org/Question" data-is-open="false">';
+    echo '<dl ' . $attributes . ' class="faq-list__item wpuacfflexfaq-list__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" data-is-open="false">';
     echo '<dt itemprop="name" class="h3 field-question"><button aria-expanded="false" aria-controls="' . esc_attr($faq_id) . '"><span>' . $question . '</span></button></dt>';
-    echo '<dd id="' . esc_attr($faq_id) . '" class="block-answer" itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">';
+    echo '<dd id="' . esc_attr($faq_id) . '" class="block-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">';
     echo '<div class="field-answer cssc-content" itemprop="text">' . trim(wpautop($answer)) . '</div>';
     echo '</dd>';
     echo '</dl>';

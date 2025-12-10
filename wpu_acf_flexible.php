@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.8.3
+Version: 3.9.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.8.3';
+    private $plugin_version = '3.9.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1471,7 +1471,7 @@ EOT;
 
     public function set_acfe_flexible_layouts_icons($icons) {
         $toggle_title = __('Click to reduce/enlarge the layout', 'wpu_acf_flexible');
-        $icons['wpu-acf-flex-toggle'] = '<a class="acf-icon -down small" href="#" data-name="wpu-acf-flex-toggle" title="' . esc_attr($toggle_title) . '"></a>';
+        $icons['wpu-acf-flex-toggle'] = '<a class="acf-icon -down small wpu-acf-flex-toggle-icon" href="#" data-name="wpu-acf-flex-toggle" title="' . esc_attr($toggle_title) . '"></a>';
         return $icons;
     }
 

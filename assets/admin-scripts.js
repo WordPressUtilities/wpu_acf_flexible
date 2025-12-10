@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     /* Toggle visibility on layouts */
     (function() {
-        jQuery('body').on('click', '.acf-icon[data-name="wpu-acf-flex-toggle"]', function(e) {
+        jQuery('body').on('click', '.wpu-acf-flex-toggle-icon[data-name="wpu-acf-flex-toggle"]', function(e) {
             e.preventDefault();
             var $icn = jQuery(this);
             $icn.closest('.layout[data-layout]').toggleClass('wpuacf-hidden-preview');
@@ -28,12 +28,12 @@ document.addEventListener("DOMContentLoaded", function() {
         /* Reduce all layouts */
         jQuery('body').on('mousedown touchstart', '[data-acfe-flexible-control-action="wpu-acf-flex-reduce"]', function(e) {
             e.preventDefault();
-            jQuery('.acf-icon[data-name="wpu-acf-flex-toggle"].-down').click();
+            jQuery('.wpu-acf-flex-toggle-icon[data-name="wpu-acf-flex-toggle"].-down').click();
         });
         /* Expand all layouts */
         jQuery('body').on('mousedown touchstart', '[data-acfe-flexible-control-action="wpu-acf-flex-expand"]', function(e) {
             e.preventDefault();
-            jQuery('.acf-icon[data-name="wpu-acf-flex-toggle"].-up').click();
+            jQuery('.wpu-acf-flex-toggle-icon[data-name="wpu-acf-flex-toggle"].-up').click();
         });
     }());
 

@@ -86,3 +86,12 @@ a:hover .acfe-flexible-layout-thumbnail {
     background-color: #000;
     transform: translateY(-50%);
 }
+
+/* ----------------------------------------------------------
+  Toggle icon
+---------------------------------------------------------- */
+
+.wpu-acf-flex-toggle-icon {
+    width: 20px!important;
+    height: 20px!important;
+}
