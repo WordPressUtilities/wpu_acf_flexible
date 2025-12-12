@@ -95,10 +95,15 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
             $layouts_details = $this->add_field_group($id, $layout);
             $parts = array_keys($layout['fields']);
-            $metas = $this->get_layout_value($metas, $layouts_details['fields'][$parts[0]]['sub_fields'], $parts[0]);
-
+            if (isset($layouts_details['fields'][$parts[0]]['sub_fields'])) {
+                $metas = $this->get_layout_value($metas, $layouts_details['fields'][$parts[0]]['sub_fields'], $parts[0]);
+            } else {
+                foreach ($layouts_details['fields'] as $layout_field) {
+                    $field_key = isset($layout_field['name']) ? $layout_field['name'] : '';
+                    $metas = $this->get_field_value($metas, $layout_field, '_', $field_key);
+                }
+            }
         }
-
         /* Set new metas */
         $this->save_metas($this->post_id, $metas);
         if ($post_creation) {
