@@ -132,6 +132,46 @@ document.addEventListener("DOMContentLoaded", function() {
             return args;
         });
     }());
+
+
+
+    /* DYNAMIC INSTRUCTIONS */
+    (function() {
+
+        function applyDynamicInstructions(field) {
+            var $parent = field.$el.closest('[data-dynamic-instructions]');
+            var data = $parent.data('dynamic-instructions');
+
+            if (!data) {
+                return;
+            }
+
+            $parent.find('p.description').html(data[field.val()] || '');
+        }
+        acf.addAction('ready', function($el) {
+            acf.getFields({
+                type: 'select'
+            }, $el).forEach(function(field) {
+                applyDynamicInstructions(field);
+                field.$el.on('change', function() {
+                    applyDynamicInstructions(field);
+                });
+            });
+        });
+
+        acf.addAction('append', function($el) {
+            acf.getFields({
+                type: 'select'
+            }, $el).forEach(function(field) {
+                applyDynamicInstructions(field);
+                field.$el.on('change', function() {
+                    applyDynamicInstructions(field);
+                });
+            });
+        });
+
+    }());
+
 });
 
 

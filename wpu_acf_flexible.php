@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.9.1
+Version: 3.10.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.9.1';
+    private $plugin_version = '3.10.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1587,6 +1587,7 @@ $wpu_acf_flexible = new wpu_acf_flexible();
 require_once __DIR__ . '/inc/reusable-blocks.php';
 require_once __DIR__ . '/inc/locations.php';
 require_once __DIR__ . '/inc/master-generator.php';
+require_once __DIR__ . '/inc/dynamic-instructions.php';
 require_once __DIR__ . '/inc/helpers.php';
 
 /* Load fields */
