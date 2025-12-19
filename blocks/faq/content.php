@@ -5,6 +5,7 @@ if (!$questions) {
     return;
 }
 $_content_before = apply_filters('wpu_acf_flexible__content__faq__before', '');
+$_content_before_title = apply_filters('wpu_acf_flexible__content__faq__before_title', '');
 $_content_before_list = apply_filters('wpu_acf_flexible__content__faq__before_list', '');
 $_content_after = apply_filters('wpu_acf_flexible__content__faq__after', '');
 $_block_attribute = '';
@@ -16,6 +17,7 @@ $_block_attribute = apply_filters('wpu_acf_flexible__content__faq__block_attribu
 echo '<section class="' . get_wpu_acf_wrapper_classname('faq') . '">';
 echo $_content_before;
 echo '<div class="block--faq" ' . $_block_attribute . '>';
+echo $_content_before_title;
 echo get_wpu_acf_title_content();
 echo $_content_before_list;
 echo '<div class="faq-list__items">';
