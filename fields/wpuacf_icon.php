@@ -85,7 +85,6 @@ function wpuacfflex__get_icons() {
     return $icons;
 }
 
-
 /* Display an icon
 -------------------------- */
 
@@ -113,3 +112,22 @@ function get_wpu_acf_icon($icon = '', $args = array()) {
 
     return $html;
 }
+
+/* ----------------------------------------------------------
+  Shortcode
+---------------------------------------------------------- */
+
+add_shortcode('wpuacf_icon', function ($atts) {
+    $atts = shortcode_atts(array(
+        'icon' => '',
+        'classname' => '',
+        'wrapper' => false,
+        'wrapper_classname' => ''
+    ), $atts, 'wpu_icon');
+
+    return get_wpu_acf_icon($atts['icon'], array(
+        'classname' => $atts['classname'],
+        'wrapper' => filter_var($atts['wrapper'], FILTER_VALIDATE_BOOLEAN),
+        'wrapper_classname' => $atts['wrapper_classname']
+    ));
+});
