@@ -133,19 +133,17 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }());
 
-
-
     /* DYNAMIC INSTRUCTIONS */
     (function() {
-
+        if (typeof acf == "undefined") {
+            return;
+        }
         function applyDynamicInstructions(field) {
             var $parent = field.$el.closest('[data-dynamic-instructions]');
             var data = $parent.data('dynamic-instructions');
-
             if (!data) {
                 return;
             }
-
             $parent.find('p.description').html(data[field.val()] || '');
         }
         acf.addAction('ready', function($el) {
