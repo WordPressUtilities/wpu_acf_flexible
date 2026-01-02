@@ -127,6 +127,7 @@ add_filter('wpu_acf_flexible_content', function ($blocks) {
             $blocks[$block_group_id]['layouts']['wpuacf_blocks'] = array(
                 'key' => 'wpuacf_blocks_layout',
                 'wpuacf_model' => 'wpuacf_blocks',
+                'no_save_post' => true,
                 'label' => __('Reusable Blocks', 'wpu_acf_flexible'),
                 'sub_fields' => array(
                     'wpuacf_blocks' => array(

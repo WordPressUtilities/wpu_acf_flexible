@@ -2,7 +2,7 @@
 defined('ABSPATH') || die;
 $model = array(
     'label' => __('[WPUACF] Anchor', 'wpu_acf_flexible'),
-    'save_post' => false,
+    'no_save_post' => true,
     'sub_fields' => array(
         'slug' => array(
             'label' => __('Slug', 'wpu_acf_flexible'),

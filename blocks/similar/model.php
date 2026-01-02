@@ -33,6 +33,7 @@ foreach ($_post_types as $_post_type => $_data) {
 $model = array(
     'label' => __('[WPUACF] Similar', 'wpu_acf_flexible'),
     'key' => 'similar_layout',
+    'no_save_post' => true,
     'sub_fields' => array()
 );
 

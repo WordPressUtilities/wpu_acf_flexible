@@ -82,8 +82,17 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         $_layout_settings = $group_item['layouts'][$layout];
 
         /* Do not save if this layout is not allowed */
-        if ($mode == 'admin' && (isset($_layout_settings['no_save_post']) || get_sub_field('acfe_flexible_toggle'))) {
-            continue;
+        $has_no_save = false;
+        if ($mode == 'admin') {
+            if (isset($_layout_settings['no_save_post']) || get_sub_field('acfe_flexible_toggle')) {
+                continue;
+            }
+            if (isset($_layout_settings['wpuacf_model'])) {
+                $model = $wpu_acf_flexible->get_layout_model($_layout_settings['wpuacf_model'], $layout);
+                if (isset($model['no_save_post']) && $model['no_save_post']) {
+                    continue;
+                }
+            }
         }
 
         /* Load controller or template file */
