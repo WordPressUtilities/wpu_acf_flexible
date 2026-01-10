@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.11.0
+Version: 3.11.1
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.11.0';
+    private $plugin_version = '3.11.1';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1192,7 +1192,17 @@ EOT;
         $file_path = $this->get_controller_path($group);
 
         if (!is_dir($file_path)) {
-            error_log(sprintf('The folder %s does not exist. Please create it.', $file_path));
+            $theme = wp_get_theme();
+            $excluded_themes = apply_filters('wpu_acf_flexible__excluded_themes', array(
+                'twentytwentyfour',
+                'twentytwentyfive'
+            ));
+            $theme_name = strtolower(str_replace(' ', '', $theme->get('Name')));
+            if (!in_array($theme_name, $excluded_themes) && !defined('WPU_ACF_FLEXIBLE__DISABLE_THEME_FOLDER_WARNING')) {
+                define('WPU_ACF_FLEXIBLE__DISABLE_THEME_FOLDER_WARNING', true);
+                error_log(sprintf('The folder %s does not exist in the theme %s. Please create it.', $file_path, $theme->get('Name')));
+            }
+
             return;
         }
 
