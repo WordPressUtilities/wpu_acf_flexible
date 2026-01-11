@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2025-11-30 23:08+0100\n"
+"POT-Creation-Date: 2026-01-11 21:50+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -218,6 +218,36 @@ msgstr "Hauteur de l’iFrame"
 msgid "Iframe Height (Mobile)"
 msgstr "Hauteur de l’iframe (mobile)"
 
+#: .././blocks/iframe/model.php:25
+msgid "Settings"
+msgstr "Réglages"
+
+#: .././blocks/iframe/model.php:29
+msgid "Iframe ID"
+msgstr "ID de l’Iframe"
+
+#: .././blocks/iframe/model.php:31
+msgid "Optional ID attribute for the iframe"
+msgstr "Attribut ID optionnel pour l’iframe"
+
+#: .././blocks/iframe/model.php:34
+msgid "Iframe Title"
+msgstr "Titre de l’Iframe"
+
+#: .././blocks/iframe/model.php:36
+msgid "Optional title attribute for the iframe (for accessibility)"
+msgstr "Attribut de titre optionnel pour l’iframe (pour l’accessibilité)"
+
+#: .././blocks/iframe/model.php:39
+msgid "Enable Lazy Loading"
+msgstr "Activer le chargement différé"
+
+#: .././blocks/iframe/model.php:43
+msgid "If enabled, the iframe will load only when it enters the viewport."
+msgstr ""
+"Si activé, l’iframe ne se chargera que lorsqu’il entre dans la fenêtre de "
+"vue."
+
 #: .././blocks/image-content/model.php:5
 msgid "[WPUACF] Image - Content"
 msgstr "[WPUACF] Image - Contenu"
@@ -270,7 +300,7 @@ msgstr "Label"
 msgid "[WPUACF] Posts"
 msgstr "[WPUACF] Articles"
 
-#: .././blocks/posts/model.php:17 .././blocks/similar/model.php:41
+#: .././blocks/posts/model.php:17 .././blocks/similar/model.php:42
 msgid "Type"
 msgstr "Type"
 
@@ -355,7 +385,7 @@ msgstr "%s similaires"
 msgid "[WPUACF] Similar"
 msgstr "[WPUACF] Similaires"
 
-#: .././blocks/similar/model.php:52
+#: .././blocks/similar/model.php:53
 msgid "Use the default CTA and the default title if no content"
 msgstr ""
 "Utiliser le CTA par défaut et le titre par défaut s’il n’y a pas de contenu"
@@ -534,7 +564,7 @@ msgstr "Le champ « %s » est obligatoire"
 msgid "The field “%s” should be an email"
 msgstr "Le champ « %s » doit être un email"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:674
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:688
 #, php-format
 msgid ""
 "The plugin <b>%s</b> depends on the following plugins. Please install and "
@@ -543,7 +573,7 @@ msgstr ""
 "Le plugin <b>%s</b> dépend des plugins suivants. Veuillez les installer et "
 "les activer :"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:680
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:694
 #, php-format
 msgid ""
 "The plugin <b>%s</b> depends on the <b>%s</b> plugin. Please install and "
@@ -561,11 +591,11 @@ msgid "Home"
 msgstr "Accueil"
 
 #: .././inc/reusable-blocks.php:20 .././inc/reusable-blocks.php:23
-#: .././inc/reusable-blocks.php:130
+#: .././inc/reusable-blocks.php:131
 msgid "Reusable Blocks"
 msgstr "Blocs modèles"
 
-#: .././inc/reusable-blocks.php:24 .././inc/reusable-blocks.php:134
+#: .././inc/reusable-blocks.php:24 .././inc/reusable-blocks.php:135
 msgid "Reusable Block"
 msgstr "Bloc modèle"
 
@@ -601,8 +631,8 @@ msgstr "Aucun modèle de bloc n’a été trouvé dans la corbeille"
 msgid "Block usage"
 msgstr "Utilisation du bloc"
 
-#: .././inc/reusable-blocks.php:90 .././inc/reusable-blocks.php:217
-#: .././inc/reusable-blocks.php:219 .././inc/reusable-blocks.php:262
+#: .././inc/reusable-blocks.php:90 .././inc/reusable-blocks.php:218
+#: .././inc/reusable-blocks.php:220 .././inc/reusable-blocks.php:263
 msgid "Blocs areas"
 msgstr "Zones de blocs"
 
@@ -610,28 +640,28 @@ msgstr "Zones de blocs"
 msgid "This block is not used yet."
 msgstr "Ce bloc n’est pas encore utilisé."
 
-#: .././inc/reusable-blocks.php:135
+#: .././inc/reusable-blocks.php:136
 #, php-format
 msgid "View all <a %s>reusable blocks</a>"
 msgstr "Voir tous les <a %s>modèles de blocs</a>"
 
-#: .././inc/reusable-blocks.php:167 .././inc/reusable-blocks.php:178
+#: .././inc/reusable-blocks.php:168 .././inc/reusable-blocks.php:179
 msgid "All pages"
 msgstr "Toutes les pages"
 
-#: .././inc/reusable-blocks.php:226
+#: .././inc/reusable-blocks.php:227
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: .././inc/reusable-blocks.php:227
+#: .././inc/reusable-blocks.php:228
 msgid "Areas saved"
 msgstr "Zones sauvegardées"
 
-#: .././inc/reusable-blocks.php:245
+#: .././inc/reusable-blocks.php:246
 msgid "Info"
 msgstr "Info"
 
-#: .././inc/reusable-blocks.php:247
+#: .././inc/reusable-blocks.php:248
 msgid "Choose which reusable blocs will be displayed on these pages"
 msgstr "Choisissez les blocs modèles qui seront affichés sur ces pages"
 
@@ -688,27 +718,27 @@ msgstr "Sous-champ non trouvé dans la liste : %s"
 msgid "Group not found in list :%s"
 msgstr "Groupe non trouvé dans la liste :%s"
 
-#: .././wpu_acf_flexible.php:1392
+#: .././wpu_acf_flexible.php:1402
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1400
+#: .././wpu_acf_flexible.php:1410
 msgid "This field is required to publish"
 msgstr "Ce champ est obligatoire pour publier"
 
-#: .././wpu_acf_flexible.php:1439
+#: .././wpu_acf_flexible.php:1449
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1440
+#: .././wpu_acf_flexible.php:1450
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1473
+#: .././wpu_acf_flexible.php:1483
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1532
+#: .././wpu_acf_flexible.php:1542
 msgid "Add a block"
 msgstr "Ajouter un bloc"
 
