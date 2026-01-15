@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.12.0
+Version: 3.13.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.12.0';
+    private $plugin_version = '3.13.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -283,6 +283,9 @@ EOT;
         if (!function_exists('acf_add_local_field_group')) {
             return;
         }
+
+        add_filter('wpu_acf_flexible_content', array($this, 'override_flexible_content_organization'), 9999, 1);
+
         $this->base_field = apply_filters('wpu_acf_flexible__base_field', $this->base_field);
         $this->field_types = $this->get_custom_field_types();
         $this->contents = apply_filters('wpu_acf_flexible_content', array());
@@ -295,6 +298,37 @@ EOT;
             add_filter('wpu_acf_flexible__admin_css', array(&$this, 'disable_front_css'), 10, 1);
             add_filter('wpu_acf_flexible__front_css', array(&$this, 'disable_front_css'), 10, 1);
         }
+    }
+
+
+    /**
+     * Recursive function to override flexible content organization
+     * Handle columns by exploding sub_fields
+     *
+     */
+    function override_flexible_content_organization($contents) {
+        $new_contents = array();
+
+        foreach ($contents as $key => $content) {
+
+            /* Recursive call */
+            if (is_array($content)) {
+                $content = $this->override_custom_columns($content, $key);
+                $content = $this->override_flexible_content_organization($content);
+            }
+
+            /* The items from this array should be exploded */
+            if(is_array($content) && isset($content['_wpuacf_marker_explode_items'])){
+                unset($content['_wpuacf_marker_explode_items']);
+                foreach($content as $subkey => $subcontent){
+                    $new_contents[$subkey] = $subcontent;
+                }
+            }
+            else {
+                $new_contents[$key] = $content;
+            }
+        }
+        return $new_contents;
     }
 
     public function admin_assets($hook_details) {
@@ -461,6 +495,36 @@ EOT;
         }
 
         return $fields_types;
+    }
+
+    /**
+     * Wrap some sub_fields using ACF Columns
+     */
+    public function override_custom_columns($contents = array(), $parent_key = '') {
+
+        if (!is_array($contents) || !isset($contents['type'], $contents['sub_fields']) || $contents['type'] != 'wpuacf_columns') {
+            return $contents;
+        }
+
+        /* Count columns */
+        $nb_columns = count($contents['sub_fields']);
+        $column_width = floor(100 / $nb_columns);
+
+        /* Build new array */
+        $new_contents = array();
+        foreach ($contents['sub_fields'] as $column_id => $column) {
+            $new_contents[$parent_key . '_col' . $column_id] = 'wpuacf_' . $column_width . 'p';
+            $new_contents[$column_id] = $column;
+        }
+
+        /* Append clearfix */
+        $new_contents[$parent_key . '_colfinal'] = 'wpuacf_100p';
+
+        /* The items from this array should be exploded */
+        $new_contents['_wpuacf_marker_explode_items'] = true;
+
+        return $new_contents;
+
     }
 
     public function add_toolbars($toolbars) {
