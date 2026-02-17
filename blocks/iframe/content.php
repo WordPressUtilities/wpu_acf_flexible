@@ -24,11 +24,8 @@ if ($iframe_id) {
 $iframe_attributes = array(
     'id' => $row_id,
     'src' => esc_url($_url),
-    'width' => '100%',
-    'height' => $_height,
-    'frameborder' => '0',
     'allowTransparency' => 'true',
-    'style' => 'border: 0'
+    'style' => 'border:0;height:' . $_height . 'px;width:100%;',
 );
 if (get_sub_field('iframe_title')) {
     $iframe_attributes['title'] = get_sub_field('iframe_title');

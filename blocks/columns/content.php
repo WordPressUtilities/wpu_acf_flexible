@@ -10,6 +10,8 @@ $image_size = apply_filters('wpu_acf_flexible__content__columns__image_size', 'l
 $cta_classname_main = apply_filters('wpu_acf_flexible__content__columns__cta_main_classname', 'cta-main');
 $cta_classname_secondary = apply_filters('wpu_acf_flexible__content__columns__cta_secondary_classname', 'cta-secondary');
 $content_classname = apply_filters('wpu_acf_flexible__content__columns__content_classname', 'columns-list__item__content');
+$wrapper_tagname = apply_filters('wpu_acf_flexible__content__columns__wrapper_tagname', 'ul');
+$items_tagname = apply_filters('wpu_acf_flexible__content__columns__items_tagname', 'li');
 
 /* ----------------------------------------------------------
   Columns content
@@ -79,13 +81,13 @@ endwhile;
 ---------------------------------------------------------- */
 
 echo '<section class="centered-container cc-block--columns ' . get_wpu_acf_wrapper_classname('columns') . '"><div class="block--columns">';
-echo '<ul class="columns-list__list ' . $columns_list_classname . '">';
+echo '<' . $wrapper_tagname . ' class="columns-list__list ' . $columns_list_classname . '">';
 foreach ($columns as $column_parts) {
-    echo '<li>';
+    echo '<' . $items_tagname . ' class="columns-list__item-wrapper">';
     echo '<div class="columns-list__item">';
     echo implode('', $column_parts);
     echo '</div>';
-    echo '</li>';
+    echo '</' . $items_tagname . '>';
 }
-echo '</ul>';
+echo '</' . $wrapper_tagname . '>';
 echo '</div></section>';
