@@ -142,7 +142,7 @@ function get_wpu_acf_figure($image, $size = 'thumbnail', $attr = array()) {
 }
 
 function get_wpu_acf_responsive_image($field_value, $classname = '', $args = array()) {
-    if (!is_array($field_value) || !isset($field_value['image'])) {
+    if (!is_array($field_value) || !isset($field_value['image']) || !$field_value['image']) {
         return '';
     }
     if (!is_array($args)) {
