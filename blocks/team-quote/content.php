@@ -14,6 +14,7 @@ if (!$_quote) {
 }
 $_content_before = apply_filters('wpu_acf_flexible__content__team_quote__before', '');
 $_content_after = apply_filters('wpu_acf_flexible__content__team_quote__after', '');
+$_content_after_author = apply_filters('wpu_acf_flexible__content__team_quote__after_author', '');
 echo '<div class="' . get_wpu_acf_wrapper_classname('team-quote') . '">';
 echo $_content_before;
 echo '<div class="block--team-quote">';
@@ -34,6 +35,7 @@ if ($_author):
     }
     echo '</footer>';
 endif;
+echo $_content_after_author;
 echo '</div>';
 echo '</blockquote>';
 echo '</div>';

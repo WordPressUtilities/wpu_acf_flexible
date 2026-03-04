@@ -121,7 +121,12 @@ function get_wpu_acf_flexible_content($group = 'blocks', $mode = 'front', $wpuac
         } else {
             /* Include default model if available */
             if (isset($_layout_settings['wpuacf_model'])) {
-                include $wpu_acf_flexible->plugin_dir_path . 'blocks/' . $_layout_settings['wpuacf_model'] . '/content.php';
+                $file = $wpu_acf_flexible->plugin_dir_path . 'blocks/' . $_layout_settings['wpuacf_model'] . '/content.php';
+                if (file_exists($file)) {
+                    include $file;
+                } else {
+                    error_log('WPU ACF Flexible: WPU ACF Model "' . $_layout_settings['wpuacf_model'] . '" does not have a template file (expected at ' . $file . ')');
+                }
             }
         }
 

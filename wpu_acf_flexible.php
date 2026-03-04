@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.13.4
+Version: 3.13.5
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.13.4';
+    private $plugin_version = '3.13.5';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -649,6 +649,10 @@ EOT;
             } else {
                 if (isset($field['wpuacf_model'])) {
                     $tpl_file = $this->plugin_dir_path . 'blocks/' . $field['wpuacf_model'] . '/content.php';
+                    if(!file_exists($tpl_file)){
+                        error_log('WPU ACF Flexible: template file not found for model ' . $field['wpuacf_model'] . ' (expected at ' . $tpl_file . ')');
+                        $tpl_file = false;
+                    }
                 }
             }
 
