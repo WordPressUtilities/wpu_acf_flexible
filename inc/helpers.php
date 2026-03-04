@@ -104,6 +104,59 @@ function wpuacfflex_template_get_layout_css($layout_id, $layout, $css_rule_prefi
 }
 
 /* ----------------------------------------------------------
+  Download : Files
+---------------------------------------------------------- */
+
+function wpuacfflex_downloads_parse_files($files) {
+    if (!is_array($files)) {
+        return array();
+    }
+    $_files = array();
+    foreach ($files as $_file) {
+        $_url = false;
+        $_label = 'link';
+        $_target = '';
+        $_size = '';
+        $_download = false;
+        $_extension = false;
+
+        /* Get URL */
+        if (!empty($_file['url'])) {
+            $_url = $_file['url'];
+            $_target = '_blank';
+        }
+        if (is_numeric($_file['file'])) {
+            $_download = true;
+            $_url = wp_get_attachment_url($_file['file']);
+            $_label = pathinfo($_url, PATHINFO_BASENAME);
+            $_extension = strtolower(pathinfo($_url, PATHINFO_EXTENSION));
+            $file_obj = get_attached_file($_file['file']);
+            if (file_exists($file_obj)) {
+                $_size = wpuacfflex_human_filesize(filesize($file_obj), 1);
+            }
+        }
+        if (!$_url) {
+            continue;
+        }
+
+        /* Get label */
+        if (!empty($_file['filename'])) {
+            $_label = $_file['filename'];
+        }
+
+        $_files[] = array(
+            'url' => esc_url($_url),
+            'size' => $_size,
+            'target' => $_target,
+            'title' => strip_tags($_label),
+            'download' => $_download,
+            'extension' => strip_tags($_extension)
+        );
+    }
+    return $_files;
+}
+
+/* ----------------------------------------------------------
   File size
 ---------------------------------------------------------- */
 
