@@ -313,6 +313,20 @@ function wpuacfflex_get_master_header_group() {
 }
 
 /* ----------------------------------------------------------
+  Get fallback title
+---------------------------------------------------------- */
+
+function wpuacfflex_master_header_get_fallback_title() {
+    if (is_post_type_archive()) {
+        return post_type_archive_title('', false);
+    }
+    if (is_tax() || is_category() || is_tag()) {
+        return single_term_title('', false);
+    }
+    return get_the_title();
+}
+
+/* ----------------------------------------------------------
   WP-CLI : Display ACF Flexible Content layouts & fields HTML
 ---------------------------------------------------------- */
 
