@@ -296,6 +296,23 @@ function wpuacfflex_get_row_id() {
 }
 
 /* ----------------------------------------------------------
+  Get field group
+---------------------------------------------------------- */
+
+function wpuacfflex_get_master_header_group() {
+    if (is_post_type_archive()) {
+        return get_post_type() . '_options';
+    }
+    if (is_tax() || is_category() || is_tag()) {
+        $queried_object = get_queried_object();
+        if (isset($queried_object->taxonomy)) {
+            return $queried_object->taxonomy . '_' . $queried_object->term_id;
+        }
+    }
+    return get_the_ID();
+}
+
+/* ----------------------------------------------------------
   WP-CLI : Display ACF Flexible Content layouts & fields HTML
 ---------------------------------------------------------- */
 
