@@ -36,6 +36,8 @@ function wpu_acf_flexible_similar_get_default_values($type = 'post') {
         unset($query['posts_per_page']);
     }
 
+    $query = apply_filters('wpu_acf_flexible_similar_default_query', $query, $type);
+
     $return['query'] = $query;
     $return['button'] = array(
         'url' => $return['button_url'],
@@ -84,5 +86,6 @@ function wpu_acf_flexible_similar_get_items($type, $post_ids = array()) {
             'orderby' => 'post__in'
         );
     }
+    $similar_q = apply_filters('wpu_acf_flexible_similar_query', $similar_q, $type, $post_ids);
     return get_posts($similar_q);
 }
