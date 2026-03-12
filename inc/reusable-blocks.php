@@ -157,32 +157,34 @@ function wpuacfflexible_reusableblocks_get_areas() {
         $areas = array();
     }
 
-    if (function_exists('pll_languages_list')) {
-        $languages = pll_languages_list();
-        foreach ($languages as $lang) {
-            $area_id = 'all_pages__' . $lang;
-            if (isset($areas[$area_id])) {
-                continue;
-            }
-            $areas[$area_id] = array(
-                'label' => '[' . strtoupper($lang) . '] ' . __('All pages', 'wpu_acf_flexible'),
-                'current_lang' => $lang,
-                'display_conditions' => function ($args) {
-                    return (pll_current_language() == $args['current_lang']);
-                }
-            );
+    /* Default */
+    if (!isset($areas['all_pages'])) {
+        $areas['all_pages'] = array(
+            'label' => __('All pages', 'wpu_acf_flexible'),
+            'all_languages' => true,
+            'display_conditions' => '__return_true'
+        );
+    }
 
-        }
-    } else {
-        if (!isset($areas['all_pages'])) {
-            $areas['all_pages'] = array(
-                'label' => __('All pages', 'wpu_acf_flexible'),
-                'display_conditions' => function ($args) {
-                    return true;
+    $new_areas = array();
+    $languages = function_exists('pll_languages_list') ? pll_languages_list() : array();
+    foreach ($areas as $id => $area) {
+        if (!empty($languages) && isset($area['all_languages']) && $area['all_languages']) {
+            foreach ($languages as $lang) {
+                $label_prefix = '[' . strtoupper($lang) . '] ';
+                $new_area = $area;
+                $new_area['current_lang'] = $lang;
+                if (isset($area['label'])) {
+                    $new_area['label'] = $label_prefix . $area['label'];
                 }
-            );
+                $new_areas[$id . '__' . $lang] = $new_area;
+            }
+        } else {
+            $new_areas[$id] = $area;
         }
     }
+
+    $areas = $new_areas;
 
     /* Ensure everything is correct */
     foreach ($areas as $id => $area) {
@@ -227,6 +229,14 @@ add_action('init', function () {
         'update_button' => __('Update', 'wpu_acf_flexible'),
         'updated_message' => __('Areas saved', 'wpu_acf_flexible')
     ));
+
+    /* Disable translation for option page */
+    add_filter('acf/settings/current_language', function ($language) {
+        if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'wpuacfflexblocks_reusableoptions') {
+            return false;
+        }
+        return $language;
+    });
 });
 /*
 -------------------------- */
@@ -290,6 +300,11 @@ add_action('wp_footer', function () {
         }
         if (!isset($area['display_conditions']) || !$area['display_conditions']($area)) {
             continue;
+        }
+        if (isset($area['current_lang']) && function_exists('pll_current_language')) {
+            if ((pll_current_language() != $area['current_lang'])) {
+                continue;
+            }
         }
         echo wpuacfflexible_reusableblocks__get_content($new_post);
     }
