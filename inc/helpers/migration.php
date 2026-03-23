@@ -39,15 +39,12 @@ function wpu_acf_flex__migrate_content_to_blocks($post_id, $group = 'content-blo
             update_field($group, '');
 
             /* Load each blocks */
-            $layouts = array();
             foreach ($blocks as $i => $block) {
-                $layouts[] = $block['layout'];
-                update_post_meta($post_id, $group . '_' . $i . '_content', $blocks[$i]['value']);
+                add_row($group, [
+                    'acf_fc_layout' => $blocks[$i]['layout'],
+                    'content' => $blocks[$i]['value']
+                ], 1);
             }
-
-            /* Save layout */
-            update_post_meta($post_id, $group, $layouts);
-            update_post_meta($post_id, '_' . $group, 'field_' . md5($group));
 
             do_action('wpu_acf_flex__migrate_content_to_blocks__after', $post_id, $group, $blocks);
             $migration_done = true;
