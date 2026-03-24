@@ -4,7 +4,7 @@ namespace wpu_acf_flexible;
 /*
 Class Name: WPU Base Toolbox
 Description: Cool helpers for WordPress Plugins
-Version: 0.22.0
+Version: 0.23.0
 Class URI: https://github.com/WordPressUtilities/wpubaseplugin
 Author: Darklg
 Author URI: https://darklg.me/
@@ -15,11 +15,12 @@ License URI: https://opensource.org/licenses/MIT
 defined('ABSPATH') || die;
 
 class WPUBaseToolbox {
-    private $plugin_version = '0.22.0';
+    private $plugin_version = '0.23.0';
     private $args = array();
     private $missing_plugins = array();
     private $default_module_args = array(
         'need_form_js' => true,
+        'need_table_js' => false,
         'plugin_name' => 'WPU Base Toolbox'
     );
 
@@ -28,10 +29,18 @@ class WPUBaseToolbox {
             $args = array();
         }
         $this->args = array_merge($this->default_module_args, $args);
-
+        add_action('admin_enqueue_scripts', array(&$this,
+            'table_scripts'
+        ));
         add_action('wp_enqueue_scripts', array(&$this,
             'form_scripts'
         ));
+    }
+
+    public function table_scripts(){
+        if ($this->args['need_table_js']) {
+            wp_enqueue_script(__NAMESPACE__ . '-wpubasetoolbox-table-sort', plugins_url('assets/table-sort.js', __FILE__), array(), $this->plugin_version);
+        }
     }
 
     public function form_scripts() {
@@ -438,14 +447,20 @@ class WPUBaseToolbox {
         /* HEAD */
         $html .= '<thead><tr>';
         foreach ($array[0] as $key => $value) {
+            $attributes = array();
             $label = $key;
             if (isset($args['colnames'][$key])) {
-                $label = $args['colnames'][$key];
+                if (!is_array($args['colnames'][$key])) {
+                    $label = $args['colnames'][$key];
+                } else {
+                    $label = isset($args['colnames'][$key]['label']) ? $args['colnames'][$key]['label'] : $key;
+                    $attributes = isset($args['colnames'][$key]['attributes']) ? $args['colnames'][$key]['attributes'] : array();
+                }
             }
             if ($args['htmlspecialchars_th']) {
                 $label = htmlspecialchars($label);
             }
-            $html .= '<th>' . $label . '</th>';
+            $html .= '<th ' . $this->array_to_html_attributes($attributes) . '>' . $label . '</th>';
         }
         $html .= '</tr></thead>';
 
@@ -831,7 +846,7 @@ class WPUBaseToolbox {
         }
 
         $role_details = apply_filters($args['role_opt'] . '__roles', $role_details);
-        $role_version = md5($args['role_id'] . $args['role_name'] . json_encode($role_details));
+        $role_version = md5($args['role_id'] . json_encode($role_details));
 
         /* Update role only if it doesn’t exist */
         if (get_option($args['role_opt']) != $role_version) {

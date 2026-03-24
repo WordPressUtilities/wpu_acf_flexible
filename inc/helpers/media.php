@@ -23,12 +23,22 @@ function get_wpu_acf_video($video_id, $args = array()) {
         $src_attr = 'data-src';
     }
 
-    $item_src = '<video';
-    foreach ($args as $k => $v) {
-        $item_src .= ' ' . $k . '="' . esc_attr($v) . '"';
+    $item_attr = '';
+    $bool_args = array('autoplay', 'loop', 'muted', 'playsinline');
+    foreach ($bool_args as $bool_arg) {
+        $arg_value = true;
+        if (isset($args[$bool_arg])) {
+            $arg_value = !!$args[$bool_arg];
+            unset($args[$bool_arg]);
+        }
+        if ($arg_value) {
+            $item_attr .= ' ' . $bool_arg;
+        }
     }
-    $item_src .= ' autoplay loop muted playsinline><source ' . $src_attr . '="' . $attachment_url . '" type="video/mp4" /></video>';
-    return $item_src;
+    foreach ($args as $k => $v) {
+        $item_attr .= ' ' . esc_attr($k) . '="' . esc_attr($v) . '"';
+    }
+    return '<video ' . $item_attr . '><source ' . $src_attr . '="' . $attachment_url . '" type="video/mp4" /></video>';
 }
 
 function get_wpu_acf_image_src($image, $size = 'thumbnail') {
