@@ -82,6 +82,21 @@ class wpu_acf_flexible__master_generator extends wpu_acf_flexible {
 
         $metas = array();
         foreach ($this->contents as $id => $layout) {
+            if (!isset($layout['location']) && isset($layout['post_types']) && is_array($layout['post_types'])) {
+                $layout['location'] = array();
+                foreach ($layout['post_types'] as $pt) {
+                    $layout['location'][] = array(
+                        array(
+                            'param' => 'post_type',
+                            'operator' => '==',
+                            'value' => $pt
+                        )
+                    );
+                }
+            }
+            if (!isset($layout['location']) || !is_array($layout['location'])) {
+                continue;
+            }
             if (!$this->_recursive_acf_match_location_groups($layout['location'], [
                 'post_id' => $this->post_id,
                 'post_type' => $post_type
