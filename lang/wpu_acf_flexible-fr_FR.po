@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2026-01-11 21:50+0100\n"
+"POT-Creation-Date: 2026-03-27 23:34+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -67,14 +67,14 @@ msgstr "Surtitre"
 #: .././blocks/logos/model.php:8 .././blocks/media/model.php:8
 #: .././blocks/posts/model.php:9 .././blocks/quote/model.php:8
 #: .././blocks/rich-table/model.php:8 .././blocks/team-quote/model.php:8
-#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:410
+#: .././blocks/video/model.php:7 .././wpu_acf_flexible.php:443
 msgid "Title"
 msgstr "Titre"
 
 #: .././blocks/columns/model.php:36 .././blocks/columns/model.php:40
 #: .././blocks/features/model.php:23 .././blocks/logos/model.php:20
 #: .././blocks/media/model.php:20 .././blocks/rich-table/model.php:59
-#: .././fields/wpuacf_responsive_image.php:28 .././wpu_acf_flexible.php:382
+#: .././fields/wpuacf_responsive_image.php:28 .././wpu_acf_flexible.php:415
 msgid "Image"
 msgstr "Image"
 
@@ -84,7 +84,7 @@ msgid "Slider"
 msgstr "Slider"
 
 #: .././blocks/columns/model.php:52 .././blocks/video/model.php:19
-#: .././fields/wpuacf_embed.php:10 .././wpu_acf_flexible.php:387
+#: .././fields/wpuacf_embed.php:10 .././wpu_acf_flexible.php:420
 msgid "Video"
 msgstr "Vidéo"
 
@@ -176,12 +176,12 @@ msgid "Close"
 msgstr "Fermer"
 
 #: .././blocks/gallery/content.php:31
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:195
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:204
 msgid "Previous"
 msgstr "Précédent"
 
 #: .././blocks/gallery/content.php:32
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:196
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:205
 msgid "Next"
 msgstr "Suivant"
 
@@ -268,7 +268,7 @@ msgstr "[WPUACF] Logos"
 msgid "Logos"
 msgstr "Logos"
 
-#: .././blocks/logos/model.php:25 .././wpu_acf_flexible.php:393
+#: .././blocks/logos/model.php:25 .././wpu_acf_flexible.php:426
 msgid "Link"
 msgstr "Lien"
 
@@ -348,7 +348,7 @@ msgstr "Lignes de table"
 msgid "Add a line"
 msgstr "Ajouter une ligne"
 
-#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:423
+#: .././blocks/rich-table/model.php:50 .././wpu_acf_flexible.php:456
 msgid "Text"
 msgstr "Texte"
 
@@ -430,7 +430,7 @@ msgstr "Utiliser la vignette de l’embed si disponible"
 msgid "Alignment"
 msgstr "Alignement"
 
-#: .././fields/wpuacf_align.php:13 .././wpu_acf_flexible.php:449
+#: .././fields/wpuacf_align.php:13 .././wpu_acf_flexible.php:482
 msgid "Left"
 msgstr "Gauche"
 
@@ -438,7 +438,7 @@ msgstr "Gauche"
 msgid "Center"
 msgstr "Centre"
 
-#: .././fields/wpuacf_align.php:15 .././wpu_acf_flexible.php:450
+#: .././fields/wpuacf_align.php:15 .././wpu_acf_flexible.php:483
 msgid "Right"
 msgstr "Droite"
 
@@ -506,6 +506,10 @@ msgstr "Afficher une icône avant le texte"
 msgid "Show an Icon after text"
 msgstr "Afficher une icône après le texte"
 
+#: .././fields/wpuacf_percent.php:10
+msgid "Percent"
+msgstr "Pourcentage"
+
 #: .././fields/wpuacf_responsive_image.php:12
 msgid "Responsive image"
 msgstr "Image Responsive"
@@ -542,29 +546,29 @@ msgstr "Lecture automatique"
 msgid "Autoplay speed"
 msgstr "Vitesse de lecture auto"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:169
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:178
 msgid "Submit"
 msgstr "Envoyer"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:244 .././wpu_acf_flexible.php:577
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:253 .././wpu_acf_flexible.php:640
 msgid "No"
 msgstr "Non"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:245 .././wpu_acf_flexible.php:577
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:254 .././wpu_acf_flexible.php:640
 msgid "Yes"
 msgstr "Oui"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:388
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:397
 #, php-format
 msgid "The field “%s” is required"
 msgstr "Le champ « %s » est obligatoire"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:393
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:402
 #, php-format
 msgid "The field “%s” should be an email"
 msgstr "Le champ « %s » doit être un email"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:688
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:715
 #, php-format
 msgid ""
 "The plugin <b>%s</b> depends on the following plugins. Please install and "
@@ -573,7 +577,7 @@ msgstr ""
 "Le plugin <b>%s</b> dépend des plugins suivants. Veuillez les installer et "
 "les activer :"
 
-#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:694
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:721
 #, php-format
 msgid ""
 "The plugin <b>%s</b> depends on the <b>%s</b> plugin. Please install and "
@@ -581,6 +585,10 @@ msgid ""
 msgstr ""
 "Le plugin <b>%s</b> dépend du plugin <b>%s</b>. Merci de l’installer et de "
 "l’activer."
+
+#: .././inc/WPUBaseToolbox/WPUBaseToolbox.php:767
+msgid "No data available."
+msgstr "Aucune donnée disponible."
 
 #: .././inc/helpers/similar.php:17
 msgid "Similar posts"
@@ -631,8 +639,8 @@ msgstr "Aucun modèle de bloc n’a été trouvé dans la corbeille"
 msgid "Block usage"
 msgstr "Utilisation du bloc"
 
-#: .././inc/reusable-blocks.php:90 .././inc/reusable-blocks.php:218
-#: .././inc/reusable-blocks.php:220 .././inc/reusable-blocks.php:263
+#: .././inc/reusable-blocks.php:90 .././inc/reusable-blocks.php:220
+#: .././inc/reusable-blocks.php:222 .././inc/reusable-blocks.php:273
 msgid "Blocs areas"
 msgstr "Zones de blocs"
 
@@ -645,23 +653,23 @@ msgstr "Ce bloc n’est pas encore utilisé."
 msgid "View all <a %s>reusable blocks</a>"
 msgstr "Voir tous les <a %s>modèles de blocs</a>"
 
-#: .././inc/reusable-blocks.php:168 .././inc/reusable-blocks.php:179
+#: .././inc/reusable-blocks.php:163
 msgid "All pages"
 msgstr "Toutes les pages"
 
-#: .././inc/reusable-blocks.php:227
+#: .././inc/reusable-blocks.php:229
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: .././inc/reusable-blocks.php:228
+#: .././inc/reusable-blocks.php:230
 msgid "Areas saved"
 msgstr "Zones sauvegardées"
 
-#: .././inc/reusable-blocks.php:246
+#: .././inc/reusable-blocks.php:256
 msgid "Info"
 msgstr "Info"
 
-#: .././inc/reusable-blocks.php:248
+#: .././inc/reusable-blocks.php:258
 msgid "Choose which reusable blocs will be displayed on these pages"
 msgstr "Choisissez les blocs modèles qui seront affichés sur ces pages"
 
@@ -669,76 +677,76 @@ msgstr "Choisissez les blocs modèles qui seront affichés sur ces pages"
 msgid "Quickly generate flexible content in ACF"
 msgstr "Générez rapidement du contenu flexible dans ACF"
 
-#: .././wpu_acf_flexible.php:388
+#: .././wpu_acf_flexible.php:421
 #, php-format
 msgid "MP4 format. Max %sMB. Rec: 1.5MB."
 msgstr "Format MP4. Max %sMo. Rec: 1.5Mo."
 
-#: .././wpu_acf_flexible.php:397
+#: .././wpu_acf_flexible.php:430
 msgid "Clickable image"
 msgstr "Image cliquable"
 
-#: .././wpu_acf_flexible.php:414
+#: .././wpu_acf_flexible.php:447
 msgid "Unique ID"
 msgstr "ID unique"
 
-#: .././wpu_acf_flexible.php:434
+#: .././wpu_acf_flexible.php:467
 msgid "Editor"
 msgstr "Éditeur"
 
-#: .././wpu_acf_flexible.php:446
+#: .././wpu_acf_flexible.php:479
 msgid "Image position"
 msgstr "Position de l'image"
 
-#: .././wpu_acf_flexible.php:532
+#: .././wpu_acf_flexible.php:595
 #, php-format
 msgid "Dimensions: min %s"
 msgstr "Dimensions: min %s"
 
-#: .././wpu_acf_flexible.php:539
+#: .././wpu_acf_flexible.php:602
 #, php-format
 msgid "Format: %s"
 msgstr "Format : %s"
 
-#: .././wpu_acf_flexible.php:961 .././wpu_acf_flexible.php:970
+#: .././wpu_acf_flexible.php:1028 .././wpu_acf_flexible.php:1037
 msgid "Add block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1090
+#: .././wpu_acf_flexible.php:1157
 msgid "Layout not found"
 msgstr "Layout non trouvé"
 
-#: .././wpu_acf_flexible.php:1126
+#: .././wpu_acf_flexible.php:1193
 #, php-format
 msgid "Sub-field not found in list : %s"
 msgstr "Sous-champ non trouvé dans la liste : %s"
 
-#: .././wpu_acf_flexible.php:1138
+#: .././wpu_acf_flexible.php:1205
 #, php-format
 msgid "Group not found in list :%s"
 msgstr "Groupe non trouvé dans la liste :%s"
 
-#: .././wpu_acf_flexible.php:1402
+#: .././wpu_acf_flexible.php:1469
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1410
+#: .././wpu_acf_flexible.php:1477
 msgid "This field is required to publish"
 msgstr "Ce champ est obligatoire pour publier"
 
-#: .././wpu_acf_flexible.php:1449
+#: .././wpu_acf_flexible.php:1516
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1450
+#: .././wpu_acf_flexible.php:1517
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1483
+#: .././wpu_acf_flexible.php:1550
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1542
+#: .././wpu_acf_flexible.php:1609
 msgid "Add a block"
 msgstr "Ajouter un bloc"
 
