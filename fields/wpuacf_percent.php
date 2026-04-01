@@ -25,6 +25,9 @@ function get_wpuacf_percent($field) {
 }
 
 function get_wpuacf_percent_fraction($field) {
+    if ($field === 0) {
+        return '0';
+    }
     if (!$field || !ctype_digit($field)) {
         return '1';
     }
