@@ -309,6 +309,9 @@ function wpuacfflex_get_master_header_group() {
             return $queried_object->taxonomy . '_' . $queried_object->term_id;
         }
     }
+    if (is_author()) {
+        return 'author_' . get_queried_object_id();
+    }
     return get_the_ID();
 }
 
@@ -323,7 +326,24 @@ function wpuacfflex_master_header_get_fallback_title() {
     if (is_tax() || is_category() || is_tag()) {
         return single_term_title('', false);
     }
+    if (is_author()) {
+        return get_the_author();
+    }
     return get_the_title();
+}
+
+/* ----------------------------------------------------------
+  Get fallback intro
+---------------------------------------------------------- */
+
+function wpuacfflex_master_header_get_fallback_description() {
+    if (is_tax() || is_category() || is_tag()) {
+        return term_description();
+    }
+    if (is_author()) {
+        return get_the_author_meta('description');
+    }
+    return '';
 }
 
 /* ----------------------------------------------------------
