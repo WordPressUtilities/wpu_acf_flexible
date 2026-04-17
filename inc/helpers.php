@@ -371,3 +371,56 @@ if (defined('WP_CLI')) {
         'when' => 'wp_loaded'
     ));
 }
+
+/* ----------------------------------------------------------
+  WP-CLI : Display posts where a specific ACF Flexible Content layout is used
+---------------------------------------------------------- */
+
+function wpuacfflex_find_layout_usage($layout_name) {
+    $group_id = apply_filters('wpu_acf_flexible__reusable_blocks_group_id', 'content-blocks');
+    $groups = apply_filters('wpu_acf_flexible_content', array());
+    if (!isset($groups[$group_id])) {
+        if (defined('WP_CLI')) {
+            WP_CLI::error('Group "' . $group_id . '" not found in registered groups.');
+        }
+        return false;
+    }
+    if (!isset($groups[$group_id]['layouts'][$layout_name])) {
+        if (defined('WP_CLI')) {
+            WP_CLI::error('Layout "' . $layout_name . '" not found in group "' . $group_id . '".');
+        }
+        return false;
+    }
+    $args = array(
+        'post_type' => 'any',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => $group_id,
+                'value' => '"' . $layout_name . '"',
+                'compare' => 'LIKE'
+            )
+        )
+    );
+    $query = new WP_Query($args);
+    return $query->posts;
+}
+
+if (defined('WP_CLI')) {
+    WP_CLI::add_command('wpu-acf-flex-find-layout', function ($args, $assoc_args) {
+        if (empty($args[0])) {
+            WP_CLI::error('Please provide a layout name as first argument.');
+        }
+        $layout_name = $args[0];
+        $posts = wpuacfflex_find_layout_usage($layout_name);
+        if (empty($posts)) {
+            WP_CLI::success('No posts found using the layout "' . $layout_name . '".');
+            return;
+        }
+        foreach ($posts as $post) {
+            WP_CLI::line('#' . $post->ID . ' - ' . get_permalink($post));
+        }
+    }, array(
+        'when' => 'wp_loaded'
+    ));
+}
