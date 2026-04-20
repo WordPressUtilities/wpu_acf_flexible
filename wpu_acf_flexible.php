@@ -284,7 +284,7 @@ EOT;
             return;
         }
 
-        if(!is_dir(get_stylesheet_directory())){
+        if (!is_dir(get_stylesheet_directory())) {
             return;
         }
 
@@ -321,13 +321,12 @@ EOT;
             }
 
             /* The items from this array should be exploded */
-            if(is_array($content) && isset($content['_wpuacf_marker_explode_items'])){
+            if (is_array($content) && isset($content['_wpuacf_marker_explode_items'])) {
                 unset($content['_wpuacf_marker_explode_items']);
-                foreach($content as $subkey => $subcontent){
+                foreach ($content as $subkey => $subcontent) {
                     $new_contents[$subkey] = $subcontent;
                 }
-            }
-            else {
+            } else {
                 $new_contents[$key] = $content;
             }
         }
@@ -653,7 +652,7 @@ EOT;
             } else {
                 if (isset($field['wpuacf_model'])) {
                     $tpl_file = $this->plugin_dir_path . 'blocks/' . $field['wpuacf_model'] . '/content.php';
-                    if(!file_exists($tpl_file)){
+                    if (!file_exists($tpl_file)) {
                         error_log('WPU ACF Flexible: template file not found for model ' . $field['wpuacf_model'] . ' (expected at ' . $tpl_file . ')');
                         $tpl_file = false;
                     }
@@ -1394,16 +1393,16 @@ EOT;
         $allowed_tags = apply_filters('wpu_acf_flexible__save_post_allowed_tags', '<p><br><a><strong><em><h1><h2><h3><h4><h5><ol><ul><li><img><table><tr><td><th><tbody><thead><tfoot>');
 
         /* Disable form content */
-        $content = preg_replace('/<form(.*?)>(.*?)<\/form>/isU', '', $content);
+        $content = preg_replace('/<form\b[^>]*>.*?<\/form>/is', '', $content);
 
         /* Replace content between <script> tags */
-        $content = preg_replace('/<script(.*?)>(.*?)<\/script>/isU', '', $content);
+        $content = preg_replace('/<script\b[^>]*>.*?<\/script>/is', '', $content);
 
         /* Replace content between <style> tags */
-        $content = preg_replace('/<style(.*?)>(.*?)<\/style>/isU', '', $content);
+        $content = preg_replace('/<style\b[^>]*>.*?<\/style>/is', '', $content);
 
         /* Keep only some useful tags */
-        $content = wp_strip_all_tags($content, $allowed_tags);
+        $content = strip_tags($content, $allowed_tags);
 
         /* Ensure content is correct and secure */
         $content = wp_kses_post($content);
@@ -1436,10 +1435,12 @@ EOT;
             if (!isset($blocks['save_post']) || !$blocks['save_post']) {
                 continue;
             }
-            $content_html .= $this->secure_post_content(get_wpu_acf_flexible_content($group, 'admin', array('opt_group' => $post_ID, 'save_post_mode' => true)));
+            $content_html .= ' ' . $this->secure_post_content(get_wpu_acf_flexible_content($group, 'admin', array('opt_group' => $post_ID, 'save_post_mode' => true)));
         }
 
-        $content_html .= $this->secure_post_content(apply_filters('wpu_acf_flexible__save_post_default_content_html__after', '', $post_ID));
+        $content_html .= ' ' . $this->secure_post_content(apply_filters('wpu_acf_flexible__save_post_default_content_html__after', '', $post_ID));
+
+        $content_html = trim($content_html);
 
         if (empty($content_html)) {
             return;
