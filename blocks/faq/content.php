@@ -38,7 +38,13 @@ while (have_rows('questions')):
     echo '<' . $_faq_block_settings['tag_question'] . ' ' . $attributes . ' class="faq-list__item wpuacfflexfaq-list__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" data-is-open="false">';
     echo '<' . $_faq_block_settings['tag_question_title'] . ' itemprop="name" class="h3 field-question"><button aria-expanded="false" aria-controls="' . esc_attr($faq_id) . '"><span>' . $question . '</span></button></' . $_faq_block_settings['tag_question_title'] . '>';
     echo '<' . $_faq_block_settings['tag_question_content'] . ' id="' . esc_attr($faq_id) . '" class="block-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">';
-    echo '<div class="field-answer cssc-content" itemprop="text">' . trim(wpautop($answer)) . '</div>';
+    echo apply_filters('wpu_acf_flexible__content__faq__item__before_content', '', get_row());
+    echo '<div class="field-answer cssc-content" itemprop="text">';
+    echo apply_filters('wpu_acf_flexible__content__faq__item__content_start', '', get_row());
+    echo trim(wpautop($answer));
+    echo apply_filters('wpu_acf_flexible__content__faq__item__content_end', '', get_row());
+    echo '</div>';
+    echo apply_filters('wpu_acf_flexible__content__faq__item__after_content', '', get_row());
     echo '</' . $_faq_block_settings['tag_question_content'] . '>';
     echo '</' . $_faq_block_settings['tag_question'] . '>';
 endwhile;
