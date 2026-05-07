@@ -78,6 +78,18 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
         $has_srcset = true;
     }
 
+    /* Wrapper */
+    $has_wrapper = false;
+    $wrapper_classname = 'wpuacf-image__wrapper';
+    if (isset($attr['has_wrapper'])) {
+        $has_wrapper = true;
+        unset($attr['has_wrapper']);
+    }
+    if (isset($attr['wrapper_classname'])) {
+        $wrapper_classname = $attr['wrapper_classname'];
+        unset($attr['wrapper_classname']);
+    }
+
     /* Force default alt text if needed */
     if (apply_filters('get_wpu_acf_image__force_alt', false)) {
         $alt_text = get_post_meta($image, '_wp_attachment_image_alt', true);
@@ -94,6 +106,11 @@ function get_wpu_acf_image($image, $size = 'thumbnail', $attr = array()) {
     if (!$has_srcset) {
         remove_filter('wp_calculate_image_srcset_meta', '__return_null');
     }
+
+    if ($has_wrapper) {
+        return '<div class="' . trim(esc_attr($wrapper_classname)) . '">' . $html . '</div>';
+    }
+
     return $html;
 }
 
