@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2026-05-06 19:38+0200\n"
+"POT-Creation-Date: 2026-05-08 18:41+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -12,8 +12,7 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_x:1,2c;_n:1,2;esc_attr__;esc_html__;esc_attr_e;esc_html_e\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c;_n:1,2;esc_attr__;esc_html__;esc_attr_e;esc_html_e\n"
 "X-Poedit-SearchPath-0: ../.\n"
 
 #: .././blocks/anchor/model.php:4
@@ -506,6 +505,18 @@ msgstr "Afficher une icône avant le texte"
 #: .././fields/wpuacf_iconcta.php:28
 msgid "Show an Icon after text"
 msgstr "Afficher une icône après le texte"
+
+#: .././fields/wpuacf_overlay.php:10
+msgid "Overlay"
+msgstr "Overlay"
+
+#: .././fields/wpuacf_overlay.php:15
+msgid "Overlay on background"
+msgstr "Overlay sur l'arrière-plan"
+
+#: .././fields/wpuacf_overlay.php:22
+msgid "Overlay percent"
+msgstr "Opacité de l’overlay"
 
 #: .././fields/wpuacf_percent.php:10
 msgid "Percent"
