@@ -27,7 +27,13 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
                 )
             ),
             'colc' => 'wpuacf_100p'
-        )
+        ),
+        'field_vars_callback' => function ($id, $sub_field, $level) {
+            return '';
+        },
+        'field_html_callback' => function ($id, $sub_field, $level) {
+            return '<?php echo wpuacfflex_get_overlay_style(get_sub_field(\'' . $id . '\')); ?>' . "\n";
+        }
     );
     return $types;
 }, 10, 1);
