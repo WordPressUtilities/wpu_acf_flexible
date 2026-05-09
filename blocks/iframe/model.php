@@ -41,6 +41,13 @@ $model = array(
             'ui' => 1,
             'default_value' => 0,
             'instructions' => __('If enabled, the iframe will load only when it enters the viewport.', 'wpu_acf_flexible'),
-        )
+        ),
+        'full_width_iframe' => array(
+            'label' => __('Full Width Iframe', 'wpu_acf_flexible'),
+            'type' => 'true_false',
+            'ui' => 1,
+            'default_value' => 0,
+            'instructions' => __('If enabled, the iframe will stretch to full width of its container.', 'wpu_acf_flexible'),
+        ),
     )
 );
