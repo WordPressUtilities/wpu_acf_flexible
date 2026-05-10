@@ -301,6 +301,10 @@ function wpuacfflex_get_row_id() {
 
 function wpuacfflex_get_master_header_group() {
     if (is_post_type_archive()) {
+        $obj = get_queried_object();
+        if (isset($obj->name)) {
+            return $obj->name . '_options';
+        }
         return get_post_type() . '_options';
     }
     if (is_tax() || is_category() || is_tag()) {
