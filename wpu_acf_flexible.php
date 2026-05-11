@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.14.16
+Version: 3.15.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.14.16';
+    private $plugin_version = '3.15.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -1090,6 +1090,34 @@ EOT;
         }
 
         $acf_location = array();
+
+        /* Nav items : handle multilingual locations */
+        if (isset($content['wpuacf_location__menu_location'])) {
+            $_loc = $content['wpuacf_location__menu_location'];
+            if (!is_array($_loc)) {
+                $_loc = array($_loc);
+            }
+            $languages = wpuacfflex_get_languages();
+
+            foreach ($_loc as $nav_menu_item) {
+                $acf_location[] = array(
+                    array(
+                        'param' => 'nav_menu_item',
+                        'operator' => '==',
+                        'value' => 'location/' . $nav_menu_item
+                    )
+                );
+                foreach ($languages as $key => $lang) {
+                    $acf_location[] = array(
+                        array(
+                            'param' => 'nav_menu_item',
+                            'operator' => '==',
+                            'value' => 'location/' . $nav_menu_item . '___' . $key
+                        )
+                    );
+                }
+            }
+        }
 
         /* Build post types */
         if (!empty($page_ids)) {
