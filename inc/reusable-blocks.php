@@ -74,7 +74,7 @@ add_action('add_meta_boxes', function () {
             $html .= '<ul>';
             foreach ($metas as $meta) {
                 $p = get_post($meta->ID);
-                $html .= '<li><a href="' . get_edit_post_link($meta->ID) . '">' . $p->post_title . '</a> (' . $p->post_type . ')</li>';
+                $html .= '<li><a href="' . get_edit_post_link($meta->ID) . '">' . esc_html($p->post_title) . '</a> (' . esc_html($p->post_type) . ')</li>';
             }
             $html .= '</ul>';
         }
@@ -87,10 +87,10 @@ add_action('add_meta_boxes', function () {
             }
         }
         if (!empty($areas_with_this_block)) {
-            $html .= '<h3>' . __('Blocs areas', 'wpu_acf_flexible') . '</h3>';
+            $html .= '<h3>' . __('Blocks areas', 'wpu_acf_flexible') . '</h3>';
             $html .= '<ul>';
             foreach ($areas_with_this_block as $area) {
-                $html .= '<li><a href="' . admin_url('edit.php?post_type=wpuacf_blocks&page=wpuacfflexblocks_reusableoptions') . '">' . $area . '</a></li>';
+                $html .= '<li><a href="' . admin_url('edit.php?post_type=wpuacf_blocks&page=wpuacfflexblocks_reusableoptions') . '">' . esc_html($area)  . '</a></li>';
             }
             $html .= '</ul>';
         }
@@ -217,9 +217,9 @@ add_action('init', function () {
         return;
     }
     acf_add_options_page(array(
-        'page_title' => __('Blocs areas', 'wpu_acf_flexible'),
+        'page_title' => __('Blocks areas', 'wpu_acf_flexible'),
         'menu_slug' => 'wpuacfflexblocks_reusableoptions',
-        'menu_title' => __('Blocs areas', 'wpu_acf_flexible'),
+        'menu_title' => __('Blocks areas', 'wpu_acf_flexible'),
         'capability' => 'edit_posts',
         'position' => '50',
         'parent_slug' => 'edit.php?post_type=wpuacf_blocks',
@@ -255,7 +255,7 @@ add_filter('wpu_acf_flexible_content', function ($contents) {
         'wpuacf_blocks' => array(
             'label' => __('Info', 'wpu_acf_flexible'),
             'type' => 'message',
-            'message' => __('Choose which reusable blocs will be displayed on these pages', 'wpu_acf_flexible')
+            'message' => __('Choose which reusable blocks will be displayed on these pages', 'wpu_acf_flexible')
         )
     );
     foreach ($conditional_areas as $id => $areas) {
@@ -270,7 +270,7 @@ add_filter('wpu_acf_flexible_content', function ($contents) {
 
     /* Page */
     $contents['wpuacfflexblocks_reusableoptions'] = array(
-        'name' => __('Blocs areas', 'wpu_acf_flexible'),
+        'name' => __('Blocks areas', 'wpu_acf_flexible'),
         'location' => array(
             array(
                 array(

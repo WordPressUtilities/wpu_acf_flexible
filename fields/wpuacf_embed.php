@@ -16,14 +16,22 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
                 'type' => 'oembed'
             ),
             'colb' => 'wpuacf_50p',
+            'autoplay' => array(
+                'label' => __('Autoplay when visible', 'wpu_acf_flexible'),
+                'type' => 'true_false',
+                'instructions' => __('If enabled, the video will autoplay when it becomes visible. Note that on mobile, autoplay only works if the video is muted.', 'wpu_acf_flexible')
+            ),
             'use_thumb' => array(
                 'label' => __('Use embed thumbnail if available', 'wpu_acf_flexible'),
                 'type' => 'true_false',
+                'instructions' => __('If enabled, the youtube thumbnail will be used as the cover image for a custom player.', 'wpu_acf_flexible')
             ),
             'cover_image' => array(
-                'label' => __('Default cover image', 'wpu_acf_flexible'),
-                'type' => 'image'
+                'label' => __('Cover image', 'wpu_acf_flexible'),
+                'type' => 'image',
+                'instructions' => __('If a cover image is set, it will be used as the cover for a custom player.', 'wpu_acf_flexible')
             )
+
         ),
         'field_vars_callback' => function ($id, $sub_field, $level) {
             return '$' . $id . ' = get_sub_field(\'' . $id . '\');' . "\n";
@@ -34,7 +42,8 @@ if($embed){
     echo get_wpu_acf_video_embed_image(array(
         \'video_field\' => $embed[\'embed\'],
         \'use_thumb\' => $embed[\'use_thumb\'],
-        \'image_field\' => $embed[\'cover_image\']
+        \'image_field\' => $embed[\'cover_image\'],
+        \'autoplay\' => $embed[\'autoplay\']
     ));
 }
 ?>' . "\n";
@@ -61,7 +70,8 @@ function get_wpu_acf_video_embed_image($args = array()) {
         'noimg_force_autoplay' => false,
         'use_thumb_id' => 'use_thumb',
         'only_embed' => false,
-        'only_image' => false
+        'only_image' => false,
+        'autoplay' => false
     ), $args);
 
     /* Video */
@@ -139,13 +149,17 @@ function get_wpu_acf_video_embed_image($args = array()) {
     }
 
     if (!is_admin()) {
-        if ($_image_id || $_image_embed || $args['noimg_force_autoplay']) {
+        $_has_cover = ($_image_id || $_image_embed);
+        $_autoplay = !empty($args['autoplay']);
+        if ($_has_cover || $args['noimg_force_autoplay'] || $_autoplay) {
             $_video = str_replace('app_id=', 'autoplay=1&app_id=', $_video);
             $_video = str_replace('feature=oembed', 'feature=oembed&autoplay=1', $_video);
         }
-        if (!$args['only_embed'] && ($_image_id || $_image_embed)) {
+        if (!$args['only_embed'] && ($_has_cover || $_autoplay)) {
             $_video = str_replace('src=', 'data-src=', $_video);
-            $_image = '<div class="wpuacf-video"><div class="cursor"></div><div class="cover-image">' . $_image_item . '</div>' . $_video . '</div>';
+            $_wrapper_attr = $_autoplay ? ' data-intersect-only="1"' : '';
+            $_cover_html = $_has_cover ? '<div class="cursor"></div><div class="cover-image">' . $_image_item . '</div>' : '';
+            $_image = '<div class="wpuacf-video"' . $_wrapper_attr . '>' . $_cover_html . $_video . '</div>';
         } else {
             $_image = $_video;
         }

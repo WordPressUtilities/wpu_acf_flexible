@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2026-05-09 18:41+0200\n"
+"POT-Creation-Date: 2026-05-26 21:15+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -212,7 +212,7 @@ msgstr "URL"
 
 #: .././blocks/iframe/model.php:14
 msgid "Iframe Height"
-msgstr "Hauteur de l’iFrame"
+msgstr "Hauteur de l’iframe"
 
 #: .././blocks/iframe/model.php:20
 msgid "Iframe Height (Mobile)"
@@ -262,7 +262,7 @@ msgstr ""
 msgid "[WPUACF] Image - Content"
 msgstr "[WPUACF] Image - Contenu"
 
-#: .././blocks/image/model.php:5 .././blocks/media/model.php:5
+#: .././blocks/image/model.php:5
 msgid "[WPUACF] Image"
 msgstr "[WPUACF] Image"
 
@@ -281,6 +281,10 @@ msgstr "Logos"
 #: .././blocks/logos/model.php:25 .././wpu_acf_flexible.php:429
 msgid "Link"
 msgstr "Lien"
+
+#: .././blocks/media/model.php:5
+msgid "[WPUACF] Media"
+msgstr "[WPUACF] Média"
 
 #: .././blocks/media/model.php:18
 msgid "Media type"
@@ -428,11 +432,11 @@ msgstr "Date"
 msgid "[WPUACF] Video"
 msgstr "[WPUACF] Vidéo"
 
-#: .././blocks/video/model.php:15
+#: .././blocks/video/model.php:15 .././fields/wpuacf_embed.php:30
 msgid "Cover image"
 msgstr "Image de couverture"
 
-#: .././blocks/video/model.php:24 .././fields/wpuacf_embed.php:20
+#: .././blocks/video/model.php:24 .././fields/wpuacf_embed.php:25
 msgid "Use embed thumbnail if available"
 msgstr "Utiliser la vignette de l’embed si disponible"
 
@@ -472,9 +476,33 @@ msgstr "Bas"
 msgid "Source"
 msgstr "Source"
 
-#: .././fields/wpuacf_embed.php:24
-msgid "Default cover image"
-msgstr "Image de couverture par défaut"
+#: .././fields/wpuacf_embed.php:20
+msgid "Autoplay when visible"
+msgstr "Lecture automatique quand visible"
+
+#: .././fields/wpuacf_embed.php:22
+msgid ""
+"If enabled, the video will autoplay when it becomes visible. Note that on "
+"mobile, autoplay only works if the video is muted."
+msgstr ""
+"Si cette option est activée, la vidéo se lancera automatiquement dès qu'elle "
+"apparaîtra à l'écran. Notez que sur mobile, la lecture automatique ne "
+"fonctionne que si le son de la vidéo est désactivé."
+
+#: .././fields/wpuacf_embed.php:27
+msgid ""
+"If enabled, the youtube thumbnail will be used as the cover image for a "
+"custom player."
+msgstr ""
+"Si cette option est activée, la vignette YouTube sera utilisée comme image "
+"de couverture pour un lecteur personnalisé."
+
+#: .././fields/wpuacf_embed.php:32
+msgid ""
+"If a cover image is set, it will be used as the cover for a custom player."
+msgstr ""
+"Si une image de couverture est définie, elle sera utilisée comme couverture "
+"pour un lecteur personnalisé."
 
 #: .././fields/wpuacf_gps.php:10
 msgid "GPS Coordinates"
@@ -546,15 +574,15 @@ msgstr "Visibilité responsive"
 
 #: .././fields/wpuacf_responsive_visibility.php:13
 msgid "Hide on desktop"
-msgstr "Masquer sur Ordinateur"
+msgstr "Masquer sur ordinateur"
 
 #: .././fields/wpuacf_responsive_visibility.php:14
 msgid "Hide on tablet"
-msgstr "Masquer sur Tablette"
+msgstr "Masquer sur tablette"
 
 #: .././fields/wpuacf_responsive_visibility.php:15
 msgid "Hide on mobile"
-msgstr "Masquer sur Mobile"
+msgstr "Masquer sur mobile"
 
 #: .././fields/wpuacf_slider.php:20
 msgid "Options"
@@ -681,7 +709,7 @@ msgstr "Utilisation du bloc"
 
 #: .././inc/reusable-blocks.php:90 .././inc/reusable-blocks.php:220
 #: .././inc/reusable-blocks.php:222 .././inc/reusable-blocks.php:273
-msgid "Blocs areas"
+msgid "Blocks areas"
 msgstr "Zones de blocs"
 
 #: .././inc/reusable-blocks.php:99
@@ -710,7 +738,7 @@ msgid "Info"
 msgstr "Info"
 
 #: .././inc/reusable-blocks.php:258
-msgid "Choose which reusable blocs will be displayed on these pages"
+msgid "Choose which reusable blocks will be displayed on these pages"
 msgstr "Choisissez les blocs modèles qui seront affichés sur ces pages"
 
 #: .././wpu_acf_flexible.php:272
@@ -749,46 +777,49 @@ msgid "Format: %s"
 msgstr "Format : %s"
 
 #: .././wpu_acf_flexible.php:1031 .././wpu_acf_flexible.php:1040
-msgid "Add block"
+#: .././wpu_acf_flexible.php:1642
+msgid "Add a block"
 msgstr "Ajouter un bloc"
 
-#: .././wpu_acf_flexible.php:1160
+#: .././wpu_acf_flexible.php:1188
 msgid "Layout not found"
 msgstr "Layout non trouvé"
 
-#: .././wpu_acf_flexible.php:1196
+#: .././wpu_acf_flexible.php:1224
 #, php-format
 msgid "Sub-field not found in list : %s"
 msgstr "Sous-champ non trouvé dans la liste : %s"
 
-#: .././wpu_acf_flexible.php:1208
+#: .././wpu_acf_flexible.php:1236
 #, php-format
 msgid "Group not found in list :%s"
 msgstr "Groupe non trouvé dans la liste :%s"
 
-#: .././wpu_acf_flexible.php:1474
+#: .././wpu_acf_flexible.php:1502
 msgid "HTML is invalid"
 msgstr "Le code HTML n’est pas valide"
 
-#: .././wpu_acf_flexible.php:1482
+#: .././wpu_acf_flexible.php:1510
 msgid "This field is required to publish"
 msgstr "Ce champ est obligatoire pour publier"
 
-#: .././wpu_acf_flexible.php:1521
+#: .././wpu_acf_flexible.php:1549
 msgid "Reduce all layouts"
 msgstr "Réduire toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1522
+#: .././wpu_acf_flexible.php:1550
 msgid "Expand all layouts"
 msgstr "Développer toutes les mises en page"
 
-#: .././wpu_acf_flexible.php:1555
+#: .././wpu_acf_flexible.php:1583
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
-#: .././wpu_acf_flexible.php:1614
-msgid "Add a block"
-msgstr "Ajouter un bloc"
+#~ msgid "Add block"
+#~ msgstr "Ajouter un bloc"
+
+#~ msgid "Default cover image"
+#~ msgstr "Image de couverture par défaut"
 
 #~ msgid "Field not found"
 #~ msgstr "Champ introuvable"

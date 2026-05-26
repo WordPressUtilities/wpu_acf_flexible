@@ -59,7 +59,8 @@ while (have_rows('columns')): the_row();
     $column['embed'] = get_wpu_acf_video_embed_image(array(
         'video_field' => $embed['embed'],
         'use_thumb' => $embed['use_thumb'],
-        'image_field' => $embed['cover_image']
+        'image_field' => $embed['cover_image'],
+        'autoplay' => $embed['autoplay']
     ));
 
     /* CTA */

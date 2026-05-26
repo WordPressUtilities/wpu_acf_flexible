@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.15.0
+Version: 3.16.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.15.0';
+    private $plugin_version = '3.16.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -400,7 +400,7 @@ EOT;
     public function admin_head() {
         $current_admin_language = wpuacfflex_get_current_admin_language();
         if ($current_admin_language) {
-            echo '<script>window.wpuacfflex_current_admin_language="' . esc_attr($current_admin_language) . '";</script>';
+            echo '<script>window.wpuacfflex_current_admin_language="' . esc_js($current_admin_language) . '";</script>';
         }
     }
 
@@ -1028,7 +1028,7 @@ EOT;
                     'id' => ''
                 ),
                 'layouts' => array(),
-                'button_label' => __('Add block', 'wpu_acf_flexible'),
+                'button_label' => __('Add a block', 'wpu_acf_flexible'),
                 'min' => '',
                 'max' => ''
             );
@@ -1037,7 +1037,7 @@ EOT;
                 $base_field_layouts['acfe_flexible_layouts_thumbnails'] = 1;
                 $base_field_layouts['acfe_flexible_modal'] = array(
                     'acfe_flexible_modal_enabled' => '1',
-                    'acfe_flexible_modal_title' => __('Add block', 'wpu_acf_flexible'),
+                    'acfe_flexible_modal_title' => __('Add a block', 'wpu_acf_flexible'),
                     'acfe_flexible_modal_size' => 'large',
                     'acfe_flexible_modal_col' => '6',
                     'acfe_flexible_modal_categories' => true

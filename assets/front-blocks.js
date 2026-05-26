@@ -24,6 +24,24 @@ window.addEventListener("DOMContentLoaded", function() {
                 $video.setAttribute('data-is-playing', 1);
             }, 500);
         }
+
+        /* Intersect autoplay */
+        if ("IntersectionObserver" in window) {
+            var $autoplayVideos = document.querySelectorAll('.wpuacf-video[data-intersect-only="1"]');
+            var autoplayObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        set_play_event(entry.target);
+                        autoplayObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: "300px"
+            });
+            $autoplayVideos.forEach(function($v) {
+                autoplayObserver.observe($v);
+            });
+        }
     }());
 
     /* GALLERY */

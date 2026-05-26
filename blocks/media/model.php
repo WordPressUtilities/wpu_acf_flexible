@@ -2,7 +2,7 @@
 defined('ABSPATH') || die;
 
 $model = array(
-    'label' => __('[WPUACF] Image', 'wpu_acf_flexible'),
+    'label' => __('[WPUACF] Media', 'wpu_acf_flexible'),
     'sub_fields' => array(
         'title' => array(
             'label' => __('Title', 'wpu_acf_flexible')
