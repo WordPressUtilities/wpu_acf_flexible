@@ -14,11 +14,21 @@ foreach ($_post_types as $_post_type => $_data) {
         continue;
     }
     $_choices[$_post_type] = $obj->labels->name;
+
+    $filters = array(
+        'search'
+    );
+
+    if(isset($_data['similar_tax']) && !empty($_data['similar_tax'])) {
+        $filters[] = 'taxonomy';
+    }
+
     $_type_fields['similar_' . $_post_type] = array(
         'label' => sprintf(__('Similar %s', 'wpu_acf_flexible'), $obj->labels->name),
         'type' => 'relationship',
         'post_type' => $_post_type,
         'return_format' => 'id',
+        'filters' => $filters,
         'max' => apply_filters('wpu_acf_flexible_similar_max_items', 16, $_post_type),
         'wpuacf_condition' => array(
             'similar_type' => $_post_type
