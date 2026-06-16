@@ -6,7 +6,8 @@ defined('ABSPATH') || die;
 ---------------------------------------------------------- */
 
 add_filter('wpu_acf_flexible__field_types', function ($types) {
-    $supported_formats = get_wpu_acf_embed_supported_formats();
+    $supported_formats = get_wpu_acf_embed_supported_formats(array('label_only' => true));
+
     $types['wpuacf_embed'] = array(
         'label' => __('Video', 'wpu_acf_flexible'),
         'type' => 'group',
@@ -275,7 +276,15 @@ function get_wpu_acf_youtube_id_from_url($embed_url) {
 /* Embed format
 -------------------------- */
 
-function get_wpu_acf_embed_supported_formats() {
+function get_wpu_acf_embed_supported_formats($args = array()) {
+
+    if (!is_array($args)) {
+        $args = array();
+    }
+    $args = array_merge(array(
+        'label_only' => false
+    ), $args);
+
     $default_format = array(
         'label' => '16/9',
         'ratio' => '16/9',
@@ -299,6 +308,12 @@ function get_wpu_acf_embed_supported_formats() {
     }
     if (!isset($formats['default'])) {
         $formats['default'] = $default_format;
+    }
+
+    if ($args['label_only']) {
+        return array_map(function ($format) {
+            return $format['label'];
+        }, $formats);
     }
     return $formats;
 }
