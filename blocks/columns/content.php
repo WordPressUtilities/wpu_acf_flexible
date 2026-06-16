@@ -60,7 +60,8 @@ while (have_rows('columns')): the_row();
         'video_field' => $embed['embed'],
         'use_thumb' => $embed['use_thumb'],
         'image_field' => $embed['cover_image'],
-        'autoplay' => $embed['autoplay']
+        'autoplay' => $embed['autoplay'],
+        'embed_format' => $embed['embed_format']
     ));
 
     /* CTA */

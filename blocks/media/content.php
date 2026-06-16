@@ -27,6 +27,7 @@ case 'embed':
             'use_thumb' => $embed['use_thumb'],
             'image_field' => $embed['cover_image'],
             'autoplay' => $embed['autoplay'],
+            'embed_format' => $embed['embed_format']
         ));
     }
     break;

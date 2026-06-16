@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WPU ACF Flexible\n"
-"POT-Creation-Date: 2026-05-26 21:15+0200\n"
+"POT-Creation-Date: 2026-06-16 15:52+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Darklg <darklg.blog@gmail.com>\n"
 "Language-Team: \n"
@@ -12,7 +12,8 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-KeywordsList: __;_e;_x:1,2c;_n:1,2;esc_attr__;esc_html__;esc_attr_e;esc_html_e\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_n:1,2;esc_attr__;esc_html__;esc_attr_e;esc_html_e\n"
 "X-Poedit-SearchPath-0: ../.\n"
 
 #: .././blocks/anchor/model.php:4
@@ -84,7 +85,7 @@ msgid "Slider"
 msgstr "Slider"
 
 #: .././blocks/columns/model.php:52 .././blocks/video/model.php:19
-#: .././fields/wpuacf_embed.php:10 .././wpu_acf_flexible.php:423
+#: .././fields/wpuacf_embed.php:11 .././wpu_acf_flexible.php:423
 msgid "Video"
 msgstr "Vidéo"
 
@@ -314,7 +315,7 @@ msgstr "Label"
 msgid "[WPUACF] Posts"
 msgstr "[WPUACF] Articles"
 
-#: .././blocks/posts/model.php:17 .././blocks/similar/model.php:42
+#: .././blocks/posts/model.php:17 .././blocks/similar/model.php:52
 msgid "Type"
 msgstr "Type"
 
@@ -390,16 +391,16 @@ msgstr "Nombre de colonnes"
 msgid "Number of rows"
 msgstr "Nombre de lignes"
 
-#: .././blocks/similar/model.php:18
+#: .././blocks/similar/model.php:27
 #, php-format
 msgid "Similar %s"
 msgstr "%s similaires"
 
-#: .././blocks/similar/model.php:34
+#: .././blocks/similar/model.php:44
 msgid "[WPUACF] Similar"
 msgstr "[WPUACF] Similaires"
 
-#: .././blocks/similar/model.php:53
+#: .././blocks/similar/model.php:63
 msgid "Use the default CTA and the default title if no content"
 msgstr ""
 "Utiliser le CTA par défaut et le titre par défaut s’il n’y a pas de contenu"
@@ -432,11 +433,11 @@ msgstr "Date"
 msgid "[WPUACF] Video"
 msgstr "[WPUACF] Vidéo"
 
-#: .././blocks/video/model.php:15 .././fields/wpuacf_embed.php:30
+#: .././blocks/video/model.php:15 .././fields/wpuacf_embed.php:31
 msgid "Cover image"
 msgstr "Image de couverture"
 
-#: .././blocks/video/model.php:24 .././fields/wpuacf_embed.php:25
+#: .././blocks/video/model.php:24 .././fields/wpuacf_embed.php:26
 msgid "Use embed thumbnail if available"
 msgstr "Utiliser la vignette de l’embed si disponible"
 
@@ -472,15 +473,15 @@ msgstr "Milieu"
 msgid "Bottom"
 msgstr "Bas"
 
-#: .././fields/wpuacf_embed.php:15
+#: .././fields/wpuacf_embed.php:16
 msgid "Source"
 msgstr "Source"
 
-#: .././fields/wpuacf_embed.php:20
+#: .././fields/wpuacf_embed.php:21
 msgid "Autoplay when visible"
 msgstr "Lecture automatique quand visible"
 
-#: .././fields/wpuacf_embed.php:22
+#: .././fields/wpuacf_embed.php:23
 msgid ""
 "If enabled, the video will autoplay when it becomes visible. Note that on "
 "mobile, autoplay only works if the video is muted."
@@ -489,7 +490,7 @@ msgstr ""
 "apparaîtra à l'écran. Notez que sur mobile, la lecture automatique ne "
 "fonctionne que si le son de la vidéo est désactivé."
 
-#: .././fields/wpuacf_embed.php:27
+#: .././fields/wpuacf_embed.php:28
 msgid ""
 "If enabled, the youtube thumbnail will be used as the cover image for a "
 "custom player."
@@ -497,12 +498,24 @@ msgstr ""
 "Si cette option est activée, la vignette YouTube sera utilisée comme image "
 "de couverture pour un lecteur personnalisé."
 
-#: .././fields/wpuacf_embed.php:32
+#: .././fields/wpuacf_embed.php:33
 msgid ""
 "If a cover image is set, it will be used as the cover for a custom player."
 msgstr ""
 "Si une image de couverture est définie, elle sera utilisée comme couverture "
 "pour un lecteur personnalisé."
+
+#: .././fields/wpuacf_embed.php:36
+msgid "Format"
+msgstr "Format"
+
+#: .././fields/wpuacf_embed.php:39
+msgid ""
+"If enabled, the video will be displayed in the selected format. Works only "
+"with custom players."
+msgstr ""
+"Si cette option est activée, la vidéo s'affichera dans le format "
+"sélectionné. Ne fonctionne qu'avec les lecteurs personnalisés."
 
 #: .././fields/wpuacf_gps.php:10
 msgid "GPS Coordinates"

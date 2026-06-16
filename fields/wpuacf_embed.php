@@ -6,6 +6,7 @@ defined('ABSPATH') || die;
 ---------------------------------------------------------- */
 
 add_filter('wpu_acf_flexible__field_types', function ($types) {
+    $supported_formats = get_wpu_acf_embed_supported_formats();
     $types['wpuacf_embed'] = array(
         'label' => __('Video', 'wpu_acf_flexible'),
         'type' => 'group',
@@ -30,6 +31,13 @@ add_filter('wpu_acf_flexible__field_types', function ($types) {
                 'label' => __('Cover image', 'wpu_acf_flexible'),
                 'type' => 'image',
                 'instructions' => __('If a cover image is set, it will be used as the cover for a custom player.', 'wpu_acf_flexible')
+            ),
+            'embed_format' => array(
+                'label' => __('Format', 'wpu_acf_flexible'),
+                'type' => 'select',
+                'choices' => $supported_formats,
+                'instructions' => __('If enabled, the video will be displayed in the selected format. Works only with custom players.', 'wpu_acf_flexible'),
+                'default' => 'default'
             )
 
         ),
@@ -43,12 +51,17 @@ if($embed){
         \'video_field\' => $embed[\'embed\'],
         \'use_thumb\' => $embed[\'use_thumb\'],
         \'image_field\' => $embed[\'cover_image\'],
-        \'autoplay\' => $embed[\'autoplay\']
+        \'autoplay\' => $embed[\'autoplay\'],
+        \'embed_format\' => $embed[\'embed_format\']
     ));
 }
 ?>' . "\n";
         }
     );
+
+    if (empty($supported_formats)) {
+        unset($types['wpuacf_embed']['sub_fields']['embed_format']);
+    }
     return $types;
 }, 10, 1);
 
@@ -71,7 +84,8 @@ function get_wpu_acf_video_embed_image($args = array()) {
         'use_thumb_id' => 'use_thumb',
         'only_embed' => false,
         'only_image' => false,
-        'autoplay' => false
+        'autoplay' => false,
+        'embed_format' => 'default'
     ), $args);
 
     /* Video */
@@ -122,6 +136,15 @@ function get_wpu_acf_video_embed_image($args = array()) {
         $_video = '<iframe allowfullscreen allow="autoplay" width="' . $iframe_width . '" height="' . $iframe_height . '" src="' . strip_tags($_video) . '"></iframe>';
     }
 
+    if (isset($args['embed_format']) && $args['embed_format'] && $args['embed_format'] !== 'default') {
+        $css_rule = 'aspect-ratio: ' . get_wpu_acf_embed_format_aspect_ratio($args['embed_format']) . ';height:100%;width:100%; ';
+        if (strpos($_video, 'style="') !== false) {
+            $_video = str_replace('style="', 'style="' . $css_rule, $_video);
+        } else {
+            $_video = str_replace('width=', 'style="' . $css_rule . ' " width=', $_video);
+        }
+    }
+
     /* Do not embed if not an iframe or a video tag */
     if (strpos($_video, '<iframe') === false && strpos($_video, '<video') === false) {
         return false;
@@ -158,6 +181,10 @@ function get_wpu_acf_video_embed_image($args = array()) {
         if (!$args['only_embed'] && ($_has_cover || $_autoplay)) {
             $_video = str_replace('src=', 'data-src=', $_video);
             $_wrapper_attr = $_autoplay ? ' data-intersect-only="1"' : '';
+            if ($args['embed_format'] !== 'default') {
+                $padding_top = get_wpu_acf_embed_format_padding_top($args['embed_format']);
+                $_wrapper_attr .= ' style="padding-top: ' . $padding_top . '%;"';
+            }
             $_cover_html = $_has_cover ? '<div class="cursor"></div><div class="cover-image">' . $_image_item . '</div>' : '';
             $_image = '<div class="wpuacf-video"' . $_wrapper_attr . '>' . $_cover_html . $_video . '</div>';
         } else {
@@ -243,4 +270,51 @@ function get_wpu_acf_youtube_id_from_url($embed_url) {
         return $match[1];
     }
     return false;
+}
+
+/* Embed format
+-------------------------- */
+
+function get_wpu_acf_embed_supported_formats() {
+    $default_format = array(
+        'label' => '16/9',
+        'ratio' => '16/9',
+        'padding_top' => '56.25'
+    );
+    $formats = apply_filters('wpu_acf_embed_supported_formats', array(
+        'default' => $default_format,
+        'square' => array(
+            'label' => '1/1',
+            'ratio' => '1/1',
+            'padding_top' => '100'
+        ),
+        'portrait' => array(
+            'label' => '9/16',
+            'ratio' => '9/16',
+            'padding_top' => '177.78'
+        )
+    ));
+    if (empty($formats) || !is_array($formats)) {
+        return array('default' => $default_format);
+    }
+    if (!isset($formats['default'])) {
+        $formats['default'] = $default_format;
+    }
+    return $formats;
+}
+
+function get_wpu_acf_embed_format_aspect_ratio($format) {
+    $formats = get_wpu_acf_embed_supported_formats();
+    if (isset($formats[$format]) && isset($formats[$format]['ratio'])) {
+        return $formats[$format]['ratio'];
+    }
+    return $formats['default']['ratio'];
+}
+
+function get_wpu_acf_embed_format_padding_top($format) {
+    $formats = get_wpu_acf_embed_supported_formats();
+    if (isset($formats[$format]) && isset($formats[$format]['padding_top'])) {
+        return $formats[$format]['padding_top'];
+    }
+    return $formats['default']['padding_top'];
 }
