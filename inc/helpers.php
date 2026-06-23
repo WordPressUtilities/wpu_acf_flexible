@@ -428,3 +428,16 @@ if (defined('WP_CLI')) {
         'when' => 'wp_loaded'
     ));
 }
+
+/* ----------------------------------------------------------
+  Cached get_field
+---------------------------------------------------------- */
+
+function wpuacfflex_get_cached_field($field_name = '', $post_id = 'option', $cache_duration = 3600) {
+    return wpuacfflex_get_file_cache('wpuacfflex_get_cached_field_' . $field_name . '_' . $post_id, $cache_duration, function ($args) {
+        return get_field($args['field_name'], $args['post_id']);
+    }, array(
+        'field_name' => $field_name,
+        'post_id' => $post_id
+    ));
+}
