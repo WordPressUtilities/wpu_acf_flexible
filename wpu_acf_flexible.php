@@ -3,7 +3,7 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.17.2
+Version: 3.17.3
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.17.2';
+    private $plugin_version = '3.17.3';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -421,9 +421,9 @@ EOT;
             ),
             'wpuacf_video' => array(
                 'label' => __('Video', 'wpu_acf_flexible'),
-                'instructions' => sprintf(__('MP4 format. Max %sMB. Rec: 1.5MB.', 'wpu_acf_flexible'), $upload_size),
+                'instructions' => sprintf(__('Format MP4, WebM. Max %sMB. Rec: 1.5MB.', 'wpu_acf_flexible'), $upload_size),
                 'type' => 'file',
-                'mime_types' => 'mp4'
+                'mime_types' => 'mp4,webm',
             ),
             'wpuacf_cta' => array(
                 'label' => __('Link', 'wpu_acf_flexible'),
