@@ -26,7 +26,7 @@ function get_wpu_acf_text($field_value, $args = array()) {
         $field_value = str_replace('>', '&gt;', $field_value);
     }
 
-    $field_value = trim(strip_tags($field_value, $args['allowed_tags']));
+    $field_value = force_balance_tags(trim(strip_tags($field_value, $args['allowed_tags'])));
     if (!$field_value) {
         return '';
     }
@@ -47,11 +47,10 @@ function get_wpu_acf_field_html($field_value, $args = array()) {
         'allowed_tags' => ''
     ), $args);
 
-    $field_value = trim(strip_tags($field_value, $args['allowed_tags']));
+    $field_value = force_balance_tags(trim(strip_tags($field_value, $args['allowed_tags'])));
     if (!$field_value) {
         return '';
     }
-
     return '<' . esc_attr($args['tag']) . ' class="' . esc_attr($args['classname']) . '">' . $field_value . '</' . esc_attr($args['tag']) . '>';
 }
 
@@ -80,7 +79,7 @@ function get_wpu_acf_minieditor($field, $args = array()) {
         $field = strip_tags($field, $args['allowed_tags']);
     }
     $field = apply_filters('wpu_acf_flexible__get_wpu_acf_minieditor__before_wpautop', $field, $args['allowed_tags']);
-    $field_content = wpautop($field);
+    $field_content = force_balance_tags(wpautop($field));
     if (!$field_content) {
         return '';
     }
