@@ -15,22 +15,31 @@ $_logos_html = '';
 while (has_sub_field('logos')) {
     $_logo_html = wp_get_attachment_image(get_sub_field('image'), $_image_size);
     $url = get_sub_field('url');
-    if ($url) {
+    if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
+        $link_attributes = array(
+            'class' => 'field-url',
+            'href' => $url
+        );
 
-        $target_attr = '';
+        /* Target */
         $target_value = '';
         if ($_logos_target) {
             $target_value = $_logos_target;
-        }
-        else {
+        } else {
             $target_value = wpuacfflex_is_external_link($url) ? '_blank' : '';
         }
-
         if ($target_value) {
-            $target_attr = 'target="' . esc_attr($target_value) . '"';
+            $link_attributes['target'] = $target_value;
         }
 
-        $_logo_html = '<a ' . $target_attr . ' class="field-url" href="' . $url . '">' . $_logo_html . '</a>';
+        $link_attributes = apply_filters('wpu_acf_flexible__content__logos__link_attributes', $link_attributes, $url);
+
+        $link_attributes_str = '';
+        foreach ($link_attributes as $attr => $value) {
+            $link_attributes_str .= ' ' . esc_attr($attr) . '="' . esc_attr($value) . '"';
+        }
+
+        $_logo_html = '<a' . $link_attributes_str . '>' . $_logo_html . '</a>';
     }
     if ($_add_wrapper) {
         $_logo_html = '<div class="logo-item">' . $_logo_html . '</div>';
