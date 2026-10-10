@@ -24,7 +24,8 @@ function example_wpu_acf_flexible_content($contents) {
         'label' => 'Basique',
         'sub_fields' => array(
             'title' => array(
-                'label' => 'Titre'
+                'label' => 'Titre',
+                'wpuacf_input_style' => 'font-size:2em;font-weight:700' // Custom CSS on the admin input
             ),
             'content' => array(
                 'label' => 'Contenu',

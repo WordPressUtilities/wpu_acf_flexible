@@ -3,14 +3,14 @@
 /*
 Plugin Name: WPU ACF Flexible
 Description: Quickly generate flexible content in ACF
-Version: 3.17.5
+Version: 3.18.0
 Plugin URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Update URI: https://github.com/WordPressUtilities/wpu_acf_flexible/
 Author: Darklg
 Author URI: https://darklg.me/
 Text Domain: wpu_acf_flexible
 Domain Path: /lang
-Requires at least: 6.2
+Requires at least: 6.9
 Requires PHP: 8.0
 Network: Optional
 License: MIT License
@@ -22,7 +22,7 @@ defined('ABSPATH') || die;
 class wpu_acf_flexible {
     public $basetoolbox;
     public $plugin_description;
-    private $plugin_version = '3.17.5';
+    private $plugin_version = '3.18.0';
     public $field_types = array();
 
     public $plugin_dir_path;
@@ -74,6 +74,7 @@ class wpu_acf_flexible {
     );
 
     public $editor_heights = array();
+    public $input_styles = array();
 
     private $default_content = <<<EOT
 <?php
@@ -619,6 +620,20 @@ EOT;
             foreach ($field['wpuacf_nav_item_depth'] as $depth) {
                 $field['wrapper']['class'] .= ' wpuacf-nav-item-depth-' . $depth;
             }
+        }
+
+        if (isset($field['wpuacf_input_style']) && is_string($field['wpuacf_input_style'])) {
+            /* Prevent leaving the CSS rule or the style tag */
+            $style = str_replace(array('{', '}', '<', '>'), '', $field['wpuacf_input_style']);
+            $style_class = 'wpuacf-input-style-' . md5($style);
+            $this->input_styles[$style_class] = $style;
+            if (!isset($field['wrapper'])) {
+                $field['wrapper'] = array();
+            }
+            if (!isset($field['wrapper']['class'])) {
+                $field['wrapper']['class'] = '';
+            }
+            $field['wrapper']['class'] .= ' ' . $style_class;
         }
 
         /* Required */
@@ -1590,6 +1605,9 @@ EOT;
         echo '.layout.wpuacf-hidden-preview .acf-fields,';
         echo '.layout.wpuacf-hidden-preview .acfe-fc-placeholder ,';
         echo '.wpu-acf-flex-hidden-field{z-index:1!important;position:absolute!important;top:0!important;left:-999em!important;height:1px!important;width:1px!important;overflow:hidden!important;}';
+        foreach ($this->input_styles as $style_class => $style) {
+            echo '.' . $style_class . '>.acf-input input,.' . $style_class . '>.acf-input textarea{' . $style . '}';
+        }
         echo '</style>';
     }
 
