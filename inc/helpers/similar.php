@@ -83,7 +83,8 @@ function wpu_acf_flexible_similar_get_items($type, $post_ids = array()) {
         $similar_q = array(
             'post_type' => $type,
             'post__in' => $post_ids,
-            'orderby' => 'post__in'
+            'orderby' => 'post__in',
+            'posts_per_page' => count($post_ids)
         );
     }
     $similar_q = apply_filters('wpu_acf_flexible_similar_query', $similar_q, $type, $post_ids);
