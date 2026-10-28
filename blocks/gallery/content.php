@@ -17,7 +17,7 @@ $_gallery_use_navigation = apply_filters('wpu_acf_flexible__content__gallery__us
 $_gallery_html = '';
 $_gallery_after = '';
 foreach ($_images as $_i => $_image) {
-    $_image_html = wp_get_attachment_image($_image, $_image_size);
+    $_image_html = wp_get_attachment_image($_image, $_image_size, '', array('loading' => 'lazy'));
     $_image_url_large = wp_get_attachment_image_src($_image, $_image_size_large);
     $img_id = $gallery_uniqid . '-' . $_i;
     if ($_image_url_large[0]) {
@@ -25,7 +25,7 @@ foreach ($_images as $_i => $_image) {
         if ($_gallery_use_dialog) {
             $attr .= ' data-acf-dialog-target="' . $img_id . '"';
             $_gallery_after .= '<dialog data-acf-dialog-type="image" id="' . $img_id . '">';
-            $_gallery_after .= wp_get_attachment_image($_image, $_image_size_large, array('loading' => 'lazy'));
+            $_gallery_after .= wp_get_attachment_image($_image, $_image_size_large, '', array('loading' => 'lazy'));
             $_gallery_after .= '<button data-acf-dialog-close><span>' . __('Close', 'wpu_acf_flexible') . '</span></button>';
             if ($_gallery_use_navigation) {
                 $_gallery_after .= '<button data-acf-dialog-prev><span>' . __('Previous', 'wpu_acf_flexible') . '</span></button>';

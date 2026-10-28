@@ -16,6 +16,7 @@ add_action('init', function () {
         'public' => true,
         'publicly_queryable' => false,
         'show_in_nav_menus' => false,
+        'rewrite' => false,
         'exclude_from_search' => true,
         'label' => __('Reusable Blocks', 'wpu_acf_flexible'),
         'menu_icon' => 'dashicons-embed-generic',

@@ -13,7 +13,7 @@ $_logos_target = apply_filters('wpu_acf_flexible__content__logos__target', '');
 
 $_logos_html = '';
 while (has_sub_field('logos')) {
-    $_logo_html = wp_get_attachment_image(get_sub_field('image'), $_image_size);
+    $_logo_html = wp_get_attachment_image(get_sub_field('image'), $_image_size, '', array('loading' => 'lazy'));
     $url = get_sub_field('url');
     if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
         $link_attributes = array(

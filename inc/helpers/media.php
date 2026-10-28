@@ -246,7 +246,7 @@ function get_wpu_acf_gallery($gallery, $args = array()) {
         $html .= '<li>';
         $html .= '<div class="' . trim(esc_attr($args['item_classname'])) . '">';
         $html .= $bigimage ? '<a class="' . trim(esc_attr($args['link_classname'])) . '" href="' . $bigimage . '">' : '';
-        $html .= wp_get_attachment_image($image['ID'], $args['format']);
+        $html .= wp_get_attachment_image($image['ID'], $args['format'], '', array('loading' => 'lazy'));
         $html .= $bigimage ? '</a>' : '';
         $html .= '</div>';
         $html .= '</li>';
