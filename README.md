@@ -97,6 +97,14 @@ function example_wpu_acf_flexible_content($contents) {
     $layouts['anchor'] = array(
         'wpuacf_model' => 'anchor'
     );
+    /* Subpages : A navigation between sibling or child pages */
+    $layouts['subpages'] = array(
+        'wpuacf_model' => 'subpages'
+    );
+    /* Siblings navigation : Links to the previous / next sibling page */
+    $layouts['siblings-nav'] = array(
+        'wpuacf_model' => 'siblings-nav'
+    );
     /* Pull Quote : A Quote + Optional Details. */
     $layouts['quote'] = array(
         'wpuacf_model' => 'quote'

@@ -828,6 +828,26 @@ msgstr "Développer toutes les mises en page"
 msgid "Click to reduce/enlarge the layout"
 msgstr "Cliquez pour réduire/agrandir le layout"
 
+#: .././inc/helpers/subpages.php
+msgid "No pages to display."
+msgstr "Aucune page à afficher."
+
+#: .././blocks/subpages/model.php
+msgid "[WPUACF] Subpages"
+msgstr "[WPUACF] Sous-pages"
+
+#: .././blocks/subpages/model.php
+msgid "Sibling pages"
+msgstr "Pages sœurs"
+
+#: .././blocks/subpages/model.php
+msgid "Child pages"
+msgstr "Pages enfants"
+
+#: .././blocks/siblings-nav/model.php
+msgid "[WPUACF] Siblings navigation"
+msgstr "[WPUACF] Navigation entre pages sœurs"
+
 #~ msgid "Add block"
 #~ msgstr "Ajouter un bloc"
 
